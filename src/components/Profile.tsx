@@ -9,14 +9,15 @@ const Profile = ({
   id,
   name,
   bio,
+  currentUser,
 }: {
   id: string;
   name: string;
   bio: string;
+  currentUser: { id: string };
 }) => {
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
-  const [currentUser, setCurrentUser] = useState({ id: '1' });
 
   useEffect(() => {
     const fetchData = async () => {
