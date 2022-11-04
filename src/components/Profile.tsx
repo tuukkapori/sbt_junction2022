@@ -4,6 +4,7 @@ import Education from './Education';
 import WorkHistory from './WorkHistory';
 import Connect from './Connect';
 import { getProfileInfo } from '../services/profileInfo';
+import { useParams } from 'react-router-dom';
 
 const Profile = ({
   id,
@@ -20,13 +21,14 @@ const Profile = ({
   const [workHistory, setWorkHistory] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (id: string) => {
       const { education: educationData, workHistory: workHistoryData } =
-        await getProfileInfo();
+        await getProfileInfo(id);
       setEducation(educationData);
       setWorkHistory(workHistoryData);
     };
-    fetchData();
+    const walletId: any = useParams();
+    fetchData(walletId);
   }, []);
 
   return (

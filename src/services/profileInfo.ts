@@ -1,4 +1,4 @@
-const getProfileInfo = async () => {
+const getProfileInfo = async (id: string) => {
   return {
     education: [
       { school: 'Aalto University', startDate: '2022-09-01' },
