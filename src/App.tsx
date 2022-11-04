@@ -4,6 +4,7 @@ import { app } from './firebase';
 import { Container } from '@mui/material';
 import Profile from './components/Profile';
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 console.log(app);
 
 export default function App() {
@@ -11,15 +12,26 @@ export default function App() {
 
   return (
     <Container maxWidth="sm" sx={{ paddingTop: 20 }}>
-      {/* <MetamaskProvider> */}
-      {/* <HelloMetamask /> */}
-      <Profile
-        id="2"
-        name="Teemu Teekkari"
-        bio="Up and coming web3 developer"
-        currentUser={currentUser}
-      />
-      {/* </MetamaskProvider> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<div>Welcome</div>} />
+          <Route
+            path="/profiles/2"
+            element={
+              <Profile
+                id="2"
+                name="Teemu Teekkari"
+                bio="Up and coming web3 developer"
+                currentUser={currentUser}
+              />
+            }
+          />
+        </Routes>
+        {/* <MetamaskProvider> */}
+        {/* <HelloMetamask /> */}
+
+        {/* </MetamaskProvider> */}
+      </BrowserRouter>
     </Container>
   );
 }
