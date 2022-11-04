@@ -1,6 +1,9 @@
 const getProfileInfo = async () => {
   return {
-    education: [{ school: 'Aalto University', startDate: '2022-09-01' }],
+    education: [
+      { school: 'Aalto University', startDate: '2022-09-01' },
+      { school: 'LUT University', startDate: '2022-10-01' },
+    ],
     workHistory: [{ companyName: 'Nitor', startDate: '2016-06-01' }],
   };
 };

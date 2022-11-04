@@ -1,6 +1,17 @@
+import { Paper, Typography } from '@mui/material';
+
 const Education = ({ items }: { items: any }) => {
   console.log({ items });
-  return <div>Education</div>;
+  return (
+    <Paper sx={{ margin: 1, padding: 1 }}>
+      {items &&
+        items.map((item: any, index: number) => (
+          <Paper key={index} sx={{ margin: 1, padding: 1 }}>
+            <Typography variant="h5">{item.school}</Typography>
+          </Paper>
+        ))}
+    </Paper>
+  );
 };
 
 export default Education;
