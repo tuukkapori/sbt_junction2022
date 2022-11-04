@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Education from './Education';
 import WorkHistory from './WorkHistory';
@@ -31,8 +31,13 @@ const Profile = ({
   return (
     <div>
       <Paper elevation={3} sx={{ padding: 5 }}>
-        <div>{name}</div>
+        {name ? (
+          <Typography variant="h3">{name}</Typography>
+        ) : (
+          <Typography variant="h3">{id}</Typography>
+        )}
         <div>{bio}</div>
+        <div>connections: 42</div>
         {id != currentUser.id && <Connect />}
       </Paper>
       <Education items={education} />
