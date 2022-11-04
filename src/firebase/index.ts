@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app'
+import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
   collection,
@@ -9,11 +9,11 @@ import {
   where,
   getDoc,
   doc,
-} from 'firebase/firestore/lite'
+} from 'firebase/firestore/lite';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-console.log('initializing firebase')
+console.log('initializing firebase');
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -23,24 +23,41 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
-}
+};
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app)
+const db = getFirestore(app);
 
 const getUserByWalletId = async (walletId: string) => {
-  const docRef = doc(db, 'users', walletId)
-  const snap = await getDoc(docRef)
+  const docRef = doc(db, 'users', walletId);
+  const snap = await getDoc(docRef);
 
   if (snap.exists()) {
-    console.log('snap exists ', snap.data())
-    return snap.data()
+    console.log('snap exists ', snap.data());
+    return snap.data();
   } else {
-    console.log('not founbd')
-    return undefined
+    console.log('not founbd');
+    return undefined;
   }
-}
+};
 
-export { app, getUserByWalletId }
+const getUsersBySearhTerm = async (search: string) => {
+  if (search.startsWith('0x')) {
+    const user = await getUserByWalletId(search);
+    return [user];
+  } else {
+    const q = query(collection(db, 'users'));
+    const querySnapshot = await getDocs(q);
+    const users: any[] = [];
+    querySnapshot.forEach(doc => {
+      users.push({ walletId: doc.id, ...doc.data() });
+    });
+    return users.filter((user: any) =>
+      user.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+};
+
+export { app, getUserByWalletId, getUsersBySearhTerm };
