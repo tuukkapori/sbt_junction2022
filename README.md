@@ -1,3 +1,6 @@
+# Basic boilerplate forked from [jaavier/boilerplate-react-metamask](https://github.com/jaavier/boilerplate-react-metamask).
+
+
 # Boilerplate-react-metamask
 Boilerplate to connect React app to Web3 using Metamask.
 
