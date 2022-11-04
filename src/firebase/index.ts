@@ -1,7 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  Firestore,
+  where,
+  getDoc,
+  doc,
+} from 'firebase/firestore/lite'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+console.log('initializing firebase')
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,3 +27,30 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
+
+const db = getFirestore(app)
+
+async function getCities(db: Firestore) {
+  console.log('calling firebase')
+  const citiesCol = collection(db, 'users')
+  const citySnapshot = await getDocs(citiesCol)
+  const cityList = citySnapshot.docs.map((doc) => doc.data())
+  console.log('firebase ', cityList)
+  return cityList
+}
+
+const getUserByWalletId = async (walletId: string) => {
+  const docRef = doc(db, 'users', walletId)
+  const snap = await getDoc(docRef)
+
+  if (snap.exists()) {
+    console.log('snap exists ', snap.data())
+  } else {
+    console.log('not founbd')
+  }
+}
+
+getCities(db)
+getUserByWalletId('walletid1234')
+
+export { app }
