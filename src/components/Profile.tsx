@@ -1,10 +1,10 @@
-import { Paper, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import Education from './Education';
-import WorkHistory from './WorkHistory';
-import Connect from './Connect';
-import { getProfileInfo } from '../services/profileInfo';
-import { useParams } from 'react-router-dom';
+import { Paper, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import Education from './Education'
+import WorkHistory from './WorkHistory'
+import Connect from './Connect'
+import { getProfileInfo } from '../services/profileInfo'
+import { useParams } from 'react-router-dom'
 
 const Profile = ({
   name,
@@ -44,7 +44,7 @@ const Profile = ({
       <Education items={education} />
       <WorkHistory items={workHistory} />
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
