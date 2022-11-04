@@ -62,7 +62,9 @@ const Navigation = ({ children }: any) => {
               }}
             />
 
-            <Button onClick={handleSearch}>Search</Button>
+            <Button onClick={handleSearch} disabled={!searchTerm}>
+              Search
+            </Button>
           </Box>
           <IconButton onClick={handleOpenProfileMenu}>
             <Avatar />

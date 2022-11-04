@@ -27,7 +27,7 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
       setWorkHistory(workHistoryData);
     };
     fetchData(walletId);
-  }, []);
+  }, [walletId]);
 
   return (
     <div>
@@ -35,9 +35,9 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
         {profileInfo ? (
           <div>
             {profileInfo.name ? (
-              <Typography variant="h3">{profileInfo.name}</Typography>
+              <Typography variant='h3'>{profileInfo.name}</Typography>
             ) : (
-              <Typography variant="h3">Name missing</Typography>
+              <Typography variant='h3'>Name missing</Typography>
             )}
             {profileInfo.bio ? (
               <div>{profileInfo.bio}</div>
