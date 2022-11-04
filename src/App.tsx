@@ -9,8 +9,9 @@ export default function App() {
       {/* <MetamaskProvider> */}
       {/* <HelloMetamask /> */}
       <Profile
+        id="2"
         name="Teemu Teekkari"
-        description="Up and coming web3 developer"
+        bio="Up and coming web3 developer"
       />
       {/* </MetamaskProvider> */}
     </Container>

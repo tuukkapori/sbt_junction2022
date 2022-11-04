@@ -6,14 +6,17 @@ import Connect from './Connect';
 import { getProfileInfo } from '../services/profileInfo';
 
 const Profile = ({
+  id,
   name,
-  description,
+  bio,
 }: {
+  id: string;
   name: string;
-  description: string;
+  bio: string;
 }) => {
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
+  const [currentUser, setCurrentUser] = useState({ id: '1' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,8 +32,8 @@ const Profile = ({
     <div>
       <Paper elevation={3} sx={{ padding: 5 }}>
         <div>{name}</div>
-        <div>{description}</div>
-        <Connect />
+        <div>{bio}</div>
+        {id != currentUser.id && <Connect />}
       </Paper>
       <Education items={education} />
       <WorkHistory items={workHistory} />
