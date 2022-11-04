@@ -1,7 +1,6 @@
-const WorkHistory = () => {
-  return (
-    <div>WorkHistory</div>
-  )
-}
+const WorkHistory = ({ items }: { items: any }) => {
+  console.log({ items });
+  return <div>WorkHistory</div>;
+};
 
-export default WorkHistory
+export default WorkHistory;

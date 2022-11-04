@@ -1,7 +1,6 @@
-const Education = () => {
-  return (
-    <div>Education</div>
-  )
-}
+const Education = ({ items }: { items: any }) => {
+  console.log({ items });
+  return <div>Education</div>;
+};
 
-export default Education
+export default Education;
