@@ -1,14 +1,13 @@
 import { Paper, Typography } from '@mui/material';
+import EducationItem, { EducationItemType } from './EducationItem';
 
 const Education = ({ items }: { items: any }) => {
   return (
     <Paper sx={{ marginTop: 2, padding: 1 }}>
       <Typography variant="h4">Education</Typography>
       {items &&
-        items.map((item: any, index: number) => (
-          <Paper key={index} sx={{ margin: 1, padding: 1 }}>
-            <Typography variant="h5">{item.school}</Typography>
-          </Paper>
+        items.map((item: EducationItemType, index: number) => (
+          <EducationItem key={index} item={item} />
         ))}
     </Paper>
   );

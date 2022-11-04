@@ -1,10 +1,9 @@
 import { Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Education from './Education';
+import Education from './EducationList';
 import WorkHistory from './WorkHistory';
 import Connect from './Connect';
 import {
-  ProfileInfo,
   getProfileFromBlockchain,
   getProfileFromFirebase,
 } from '../services/profileInfo';
@@ -38,7 +37,7 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
             {profileInfo.name ? (
               <Typography variant="h3">{profileInfo.name}</Typography>
             ) : (
-              <Typography variant="h3">Wallet ID</Typography>
+              <Typography variant="h3">Name missing</Typography>
             )}
             {profileInfo.bio ? (
               <div>{profileInfo.bio}</div>
