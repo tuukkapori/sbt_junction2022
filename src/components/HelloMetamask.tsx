@@ -1,17 +1,16 @@
-import { Button } from '@mui/material'
-import { useEffect } from 'react'
-import { useMetamask, ConnectMetamask, loadSmartContract } from '../metamask'
-import dapp from '../metamask/dapp'
+import { useEffect } from 'react';
+import { useMetamask, ConnectMetamask, loadSmartContract } from '../metamask';
+import dapp from '../metamask/dapp';
 
 export default function HelloMetamask() {
-  const { user, setContract } = useMetamask()
+  const { user, setContract } = useMetamask();
   const setSmartContract = () => {
-    setContract(loadSmartContract(dapp.address, dapp.abi))
-  }
+    setContract(loadSmartContract(dapp.address, dapp.abi));
+  };
 
   useEffect(() => {
-    setSmartContract()
-  }, [])
+    setSmartContract();
+  }, []);
 
   return (
     <div className="flex flex-col items-center bg-slate-100 h-screen justify-center">
@@ -29,10 +28,9 @@ export default function HelloMetamask() {
             <div className="my-3 uppercase tracking-wide text-xs">
               Balance: {user.balance.toString().slice(0, 10)} ETH
             </div>
-            <Button>hello</Button>
           </>
         )}
       </div>
     </div>
-  )
+  );
 }
