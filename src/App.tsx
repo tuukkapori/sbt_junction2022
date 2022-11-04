@@ -19,8 +19,6 @@ export default function App() {
             path="/profiles/:walletId"
             element={
               <Profile
-                name="Teemu Teekkari"
-                bio="Up and coming web3 developer"
                 currentUser={currentUser}
               />
             }

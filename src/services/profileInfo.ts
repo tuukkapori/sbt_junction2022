@@ -1,4 +1,10 @@
-const getProfileInfo = async (id: string) => {
+export interface ProfileInfo {
+  walletId: string;
+  name: string;
+  bio: string;
+}
+
+const getProfileFromBlockchain = async (walletId: string) => {
   return {
     education: [
       { school: 'Aalto University', startDate: '2022-09-01' },
@@ -11,4 +17,14 @@ const getProfileInfo = async (id: string) => {
   };
 };
 
-export { getProfileInfo };
+const getProfileFromFirebase = async (
+  walletId: string
+): Promise<ProfileInfo> => {
+  return {
+    walletId,
+    name: 'Teemu Teekkari',
+    bio: 'senior web3 developer',
+  };
+};
+
+export { getProfileFromBlockchain, getProfileFromFirebase };
