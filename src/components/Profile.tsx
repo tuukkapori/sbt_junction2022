@@ -4,33 +4,21 @@ import Education from './Education'
 import WorkHistory from './WorkHistory'
 import Connect from './Connect'
 import { getProfileInfo } from '../services/profileInfo'
-import { getUserByWalletId } from '../firebase'
-import { ContactlessOutlined } from '@mui/icons-material'
+import { useParams } from 'react-router-dom'
 
-const Profile = ({
-  id,
-  name,
-  bio,
-  currentUser,
-}: {
-  id: string
-  name: string
-  bio: string
-  currentUser: { id: string }
-}) => {
+const Profile = ({ id, name, bio, currentUser }: any) => {
   const [education, setEducation] = useState(null)
   const [workHistory, setWorkHistory] = useState(null)
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (id: string) => {
       const { education: educationData, workHistory: workHistoryData } =
-        await getProfileInfo()
+        await getProfileInfo(id)
       setEducation(educationData)
       setWorkHistory(workHistoryData)
-      const user = await getUserByWalletId('walletid1234')
-      console.log('user from db ', user)
     }
-    fetchData()
+    const walletId: any = useParams()
+    fetchData(walletId)
   }, [])
 
   return (

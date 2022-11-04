@@ -16,7 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<div>Welcome</div>} />
           <Route
-            path="/profiles/2"
+            path="/profiles/:walletId"
             element={
               <Profile
                 id="2"
