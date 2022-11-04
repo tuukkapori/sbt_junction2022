@@ -1,7 +1,9 @@
-import { MetamaskProvider } from './metamask/context';
-import HelloMetamask from './components/HelloMetamask';
-import { Container } from '@mui/material';
-import Profile from './components/Profile';
+import { MetamaskProvider } from './metamask/context'
+import HelloMetamask from './components/HelloMetamask'
+import { app } from './firebase'
+import { Container } from '@mui/material'
+import Profile from './components/Profile'
+console.log(app)
 
 export default function App() {
   return (
@@ -15,5 +17,5 @@ export default function App() {
       />
       {/* </MetamaskProvider> */}
     </Container>
-  );
+  )
 }
