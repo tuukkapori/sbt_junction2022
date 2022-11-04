@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -11,7 +11,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { getUserByWalletId } from '../firebase';
 import { SettingsEthernet } from '@mui/icons-material';
@@ -21,6 +21,9 @@ const Navigation = ({ children }: any) => {
   const [profileMenuAnchor, setProfileMenuAnchor] = useState<any>(null);
   const [profileMenOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [searchParams, setSearchparams] = useSearchParams();
+
+  useEffect(() => {}, [searchParams]);
 
   const handleSearch = async () => {
     console.log('search term ', searchTerm);
@@ -39,7 +42,7 @@ const Navigation = ({ children }: any) => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '0px 50px',
+            padding: '0px 5vw',
             alignItems: 'center',
           }}>
           <Box sx={{ display: 'flex' }}>
@@ -57,14 +60,17 @@ const Navigation = ({ children }: any) => {
                     </IconButton>
                   </InputAdornment>
                 ),
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <Button onClick={handleSearch} disabled={!searchTerm}>
+                      Search
+                    </Button>
+                  </InputAdornment>
+                ),
               }}
             />
-
-            <Button onClick={handleSearch} disabled={!searchTerm}>
-              Search
-            </Button>
           </Box>
-          <IconButton onClick={handleOpenProfileMenu}>
+          <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
             <Avatar />
           </IconButton>
           <Menu
