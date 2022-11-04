@@ -36,11 +36,11 @@ const getUserByWalletId = async (walletId: string) => {
 
   if (snap.exists()) {
     console.log('snap exists ', snap.data())
+    return snap.data()
   } else {
     console.log('not founbd')
+    return undefined
   }
 }
 
-getUserByWalletId('walletid1234')
-
-export { app }
+export { app, getUserByWalletId }
