@@ -1,8 +1,9 @@
 import { Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Education from './EducationList';
-import WorkHistory from './WorkHistory';
-import Connect from './Connect';
+import EducationList from './EducationList';
+import WorkHistoryList from './WorkHistoryList';
+import ProfileInfo from './ProfileInfo';
+
 import {
   getProfileFromBlockchain,
   getProfileFromFirebase,
@@ -11,7 +12,6 @@ import { useParams } from 'react-router-dom';
 
 const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
   const { walletId } = useParams();
-  console.log({ walletId });
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
@@ -31,28 +31,13 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
 
   return (
     <div>
-      <Paper elevation={3} sx={{ padding: 5 }}>
-        {profileInfo ? (
-          <div>
-            {profileInfo.name ? (
-              <Typography variant="h3">{profileInfo.name}</Typography>
-            ) : (
-              <Typography variant="h3">Name missing</Typography>
-            )}
-            {profileInfo.bio ? (
-              <div>{profileInfo.bio}</div>
-            ) : (
-              <div>Bio missing</div>
-            )}
-            <div>connections: 42</div>
-            <Connect />
-          </div>
-        ) : (
-          <div>Loading...</div>
-        )}
-      </Paper>
-      <Education items={education} />
-      <WorkHistory items={workHistory} />
+      {profileInfo ? <ProfileInfo data={profileInfo} /> : <div>Loading...</div>}
+      {education ? <EducationList items={education} /> : <div>Loading...</div>}
+      {workHistory ? (
+        <WorkHistoryList items={workHistory} />
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };

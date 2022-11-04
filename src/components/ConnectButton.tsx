@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-const Connect = () => {
+const ConnectButton = () => {
   const onClick = () => {
     console.log('Friend request sent!');
   };
@@ -8,4 +8,4 @@ const Connect = () => {
   return <Button onClick={onClick}>Connect</Button>;
 };
 
-export default Connect;
+export default ConnectButton;
