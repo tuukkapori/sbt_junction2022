@@ -1,7 +1,7 @@
-// import { MetamaskProvider } from './metamask/context';
-// import HelloMetamask from './components/HelloMetamask';
-import Profile from './components/Profile';
+import { MetamaskProvider } from './metamask/context';
+import HelloMetamask from './components/HelloMetamask';
 import { Container } from '@mui/material';
+import Profile from './components/Profile';
 
 export default function App() {
   return (
