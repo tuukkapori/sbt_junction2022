@@ -6,13 +6,7 @@ import Connect from './Connect'
 import { getProfileInfo } from '../services/profileInfo'
 import { getUserByWalletId } from '../firebase'
 
-const Profile = ({
-  name,
-  description,
-}: {
-  name: string
-  description: string
-}) => {
+const Profile = ({ id, name, bio }: { name: string; description: string }) => {
   const [profileInfo, setProfileInfo] = useState<any>(undefined)
   const [education, setEducation] = useState(null)
   const [workHistory, setWorkHistory] = useState(null)
