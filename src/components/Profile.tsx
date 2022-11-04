@@ -7,16 +7,15 @@ import { getProfileInfo } from '../services/profileInfo';
 import { useParams } from 'react-router-dom';
 
 const Profile = ({
-  id,
   name,
   bio,
   currentUser,
 }: {
-  id: string;
   name: string;
   bio: string;
   currentUser: { id: string };
 }) => {
+  const id = '2';
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
 
@@ -27,8 +26,7 @@ const Profile = ({
       setEducation(educationData);
       setWorkHistory(workHistoryData);
     };
-    const walletId: any = useParams();
-    fetchData(walletId);
+    fetchData(id);
   }, []);
 
   return (
@@ -37,11 +35,11 @@ const Profile = ({
         {name ? (
           <Typography variant="h3">{name}</Typography>
         ) : (
-          <Typography variant="h3">{id}</Typography>
+          <Typography variant="h3">Wallet ID</Typography>
         )}
         <div>{bio}</div>
         <div>connections: 42</div>
-        {id != currentUser.id && <Connect />}
+        <Connect />
       </Paper>
       <Education items={education} />
       <WorkHistory items={workHistory} />
