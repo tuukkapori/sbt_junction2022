@@ -22,14 +22,7 @@ export default function App() {
             <Route path="profiles" element={<Profiles />} />
             <Route
               path="/profiles/:walletId"
-              element={
-                <Profile
-                  id="2"
-                  name="Teemu Teekkari"
-                  bio="Up and coming web3 developer"
-                  currentUser={currentUser}
-                />
-              }
+              element={<Profile currentUser={currentUser} />}
             />
           </Route>
         </Routes>
