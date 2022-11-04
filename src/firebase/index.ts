@@ -30,15 +30,6 @@ const app = initializeApp(firebaseConfig)
 
 const db = getFirestore(app)
 
-async function getCities(db: Firestore) {
-  console.log('calling firebase')
-  const citiesCol = collection(db, 'users')
-  const citySnapshot = await getDocs(citiesCol)
-  const cityList = citySnapshot.docs.map((doc) => doc.data())
-  console.log('firebase ', cityList)
-  return cityList
-}
-
 const getUserByWalletId = async (walletId: string) => {
   const docRef = doc(db, 'users', walletId)
   const snap = await getDoc(docRef)
@@ -50,7 +41,6 @@ const getUserByWalletId = async (walletId: string) => {
   }
 }
 
-getCities(db)
 getUserByWalletId('walletid1234')
 
 export { app }
