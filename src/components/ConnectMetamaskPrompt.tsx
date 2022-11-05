@@ -44,7 +44,9 @@ const ConnectMetamaskPrompt = ({
           alignItems: 'center',
           fontFamily: 'OpenSans-Bold',
         }}>
-        <h2 style={{ marginTop: 0 }}>Connect your wallet to get started</h2>
+        <h2 style={{ marginTop: 0 }}>
+          Your work experience on the blockchain.
+        </h2>
         <Button
           variant='contained'
           size='large'

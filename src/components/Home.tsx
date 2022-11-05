@@ -25,7 +25,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       }}>
       <Typography
         variant='h1'
-        style={{ fontSize: '70px', fontWeight: 600, marginBottom: 2 }}>
+        style={{ fontSize: '130px', fontWeight: 600, marginBottom: 2 }}>
         Zerify
       </Typography>
       {user.isConnected ? (
