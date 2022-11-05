@@ -13,6 +13,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import WelcomeScreen from './components/WelcomeScreen';
 import CreateProfile from './components/CreateProfile';
+import SendToken from './components/SendToken';
 
 const darkTheme = createTheme({
   palette: {
@@ -68,6 +69,7 @@ export default function App() {
                 path='/profiles/:walletId'
                 element={<Profile currentWallet={currentWallet} />}
               />
+              <Route path='/send' element={<SendToken />} />
             </Route>
           </Routes>
         </BrowserRouter>
