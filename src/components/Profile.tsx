@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import EducationList from './EducationList';
 import WorkHistoryList from './WorkHistoryList';
@@ -47,21 +47,42 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
           <ProfileInfo data={profileInfo} isMe={walletId === 'me'} />
         </Box>
       ) : (
-        <Box>Loading...</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Typography>Loading...</Typography>
+        </Box>
       )}
       {workHistory ? (
         <Box>
           <WorkHistoryList items={workHistory} />
         </Box>
       ) : (
-        <Box>Loading...</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Typography>Loading...</Typography>
+        </Box>
       )}
       {education ? (
         <Box>
           <EducationList items={education} />
         </Box>
       ) : (
-        <Box>Loading...</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Typography>Loading...</Typography>
+        </Box>
       )}
     </Box>
   );
