@@ -62,9 +62,6 @@ const ProfileSearchResults = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'start',
-          background:
-            'linear-gradient( 105.3deg,  rgba(30,39,107,1) 21.8%, rgba(77,118,221,1) 100.2% );',
-          height: '100vh',
         }}>
         {users.length ? (
           users.map((user: any, index: number) => {

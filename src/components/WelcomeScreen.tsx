@@ -24,25 +24,12 @@ const WelcomeScreen = ({ currentWallet, setCurrentWallet, lmao }: any) => {
   };
   return (
     <Box
-      sx={{
-        background:
-          'linear-gradient( 105.3deg,  rgba(30,39,107,1) 21.8%, rgba(77,118,221,1) 100.2% );',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Box
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1>True Connect</h1>
-        <h2 style={{ fontWeight: 600 }}>Connect your wallet to get started</h2>
-        <Button
-          variant='contained'
-          size='large'
-          onClick={handleConnectMetamask}>
-          Connect Metamask
-        </Button>
-      </Box>
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h1>True Connect</h1>
+      <h2 style={{ fontWeight: 600 }}>Connect your wallet to get started</h2>
+      <Button variant='contained' size='large' onClick={handleConnectMetamask}>
+        Connect Metamask
+      </Button>
     </Box>
   );
 };
