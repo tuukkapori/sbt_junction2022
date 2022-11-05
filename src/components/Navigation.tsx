@@ -40,7 +40,7 @@ const Navigation = ({ children }: any) => {
 
   const handleLogOut = () => {
     deleteCurrentWalletLocalStorage();
-    navigate('/welcome');
+    navigate('/');
   };
 
   return (

@@ -5,7 +5,11 @@ import { getUserByWalletId } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentWalletLocalStorage } from '../services/localStorage';
 
-const WelcomeScreen = ({ currentWallet, setCurrentWallet, lmao }: any) => {
+const ConnectMetamaskPrompt = ({
+  setCurrentWallet,
+}: {
+  setCurrentWallet: any;
+}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleConnectMetamask = async () => {
@@ -40,9 +44,6 @@ const WelcomeScreen = ({ currentWallet, setCurrentWallet, lmao }: any) => {
           alignItems: 'center',
           fontFamily: 'OpenSans-Bold',
         }}>
-        <h1 style={{ fontSize: '70px', fontWeight: 600, marginBottom: 2 }}>
-          True Connect
-        </h1>
         <h2 style={{ marginTop: 0 }}>Connect your wallet to get started</h2>
         <Button
           variant='contained'
@@ -59,4 +60,4 @@ const WelcomeScreen = ({ currentWallet, setCurrentWallet, lmao }: any) => {
   );
 };
 
-export default WelcomeScreen;
+export default ConnectMetamaskPrompt;

@@ -11,10 +11,11 @@ import './index.css';
 import ProfileSearchResults from './components/ProfileSearchResults';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import WelcomeScreen from './components/WelcomeScreen';
+import WelcomeScreen from './components/ConnectMetamaskPrompt';
 import CreateProfile from './components/CreateProfile';
 import SendToken from './components/SendToken';
 import { getSymbol } from './services/blockchain';
+import Home from './components/Home';
 
 const darkTheme = createTheme({
   palette: {
@@ -33,56 +34,51 @@ const lightTheme = createTheme({
 console.log(app);
 
 export default function App() {
-  const [currentWallet, setCurrentWallet] = useState<any>('sadfsadf');
+  const [currentWallet, setCurrentWallet] = useState<any>(null);
 
-  console.log('setCurrentWallet from app', setCurrentWallet);
+  console.log({ currentWallet });
+  // console.log('setCurrentWallet from app', setCurrentWallet);
 
   useEffect(() => {
     const func = async () => {
       console.log('calling');
       const symbol = await getSymbol();
-      console.log('SYMBOL');
-      console.log(symbol);
+      console.log({ symbol });
     };
     func();
   }, []);
 
+  console.log('rendering....');
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Box>
-          <Navigation />
-          <Box
-            sx={{
-              background:
-                'linear-gradient( 105.3deg,  rgba(30,39,107,1) 21.8%, rgba(77,118,221,1) 100.2% );',
-              minHeight: '100vh',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Routes>
-              <Route path='/welcome' element={<WelcomeScreen />} />
-              <Route
-                path='/createProfile'
-                element={
-                  <CreateProfile
-                    currentWallet={currentWallet}
-                    setCurrentWallet={setCurrentWallet}
-                  />
-                }
-              />
-              <Route path='/'>
+    <MetamaskProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Box>
+            <Navigation />
+            <Box
+              sx={{
+                background:
+                  'linear-gradient( 105.3deg,  rgba(30,39,107,1) 21.8%, rgba(77,118,221,1) 100.2% );',
+                minHeight: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Routes>
                 <Route
-                  index
+                  path='/createProfile'
                   element={
-                    <WelcomeScreen
-                      lmao={'fuck'}
-                      currentWallet={'lmao'}
+                    <CreateProfile
+                      currentWallet={currentWallet}
                       setCurrentWallet={setCurrentWallet}
                     />
                   }
+                />
+                <Route
+                  path='/'
+                  element={<Home setCurrentWallet={setCurrentWallet} />}
                 />
                 <Route path='/search' element={<ProfileSearchResults />} />
                 <Route path='profiles' element={<Profiles />} />
@@ -91,11 +87,11 @@ export default function App() {
                   element={<Profile currentWallet={currentWallet} />}
                 />
                 <Route path='/send' element={<SendToken />} />
-              </Route>
-            </Routes>
+              </Routes>
+            </Box>
           </Box>
-        </Box>
-      </BrowserRouter>
-    </ThemeProvider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </MetamaskProvider>
   );
 }
