@@ -1,5 +1,5 @@
 import { getUserByWalletId } from './firebase';
-import abi from '../contracts/SoulBoundToken.json';
+import soulBoundTokenContract from '../contracts/SoulBoundToken.json';
 import loadSmartContract from '../metamask/helpers/loadSmartContract';
 import { SoulBoundToken } from '../contracts/SoulBoundToken';
 export interface ProfileInfo {
@@ -19,8 +19,8 @@ export interface ProfileInfo {
 // };
 
 const contract = loadSmartContract<SoulBoundToken>(
-  '0x994B4A6dBE760F8Fae32A5D649087653505b2A39',
-  abi.abi
+  soulBoundTokenContract.address,
+  soulBoundTokenContract.abi
 );
 
 const getSymbol = async () => {
