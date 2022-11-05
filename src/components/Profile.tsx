@@ -55,7 +55,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
 
   const groupededCertificates: { [key: string]: Certificate[] } =
     certificates.length
-      ? certificates.reduce((obj: any, cert: any) => {
+      ? certificates.reduce((obj, cert: Certificate) => {
           const { type } = cert;
           if (obj[type]) {
             obj[type].push(cert);
