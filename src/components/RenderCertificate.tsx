@@ -16,7 +16,7 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
         boxShadow: '2px 2px 5px 5px rbga(255, 255, 255, 1)',
         background: 'rgba(255, 255, 255, 0.1)',
         maxWidth: '400px',
-        minWidth: '300px',
+        minWidth: '400px',
       }}>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         {/*  <LightbulbIcon /> */}
