@@ -1,9 +1,10 @@
-import { Paper, Typography, Grid, Box } from '@mui/material';
+import { Paper, Typography, Grid, Box, Avatar } from '@mui/material';
 import ConnectButton from './ConnectButton';
 
 export interface ProfileInfoType {
   name: string;
   bio: string;
+  profilePicture: string;
 }
 
 const ProfileInfo = ({
@@ -13,22 +14,22 @@ const ProfileInfo = ({
   data: ProfileInfoType;
   isMe: Boolean;
 }) => {
-  const { name, bio } = data;
+  const { name, bio, profilePicture } = data;
   return (
     <Paper sx={{ padding: 5 }}>
       <Grid container>
-        <Grid item xs={12}>
+        <Grid item xs={3}>
+          <Avatar
+            src={profilePicture}
+            sx={{ width: 100, height: 100 }}></Avatar>
+        </Grid>
+        <Grid item xs={9}>
           {name ? (
             <Typography variant='h4'>{name}</Typography>
           ) : (
             <Typography variant='h4'>Name missing</Typography>
           )}
-        </Grid>
-        <Grid item xs={8}>
           {bio ? <Box>{bio}</Box> : <Box>Bio missing</Box>}
-        </Grid>
-        <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-          {!isMe && <ConnectButton />}
         </Grid>
       </Grid>
     </Paper>
