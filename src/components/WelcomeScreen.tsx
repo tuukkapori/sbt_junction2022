@@ -3,21 +3,20 @@ import { Box, Button } from '@mui/material';
 import requestAccounts from '../metamask/helpers/requestAccounts';
 import { getUserByWalletId } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentWalletLocalStorage } from '../services/localStorage';
 
-const WelcomeScreen = ({ currentWallet, setCurrentWallet }: any) => {
+const WelcomeScreen = ({ currentWallet, setCurrentWallet, lmao }: any) => {
   const navigate = useNavigate();
   const handleConnectMetamask = async () => {
     if (window.ethereum) {
       const account = await requestAccounts();
-      console.log('account connected ', account);
       if (account && account.isConnected) {
-        setCurrentWallet(account.address);
+        setCurrentWalletLocalStorage(account.address);
+
         const user = await getUserByWalletId(account.address);
         if (user) {
-          console.log('registered user found');
           navigate('/profiles/me');
         } else {
-          console.log('registered user not found');
           navigate('/createProfile');
         }
       }

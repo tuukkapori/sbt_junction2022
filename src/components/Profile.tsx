@@ -8,8 +8,9 @@ import {
   getProfileFromFirebase,
 } from '../services/profileInfo';
 import { useParams } from 'react-router-dom';
+import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
-const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
+const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const { walletId } = useParams();
   console.log({ walletId });
   const [profileInfo, setProfileInfo] = useState(null);
@@ -17,7 +18,9 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
   const [workHistory, setWorkHistory] = useState(null);
 
   useEffect(() => {
-    const fetchData = async (walletId: string) => {
+    const fetchData = async (wallet: string) => {
+      const walletId =
+        wallet === 'me' ? getCurrentWalletFromLocalStorage() || wallet : wallet;
       const profileInfo = await getProfileFromFirebase(walletId);
       setProfileInfo(profileInfo);
 

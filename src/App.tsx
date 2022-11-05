@@ -3,7 +3,7 @@ import HelloMetamask from './components/HelloMetamask';
 import { app } from './firebase';
 import { AppBar, Avatar, Container } from '@mui/material';
 import Profile from './components/Profile';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Profiles from './components/Profiles';
 import Navigation from './components/Navigation';
@@ -31,46 +31,47 @@ const lightTheme = createTheme({
 console.log(app);
 
 export default function App() {
-  const [currentWallet, setCurrentWallet] = useState<any>(null);
+  const [currentWallet, setCurrentWallet] = useState<any>('sadfsadf');
+
+  console.log('setCurrentWallet from app', setCurrentWallet);
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <MetamaskProvider>
-        <CssBaseline />
-        <div>
-          <BrowserRouter>
-            <Routes>
-              <Route path='/welcome' element={<WelcomeScreen />} />
+      <CssBaseline />
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/welcome' element={<WelcomeScreen />} />
+            <Route
+              path='/createProfile'
+              element={
+                <CreateProfile
+                  currentWallet={currentWallet}
+                  setCurrentWallet={setCurrentWallet}
+                />
+              }
+            />
+            <Route path='/' element={<Navigation />}>
               <Route
-                path='/createProfile'
+                index
                 element={
-                  <CreateProfile
-                    currentWallet={currentWallet}
+                  <WelcomeScreen
+                    lmao={'fuck'}
+                    currentWallet={'lmao'}
                     setCurrentWallet={setCurrentWallet}
                   />
                 }
               />
-              <Route path='/' element={<Navigation />}>
-                <Route
-                  index
-                  element={
-                    <WelcomeScreen
-                      currentWallet={currentWallet}
-                      setCurrentWallet={setCurrentWallet}
-                    />
-                  }
-                />
-                <Route path='/search' element={<ProfileSearchResults />} />
-                <Route path='profiles' element={<Profiles />} />
-                <Route
-                  path='/profiles/:walletId'
-                  element={<Profile currentUser={currentWallet} />}
-                />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </div>
-      </MetamaskProvider>
+              <Route path='/search' element={<ProfileSearchResults />} />
+              <Route path='profiles' element={<Profiles />} />
+              <Route
+                path='/profiles/:walletId'
+                element={<Profile currentWallet={currentWallet} />}
+              />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
   );
 }

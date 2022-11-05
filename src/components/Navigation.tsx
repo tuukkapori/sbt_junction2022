@@ -15,6 +15,7 @@ import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { getUserByWalletId } from '../firebase';
 import { SettingsEthernet } from '@mui/icons-material';
+import { deleteCurrentWalletLocalStorage } from '../services/localStorage';
 
 const Navigation = ({ children }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,6 +34,11 @@ const Navigation = ({ children }: any) => {
   const handleOpenProfileMenu = (e: any) => {
     setProfileMenuAnchor(e.currentTarget);
     setProfileMenuOpen(true);
+  };
+
+  const handleLogOut = () => {
+    deleteCurrentWalletLocalStorage();
+    navigate('/welcome');
   };
 
   return (
@@ -84,7 +90,7 @@ const Navigation = ({ children }: any) => {
             <MenuItem onClick={() => navigate('profiles/me')}>
               My profile
             </MenuItem>
-            <MenuItem>Disconnect wallet</MenuItem>
+            <MenuItem onClick={handleLogOut}>Log out</MenuItem>
           </Menu>
         </Box>
       </AppBar>

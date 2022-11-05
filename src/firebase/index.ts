@@ -9,6 +9,7 @@ import {
   where,
   getDoc,
   doc,
+  setDoc,
 } from 'firebase/firestore/lite';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -79,10 +80,25 @@ const getProfilePicUrl = async (walletId: string) => {
   return url;
 };
 
+const createUser = async (
+  walletId: string,
+  name: string,
+  bio: string,
+  profilePicture: string
+) => {
+  console.log('creatUser ', walletId, name, bio, profilePicture);
+  await setDoc(doc(db, 'users', walletId), {
+    name,
+    bio,
+    profilePicture,
+  });
+};
+
 export {
   app,
   getUserByWalletId,
   getUsersBySearhTerm,
   uploadProfilePic,
   getProfilePicUrl,
+  createUser,
 };
