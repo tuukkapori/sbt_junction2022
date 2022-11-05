@@ -1,10 +1,6 @@
 import { Box, Typography, Avatar, Card } from '@mui/material';
 import { useEffect, useState } from 'react';
-import EducationList from './EducationList';
-import WorkHistoryList from './WorkHistoryList';
-import ProfileInfo from './ProfileInfo';
 import {
-  getProfileFromBlockchain,
   Certificate,
   getCertificateURIs,
   getIssuedCertificateURIs,
@@ -12,54 +8,15 @@ import {
 import { getUserByWalletId, getCerticatesByIds } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-
-const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
-  const { title, issuerName, description, startDate, endDate } = certificate;
-  return (
-    <Card
-      sx={{
-        borderRadius: '20px',
-        padding: '18px',
-        paddingLeft: '30px',
-        marginBottom: 2,
-        boxShadow: '2px 2px 5px 5px rbga(255, 255, 255, 1)',
-        background: 'rgba(255, 255, 255, 0.1)',
-        maxWidth: '400px',
-      }}>
-      <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
-        {/*  <LightbulbIcon /> */}
-        <h3 style={{ margin: 1, paddingLeft: 2, textDecoration: 'underline' }}>
-          {title}
-        </h3>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
-        <AccountBalanceIcon sx={{ marginTop: 0.8 }} />
-        <h4 style={{ margin: '5px 0px' }}>{issuerName}</h4>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
-        <AssignmentIcon sx={{ marginTop: 0.8 }} />
-        <p style={{ margin: '5px 0px' }}>{description}</p>
-      </Box>
-
-      <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
-        <DateRangeIcon sx={{ marginTop: 0.8 }} />
-        <p style={{ margin: '5px 0px' }}>{`${startDate} - ${endDate}`}</p>
-      </Box>
-    </Card>
-  );
-};
+import CertificateList from './CertificateList';
 
 const Profile = ({ currentWallet }: { currentWallet: string }) => {
-  const { walletId } = useParams();
+  const { walletId: walletParam } = useParams();
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
   const [uris, setUris] = useState<string[]>([]);
-  const [issuedCertificates, setIssuedCertificates] = useState(null);
+  const [issuedCertificates, setIssuedCertificates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [certificates, setCertificates] = useState<any[]>([]);
 
@@ -76,17 +33,20 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         const prof = await getUserByWalletId(walletId);
         setProfileInfo(prof);
         console.log('set profile info');
-        const certs = await getProfileFromBlockchain(walletId);
-        setCertificates(certs);
+        // const certs = await getProfileFromBlockchain(walletId);
+        // setCertificates(certs);
 
         const uris = await getCertificateURIs(walletId);
+        console.log({ uris });
         // const data = await getCerticatesByIds(uris);
-        const data = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
-        setEducation(data.filter(c => c.type === 'education'));
-        setWorkHistory(data.filter(c => c.type === 'work'));
+        const data = await getCerticatesByIds(uris);
+        console.log({ data });
+        setCertificates(data);
+        // setEducation(data.filter(c => c.type === 'education'));
+        // setWorkHistory(data.filter(c => c.type === 'work'));
 
         const issuedUris: any = await getIssuedCertificateURIs(walletId);
-        const issuedData = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
+        const issuedData = await getCerticatesByIds(issuedUris);
         setIssuedCertificates(issuedData);
 
         // setIssuedCertificates(data.filter(c => c.type === 'education'))
@@ -98,12 +58,12 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         console.log('error in fetchdata function ', error);
       }
     };
-    fetchData(walletId);
-  }, []);
+    fetchData(walletParam);
+  }, [walletParam]);
 
-  console.log('work ', workHistory);
+  console.log({ issuedCertificates });
 
-  const groupededCertificates: { [key: string]: Certificate[] } =
+  const groupedCertificates: { [key: string]: Certificate[] } =
     certificates.length
       ? certificates.reduce((obj, cert: Certificate) => {
           const { type } = cert;
@@ -112,14 +72,9 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
           } else {
             obj[type] = [cert];
           }
-
           return obj;
         }, {})
       : {};
-
-  console.log('grouped ', groupededCertificates);
-
-  console.log('work ', workHistory);
 
   return (
     <Box
@@ -128,77 +83,9 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-      {/* {profileInfo ? (
-        <Box>
-          <ProfileInfo data={profileInfo} isMe={walletParam === 'me'} />
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <Typography>Loading...</Typography>
-        </Box>
-      )}
-      {workHistory && workHistory.length ? (
-        <Box>
-          <WorkHistoryList items={workHistory} />
-        </Box>
-      ) : (
-        <>
-          {loading && (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}>
-              <Typography>Loading...</Typography>
-            </Box>
-          )}
-        </>
-      )}
-      {education && education.length ? (
-        <Box>
-          <EducationList items={education} />
-        </Box>
-      ) : (
-        <>
-          {loading && (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}>
-              <Typography>Loading...</Typography>
-            </Box>
-          )}
-        </>
-      )}
-      {issuedCertificates && issuedCertificates.length ? (
-        <Box>
-          <EducationList items={education} />
-        </Box>
-      ) : (
-        <>
-          {loading && (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}>
-              <Typography>Loading...</Typography>
-            </Box>
-          )}
-        </>
-      )} */}
-      {profileInfo && (
-        <Box sx={{ p: 3 }}>
-          {walletId === 'me' && <h4>My profile</h4>}
+      <Box sx={{ p: 3 }}>
+        {walletParam === 'me' && <h4>My profile</h4>}
+        {profileInfo && (
           <Box
             sx={{
               display: 'flex',
@@ -212,25 +99,45 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
             <h1 style={{ marginBottom: 3 }}>{profileInfo.name}</h1>
             <Typography>{profileInfo.bio}</Typography>
           </Box>
+        )}
 
-          <Box sx={{ mt: 5 }}>
-            <h3>Certificates</h3>
-            <hr />
-            {certificates.length &&
-              Object.keys(groupededCertificates).map((key: string) => {
-                const certsOnCategory = groupededCertificates[key];
+        <Box sx={{ mt: 5 }}>
+          <h3>Certificates</h3>
+          <hr />
+          {certificates.length > 0 &&
+            Object.keys(groupedCertificates).map(
+              (key: string, index: number) => {
+                const certsOnCategory = groupedCertificates[key];
+                let title = key;
+
+                switch (key) {
+                  case 'work':
+                    title = 'Experience';
+                    break;
+                  case 'education':
+                    title = 'Education';
+                    break;
+                  default:
+                    title = 'Miscellaneous';
+                }
+
                 return (
-                  <Box>
-                    <h3>{key}</h3>
-                    {certsOnCategory.map(cert => {
-                      return <RenderCertificate certificate={cert} />;
-                    })}
+                  <Box key={index}>
+                    {certsOnCategory.length > 0 && (
+                      <CertificateList title={title} items={certsOnCategory} />
+                    )}
                   </Box>
                 );
-              })}
-          </Box>
+              }
+            )}
+          {issuedCertificates.length > 0 && (
+            <CertificateList
+              title={'Issued Certificates'}
+              items={issuedCertificates}
+            />
+          )}
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };
