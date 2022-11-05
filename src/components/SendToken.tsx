@@ -78,7 +78,10 @@ const SendToken = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              '& .MuiFormControl-root': { m: 1, width: '100%' },
+              '& .MuiFormControl-root': {
+                m: 1,
+                width: '100%',
+              },
             }}
             mx={2}>
             <Typography variant='h4' sx={{ textAlign: 'center' }}>

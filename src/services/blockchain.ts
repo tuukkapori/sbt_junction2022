@@ -1,4 +1,3 @@
-import { getUserByWalletId } from './firebase';
 import soulBoundTokenContract from '../contracts/SoulBoundToken.json';
 import loadSmartContract from '../metamask/helpers/loadSmartContract';
 export interface ProfileInfo {
@@ -93,7 +92,10 @@ const createCertificate = async (walletId: string, uri: string) => {
 
 const getIssuedCertificateURIs = async (walletId: string) => {
   console.log('getting issued certificates');
-  return await contract.getTokensIssuedByAddress(walletId);
+  const IDs = await contract.getTokensIssuedByAddress(walletId);
+  return Promise.all(
+    IDs.map(async id => ({ uri: await contract.tokenURI(id), id }))
+  );
 };
 
 export {

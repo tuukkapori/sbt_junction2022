@@ -15,8 +15,6 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const walletId =
     walletParam === 'me' ? window.ethereum.selectedAddress : walletParam;
   const [profileInfo, setProfileInfo] = useState(null);
-  const [education, setEducation] = useState(null);
-  const [workHistory, setWorkHistory] = useState(null);
   const [uris, setUris] = useState<string[]>([]);
   const [issuedCertificates, setIssuedCertificates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -45,8 +43,12 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         // setWorkHistory(data.filter(c => c.type === 'work'));
 
         const issuedUris: any = await getIssuedCertificateURIs(walletId);
-        const issuedData = await getCerticatesByIds(issuedUris);
+        console.log({ issuedUris });
+        const issuedData = await getCerticatesByIds(
+          issuedUris.map((x: any) => x.uri)
+        );
         setIssuedCertificates(issuedData);
+        console.log({ issuedData });
 
         // setIssuedCertificates(data.filter(c => c.type === 'education'))
 
