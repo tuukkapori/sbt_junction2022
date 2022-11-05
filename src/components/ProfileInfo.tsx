@@ -1,4 +1,4 @@
-import { Paper, Typography, Grid } from '@mui/material';
+import { Paper, Typography, Grid, Box } from '@mui/material';
 import ConnectButton from './ConnectButton';
 
 export interface ProfileInfoType {
@@ -9,8 +9,8 @@ export interface ProfileInfoType {
 const ProfileInfo = ({ data }: { data: ProfileInfoType }) => {
   const { name, bio } = data;
   return (
-    <Paper elevation={3} sx={{ padding: 5 }}>
-      <Grid container spacing={2}>
+    <Paper sx={{ padding: 5 }}>
+      <Grid container>
         <Grid item xs={12}>
           {name ? (
             <Typography variant='h4'>{name}</Typography>
@@ -18,10 +18,10 @@ const ProfileInfo = ({ data }: { data: ProfileInfoType }) => {
             <Typography variant='h4'>Name missing</Typography>
           )}
         </Grid>
-        <Grid item xs={6}>
-          {bio ? <div>{bio}</div> : <div>Bio missing</div>}
+        <Grid item xs={8}>
+          {bio ? <Box>{bio}</Box> : <Box>Bio missing</Box>}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <ConnectButton />
         </Grid>
       </Grid>

@@ -11,21 +11,35 @@ const getProfileFromBlockchain = async (walletId: string) => {
   return {
     education: [
       {
+        type: 'education',
         school: 'Aalto University',
         degree: 'Bachelor of Computer Science',
-        startDate: '2022-09-01',
-        endDate: '2025-06-01',
+        startDate: '2017-09-01',
+        endDate: '2022-06-01',
       },
       {
+        type: 'education',
         school: 'LUT University',
         degree: 'Bachelor of Mathematics',
-        startDate: '2018-09-01',
-        endDate: '2021-06-01',
+        startDate: '2013-09-01',
+        endDate: '2018-06-01',
       },
     ],
     workHistory: [
-      { companyName: 'Binance', startDate: '2016-06-01' },
-      { companyName: 'Junction', startDate: '2016-06-01' },
+      {
+        type: 'work',
+        companyName: 'Binance',
+        position: 'Software Engineer',
+        startDate: '2020-01-01',
+        endDate: '2022-03-15',
+      },
+      {
+        type: 'work',
+        companyName: 'Junction',
+        position: 'Junior Software Developer',
+        startDate: '2016-06-01',
+        endDate: '2019-12-31',
+      },
     ],
   };
 };

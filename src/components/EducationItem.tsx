@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography,Box } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 
 export interface EducationItemType {
@@ -14,7 +14,9 @@ const EducationItem = ({ item }: { item: EducationItemType }) => {
   return (
     <Grid container sx={{ margin: 1, padding: 1 }} spacing={2}>
       <Grid item xs={2}>
-        <SchoolIcon fontSize='large'></SchoolIcon>
+        <Box m={'auto'}>
+          <SchoolIcon fontSize='large'></SchoolIcon>
+        </Box>
       </Grid>
       <Grid item xs={8}>
         <Typography variant='h5'>{school}</Typography>

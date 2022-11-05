@@ -10,6 +10,7 @@ import {
   Autocomplete,
   Menu,
   MenuItem,
+  Typography,
 } from '@mui/material';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
@@ -26,7 +27,8 @@ const Navigation = ({ children }: any) => {
 
   useEffect(() => {}, [searchParams]);
 
-  const handleSearch = async () => {
+  const handleSearch = async (e: any) => {
+    e.preventDefault();
     console.log('search term ', searchTerm);
     navigate(`search?q=${searchTerm}`);
   };
@@ -51,31 +53,39 @@ const Navigation = ({ children }: any) => {
             padding: '0px 5vw',
             alignItems: 'center',
           }}>
+          <MenuItem onClick={() => navigate('/')}>
+            <Typography textAlign='center'>Home</Typography>
+          </MenuItem>
           <Box sx={{ display: 'flex' }}>
-            <TextField
-              size='small'
-              variant='outlined'
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              placeholder='Enter wallet address'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <Button onClick={handleSearch} disabled={!searchTerm}>
-                      Search
-                    </Button>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Box component='form' onSubmit={(e: any) => handleSearch(e)}>
+              <TextField
+                size='small'
+                variant='outlined'
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                placeholder='Enter wallet address'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <IconButton>
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <Button disabled={!searchTerm} type='submit'>
+                        Search
+                      </Button>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
           </Box>
+          <MenuItem onClick={() => navigate('/send')}>
+            <Typography textAlign='center'>Mint</Typography>
+          </MenuItem>
           <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
             <Avatar />
           </IconButton>
