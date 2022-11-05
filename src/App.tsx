@@ -49,21 +49,6 @@ console.log(app);
 
 export default function App() {
   const [currentWallet, setCurrentWallet] = useState<any>(null);
-
-  console.log({ currentWallet });
-  // console.log('setCurrentWallet from app', setCurrentWallet);
-
-  // useEffect(() => {
-  //   const func = async () => {
-  //     console.log('calling');
-  //     const symbol = await getSymbol();
-  //     console.log({ symbol });
-  //   };
-  //   func();
-  // }, []);
-
-  console.log('rendering....');
-
   return (
     <MetamaskProvider>
       <ThemeProvider theme={darkTheme}>
@@ -98,7 +83,7 @@ export default function App() {
                 <Route path='profiles' element={<Profiles />} />
                 <Route
                   path='/profiles/:walletId'
-                  element={<Profile currentWallet={currentWallet} />}
+                  element={<Profile/>}
                 />
                 <Route path='/send' element={<SendToken />} />
               </Routes>
