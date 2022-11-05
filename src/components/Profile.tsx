@@ -54,7 +54,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         const issuedData = await Promise.all(
           issuedUrisAndIds.map(async n => ({
             ...(await getCertificateById(n.uri)),
-            id: n.id.toString(),
+            tokenId: n.id.toString(),
           }))
         );
         console.log({ issuedData });

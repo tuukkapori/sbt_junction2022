@@ -1,5 +1,5 @@
 import { Box, Card, Tooltip, Button } from '@mui/material';
-import { Certificate } from '../services/blockchain';
+import { Certificate, revokeCertificate } from '../services/blockchain';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -16,10 +16,11 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
     endDate,
     transactionHash,
     issuerAddress,
+    tokenId,
   } = certificate;
   const navigate = useNavigate();
   const deleteCertificate = async () => {
-    console.log('deleting');
+    await revokeCertificate(tokenId);
   };
 
   return (
