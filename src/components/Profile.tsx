@@ -4,7 +4,10 @@ import EducationList from './EducationList';
 import WorkHistoryList from './WorkHistoryList';
 import ProfileInfo from './ProfileInfo';
 
-import { getProfileFromBlockchain } from '../services/blockchain';
+import {
+  getProfileFromBlockchain,
+  getCertificates,
+} from '../services/blockchain';
 import { getUserByWalletId } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
@@ -26,6 +29,10 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         await getProfileFromBlockchain(walletId);
       setEducation(educationData);
       setWorkHistory(workHistoryData);
+
+      const uris = await getCertificates(walletId);
+
+      console.log({ uris });
     };
     fetchData(walletId);
   }, [walletId]);
