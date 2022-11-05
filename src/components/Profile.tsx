@@ -53,7 +53,9 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
           lowerWalletId
         );
         console.log({ issuedUrisAndIds });
-        const issuedData = await getCerticatesByIds(issuedUrisAndIds);
+        const issuedData = await getCerticatesByIds(
+          issuedUrisAndIds.map((x: any) => x.uri)
+        );
         setIssuedCertificates(issuedData);
         console.log({ issuedData });
 
