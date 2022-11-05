@@ -131,6 +131,10 @@ export type SoulBoundTokenMethodNames =
   | 'transferFrom'
   | 'transferOwnership'
   | 'safeMint'
+  | 'revokeCertificate'
+  | 'getTokenIssuer'
+  | 'getTokensIssuedByAddress'
+  | 'getURIsFromAddress'
   | 'tokenURI';
 export interface ApprovalEventEmittedResponse {
   owner: string;
@@ -310,6 +314,40 @@ export interface SoulBoundToken {
    * @param uri Type: string, Indexed: false
    */
   safeMint(to: string, uri: string): MethodReturnContext;
+  /**
+   * Payable: false
+   * Constant: false
+   * StateMutability: nonpayable
+   * Type: function
+   * @param tokenId Type: uint256, Indexed: false
+   */
+  revokeCertificate(tokenId: string): MethodReturnContext;
+  /**
+   * Payable: false
+   * Constant: true
+   * StateMutability: view
+   * Type: function
+   * @param tokenId Type: uint256, Indexed: false
+   */
+  getTokenIssuer(tokenId: string): MethodConstantReturnContext<string>;
+  /**
+   * Payable: false
+   * Constant: true
+   * StateMutability: view
+   * Type: function
+   * @param Issuer Type: address, Indexed: false
+   */
+  getTokensIssuedByAddress(
+    Issuer: string
+  ): MethodConstantReturnContext<string[]>;
+  /**
+   * Payable: false
+   * Constant: true
+   * StateMutability: view
+   * Type: function
+   * @param tokenOwner Type: address, Indexed: false
+   */
+  getURIsFromAddress(tokenOwner: string): MethodConstantReturnContext<string[]>;
   /**
    * Payable: false
    * Constant: true
