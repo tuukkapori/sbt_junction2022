@@ -27,13 +27,16 @@ const SendToken = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const user = await getUserByWalletId(window.ethereum.selectedAddress);
+      const issuerAddress = window.ethereum.selectedAddress;
+      const user = await getUserByWalletId(issuerAddress);
 
       if (receiver) {
         const uri = nanoid();
-        const transactionHash = await createCertificate(receiver, uri);
+        const lowerCaseReceiver = receiver.toLowerCase();
+        const transactionHash = await createCertificate(lowerCaseReceiver, uri);
         const data = {
-          receiver,
+          receiver: lowerCaseReceiver,
+          issuerAddress,
           issuerName: user.name,
           type: tokenType,
           title,

@@ -30,13 +30,15 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         setLoading(true);
 
         console.log('getting user by wallet id', walletId);
-        const prof = await getUserByWalletId(walletId);
+        const lowerWalletId = walletId.toLowerCase();
+        console.log('lower wallet ', lowerWalletId);
+        const prof = await getUserByWalletId(lowerWalletId);
         setProfileInfo(prof);
         console.log('set profile info');
         // const certs = await getProfileFromBlockchain(walletId);
         // setCertificates(certs);
 
-        const uris = await getCertificateURIs(walletId);
+        const uris = await getCertificateURIs(lowerWalletId);
         console.log({ uris });
         // const data = await getCerticatesByIds(uris);
         const data = await getCerticatesByIds(uris);
@@ -45,7 +47,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         // setEducation(data.filter(c => c.type === 'education'));
         // setWorkHistory(data.filter(c => c.type === 'work'));
 
-        const issuedUris: any = await getIssuedCertificateURIs(walletId);
+        const issuedUris: any = await getIssuedCertificateURIs(lowerWalletId);
         const issuedData = await getCerticatesByIds(issuedUris);
         setIssuedCertificates(issuedData);
 
@@ -106,7 +108,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         )}
 
         <Box sx={{ mt: 5 }}>
-          <h3>Certificates</h3>
+          <h2 style={{ textAlign: 'center' }}>Certificates</h2>
           <hr />
           {certificates.length > 0 &&
             Object.keys(groupedCertificates).map(
