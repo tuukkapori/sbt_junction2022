@@ -35,12 +35,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const getUserByWalletId = async (walletId: string) => {
+  console.log('firebase function getting user');
   const docRef = doc(db, 'users', walletId);
   const snap = await getDoc(docRef);
+  console.log('snap found');
 
   if (snap.exists()) {
     console.log('snap exists ', snap.data());
-    return snap.data();
+    console.log('returning snap data');
+    const snapData = snap.data();
+    console.log('snapdata ', snapData);
+    return snapData;
   } else {
     console.log('not founbd');
     return undefined;
