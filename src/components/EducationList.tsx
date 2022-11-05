@@ -1,6 +1,8 @@
 import { Paper, Typography } from '@mui/material';
 import EducationItem, { EducationItemType } from './EducationItem';
 
+
+
 const Education = ({ items }: { items: any }) => {
   return (
     <Paper sx={{ padding: 5 }}>
