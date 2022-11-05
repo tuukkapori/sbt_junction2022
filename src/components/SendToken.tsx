@@ -7,6 +7,7 @@ import {
   FormControl,
   InputLabel,
   Box,
+  Paper,
 } from '@mui/material';
 
 const SendToken = () => {
@@ -18,6 +19,7 @@ const SendToken = () => {
   const [schoolName, setSchoolName] = useState('');
   const [degree, setDegree] = useState('');
   const [position, setPosition] = useState('');
+  const [description, setDescription] = useState('');
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -31,6 +33,7 @@ const SendToken = () => {
       schoolName,
       degree,
       position,
+      description,
     });
     setReceiver('');
     setTokenType('');
@@ -40,94 +43,107 @@ const SendToken = () => {
     setSchoolName('');
     setDegree('');
     setPosition('');
+    setDescription('');
   };
 
   return (
-    <Box
-      component='form'
-      onSubmit={onSubmit}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        '& .MuiFormControl-root': { m: 1, width: '50ch' },
-      }}
-      mx={2}>
-      <h2>Mint a new certificate</h2>
-      <FormControl>
-        <TextField
-          name='receiver'
-          label='Receiver'
-          // placeholder='Wallet ID'
-          id='receiver'
-          onChange={(e: any) => setReceiver(e.target.value)}
-          value={receiver}
-        />
-      </FormControl>
-
-      <FormControl>
-        <InputLabel>Token Type</InputLabel>
-        <Select
-          name='tokenType'
-          // label='Token Type'
-          // placeholder='YYYY-MM-DD'
-          id='tokenType'
-          onChange={(e: any) => setTokenType(e.target.value)}
-          value={tokenType}>
-          <MenuItem value=''></MenuItem>
-          <MenuItem value='education'>Education</MenuItem>
-          <MenuItem value='work'>Work</MenuItem>
-        </Select>
-      </FormControl>
-
-      <FormControl>
-        <TextField
-          name='startDate'
-          label='Start Date'
-          // placeholder='YYYY-MM-DD'
-          id='startDate'
-          onChange={(e: any) => setStartDate(e.target.value)}
-          value={startDate}
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          name='endDate'
-          label='End Date'
-          // placeholder='YYYY-MM-DD'
-          id='endDate'
-          onChange={(e: any) => setEndDate(e.target.value)}
-          value={endDate}
-        />
-      </FormControl>
-      {tokenType === 'work' && (
+    <Paper sx={{ padding: 5 }}>
+      <Box
+        component='form'
+        onSubmit={onSubmit}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          '& .MuiFormControl-root': { m: 1, width: '50ch' },
+        }}
+        mx={2}>
+        <h2>Mint a new certificate</h2>
         <FormControl>
           <TextField
-            name='position'
-            label='Position'
-            // placeholder='"Software Engineer"'
-            id='position'
-            onChange={(e: any) => setPosition(e.target.value)}
-            value={position}
+            name='receiver'
+            label='Receiver'
+            // placeholder='Wallet ID'
+            id='receiver'
+            onChange={(e: any) => setReceiver(e.target.value)}
+            value={receiver}
           />
         </FormControl>
-      )}
-      {tokenType === 'education' && (
+
+        <FormControl>
+          <InputLabel>Token Type</InputLabel>
+          <Select
+            name='tokenType'
+            // label='Token Type'
+            // placeholder='YYYY-MM-DD'
+            id='tokenType'
+            onChange={(e: any) => setTokenType(e.target.value)}
+            value={tokenType}>
+            <MenuItem value=''></MenuItem>
+            <MenuItem value='education'>Education</MenuItem>
+            <MenuItem value='work'>Work</MenuItem>
+          </Select>
+        </FormControl>
         <FormControl>
           <TextField
-            name='degree'
-            label='Degree'
-            // placeholder='"Bachelor of Science"'
-            id='degree'
-            onChange={(e: any) => setDegree(e.target.value)}
-            value={degree}
+            name='description'
+            label='Description'
+            // placeholder='YYYY-MM-DD'
+            id='description'
+            onChange={(e: any) => setDescription(e.target.value)}
+            value={description}
           />
         </FormControl>
-      )}
-      <Button type='submit' variant='outlined'>
-        Submit
-      </Button>
-    </Box>
+        <FormControl>
+          <TextField
+            name='startDate'
+            label='Start Date'
+            // placeholder='YYYY-MM-DD'
+            id='startDate'
+            onChange={(e: any) => setStartDate(e.target.value)}
+            value={startDate}
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
+            name='endDate'
+            label='End Date'
+            // placeholder='YYYY-MM-DD'
+            id='endDate'
+            onChange={(e: any) => setEndDate(e.target.value)}
+            value={endDate}
+          />
+        </FormControl>
+
+        {tokenType === 'work' && (
+          <FormControl>
+            <TextField
+              name='position'
+              label='Position'
+              // placeholder='"Software Engineer"'
+              id='position'
+              onChange={(e: any) => setPosition(e.target.value)}
+              value={position}
+            />
+          </FormControl>
+        )}
+        {tokenType === 'education' && (
+          <FormControl>
+            <TextField
+              name='degree'
+              label='Degree'
+              // placeholder='"Bachelor of Science"'
+              id='degree'
+              onChange={(e: any) => setDegree(e.target.value)}
+              value={degree}
+            />
+          </FormControl>
+        )}
+        <Button type='submit' variant='outlined'>
+          Submit
+        </Button>
+      </Box>
+    </Paper>
   );
 };
 
