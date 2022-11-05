@@ -158,7 +158,9 @@ const SendToken = () => {
             flexDirection: 'column',
             alignItems: 'center',
           }}>
-          <h1>Certificate create successfully!</h1>
+          <Typography variant='h4'>
+            Certificate created successfully!
+          </Typography>
           <Button onClick={() => setScreen('create')}>
             Create a new certificate
           </Button>
