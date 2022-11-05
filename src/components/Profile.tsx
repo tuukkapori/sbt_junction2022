@@ -7,19 +7,23 @@ import ProfileInfo from './ProfileInfo';
 import {
   getProfileFromBlockchain,
   getCertificateURIs,
+  getIssuedCertificateURIs,
 } from '../services/blockchain';
-import { getUserByWalletId } from '../services/firebase';
+import { getUserByWalletId, getCerticatesByIds } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
 const Profile = ({ currentWallet }: { currentWallet: string }) => {
-  const { walletId } = useParams();
+  const { walletParam } = useParams();
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
+  const [issuedCertificates, setIssuedCertificates] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async (wallet: string) => {
+      setLoading(true);
       const walletId =
         wallet === 'me' ? getCurrentWalletFromLocalStorage() || wallet : wallet;
       const profileInfo = await getUserByWalletId(walletId);
@@ -31,11 +35,22 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
       setWorkHistory(workHistoryData);
 
       const uris = await getCertificateURIs(walletId);
+      // const data = await getCerticatesByIds(uris);
+      const data = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
+      setEducation(data.filter(c => c.type === 'education'));
+      setWorkHistory(data.filter(c => c.type === 'work'));
+
+      const issuedUris = await getIssuedCertificateURIs(walletId);
+      const issuedData = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
+      setIssuedCertificates(issuedData);
+
+      // setIssuedCertificates(data.filter(c => c.type === 'education'))
 
       console.log({ uris });
+      setLoading(false);
     };
-    fetchData(walletId);
-  }, [walletId]);
+    fetchData(walletParam);
+  }, [walletParam]);
 
   return (
     <Box
@@ -46,7 +61,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
       }}>
       {profileInfo ? (
         <Box>
-          <ProfileInfo data={profileInfo} isMe={walletId === 'me'} />
+          <ProfileInfo data={profileInfo} isMe={walletParam === 'me'} />
         </Box>
       ) : (
         <Box
@@ -58,33 +73,59 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
           <Typography>Loading...</Typography>
         </Box>
       )}
-      {workHistory ? (
+      {workHistory && workHistory.length ? (
         <Box>
           <WorkHistoryList items={workHistory} />
         </Box>
       ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <Typography>Loading...</Typography>
-        </Box>
+        <>
+          {loading && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}>
+              <Typography>Loading...</Typography>
+            </Box>
+          )}
+        </>
       )}
-      {education ? (
+      {education && education.length ? (
         <Box>
           <EducationList items={education} />
         </Box>
       ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <Typography>Loading...</Typography>
+        <>
+          {loading && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}>
+              <Typography>Loading...</Typography>
+            </Box>
+          )}
+        </>
+      )}
+      {issuedCertificates && issuedCertificates.length ? (
+        <Box>
+          <EducationList items={education} />
         </Box>
+      ) : (
+        <>
+          {loading && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}>
+              <Typography>Loading...</Typography>
+            </Box>
+          )}
+        </>
       )}
     </Box>
   );
