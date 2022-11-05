@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { createCert } from '../services/firebase';
+import { createCertificate } from '../services/blockchain';
 
 const SendToken = () => {
   const [receiver, setReceiver] = useState('');
@@ -38,16 +39,20 @@ const SendToken = () => {
       description,
     };
     console.log(data);
-    await createCert(data);
-    setReceiver('');
-    setTokenType('');
-    setStartDate('');
-    setEndDate('');
-    setCompanyName('');
-    setSchoolName('');
-    setDegree('');
-    setPosition('');
-    setDescription('');
+    console.log({ windowEthereum: window.ethereum });
+    if (window.ethereum.selectedAddress) {
+      const uri = await createCert(data);
+      await createCertificate(window.ethereum.selectedAddress, uri);
+      // setReceiver('');
+      // setTokenType('');
+      // setStartDate('');
+      // setEndDate('');
+      // setCompanyName('');
+      // setSchoolName('');
+      // setDegree('');
+      // setPosition('');
+      // setDescription('');
+    }
   };
 
   return (

@@ -64,4 +64,21 @@ const getProfileFromBlockchain = async (walletId: string) => {
   };
 };
 
-export { getProfileFromBlockchain, getSymbol };
+const getCertificates = async (walletId: string) => {
+  console.log('getting certificates');
+  const uris = await contract.getURIsFromAddress(walletId);
+  return uris;
+};
+
+const createCertificate = async (walletId: string, uri: string) => {
+  console.log('creating certificate');
+  console.log({ walletId, uri });
+  await contract.safeMint(walletId, uri);
+};
+
+export {
+  getProfileFromBlockchain,
+  getSymbol,
+  getCertificates,
+  createCertificate,
+};

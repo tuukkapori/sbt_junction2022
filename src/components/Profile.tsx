@@ -1,10 +1,13 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import EducationList from './EducationList';
 import WorkHistoryList from './WorkHistoryList';
 import ProfileInfo from './ProfileInfo';
 
-import { getProfileFromBlockchain } from '../services/blockchain';
+import {
+  getProfileFromBlockchain,
+  getCertificates,
+} from '../services/blockchain';
 import { getUserByWalletId } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
@@ -26,6 +29,10 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         await getProfileFromBlockchain(walletId);
       setEducation(educationData);
       setWorkHistory(workHistoryData);
+
+      const uris = await getCertificates(walletId);
+
+      console.log({ uris });
     };
     fetchData(walletId);
   }, [walletId]);
@@ -47,21 +54,42 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
           <ProfileInfo data={profileInfo} isMe={walletId === 'me'} />
         </Box>
       ) : (
-        <Box>Loading...</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Typography>Loading...</Typography>
+        </Box>
       )}
       {workHistory ? (
         <Box>
           <WorkHistoryList items={workHistory} />
         </Box>
       ) : (
-        <Box>Loading...</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Typography>Loading...</Typography>
+        </Box>
       )}
       {education ? (
         <Box>
           <EducationList items={education} />
         </Box>
       ) : (
-        <Box>Loading...</Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Typography>Loading...</Typography>
+        </Box>
       )}
     </Box>
   );
