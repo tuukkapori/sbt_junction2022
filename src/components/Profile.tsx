@@ -9,15 +9,18 @@ import {
   getProfileFromFirebase,
 } from '../services/profileInfo';
 import { useParams } from 'react-router-dom';
+import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
-const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
+const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const { walletId } = useParams();
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
 
   useEffect(() => {
-    const fetchData = async (walletId: string) => {
+    const fetchData = async (wallet: string) => {
+      const walletId =
+        wallet === 'me' ? getCurrentWalletFromLocalStorage() || wallet : wallet;
       const profileInfo = await getProfileFromFirebase(walletId);
       setProfileInfo(profileInfo);
 
@@ -27,7 +30,7 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
       setWorkHistory(workHistoryData);
     };
     fetchData(walletId);
-  }, []);
+  }, [walletId]);
 
   return (
     <Box

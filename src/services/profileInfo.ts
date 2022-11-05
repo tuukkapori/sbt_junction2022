@@ -1,7 +1,10 @@
+import { getUserByWalletId } from '../firebase';
+
 export interface ProfileInfo {
   walletId: string;
   name: string;
   bio: string;
+  profilePicture: string;
 }
 
 const getProfileFromBlockchain = async (walletId: string) => {
@@ -37,14 +40,12 @@ const getProfileFromBlockchain = async (walletId: string) => {
   };
 };
 
-const getProfileFromFirebase = async (
-  walletId: string
-): Promise<ProfileInfo> => {
-  return {
-    walletId,
-    name: 'Teemu Teekkari',
-    bio: 'senior web3 developer',
-  };
+const getProfileFromFirebase = async (walletId: string) => {
+  const user: any = await getUserByWalletId(walletId);
+
+  const profileInfo: ProfileInfo = { walletId, ...user };
+
+  return profileInfo;
 };
 
 export { getProfileFromBlockchain, getProfileFromFirebase };

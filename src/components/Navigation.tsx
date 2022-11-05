@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -10,24 +10,25 @@ import {
   Autocomplete,
   Menu,
   MenuItem,
-  Typography,
-  Grid,
 } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { getUserByWalletId } from '../firebase';
 import { SettingsEthernet } from '@mui/icons-material';
+import { deleteCurrentWalletLocalStorage } from '../services/localStorage';
 
 const Navigation = ({ children }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [profileMenuAnchor, setProfileMenuAnchor] = useState<any>(null);
   const [profileMenOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [searchParams, setSearchparams] = useSearchParams();
 
-  const handleSearch = async (e: any) => {
-    e.preventDefault();
+  useEffect(() => {}, [searchParams]);
+
+  const handleSearch = async () => {
     console.log('search term ', searchTerm);
-    navigate(`profiles/${searchTerm}`);
+    navigate(`search?q=${searchTerm}`);
   };
 
   const handleOpenProfileMenu = (e: any) => {
@@ -35,61 +36,47 @@ const Navigation = ({ children }: any) => {
     setProfileMenuOpen(true);
   };
 
+  const handleLogOut = () => {
+    deleteCurrentWalletLocalStorage();
+    navigate('/welcome');
+  };
+
   return (
     <div>
-      <AppBar position='sticky' sx={{ padding: 1, background: 'black' }}>
+      <AppBar position='sticky'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '0px 30px',
+            padding: '0px 5vw',
             alignItems: 'center',
           }}>
-          <MenuItem onClick={() => navigate('/')}>
-            <Typography textAlign='center'>Home</Typography>
-          </MenuItem>
-          <MenuItem>
-            <Box component='form' onSubmit={(e: any) => handleSearch(e)}>
-              <Grid container>
-                <Grid item xs={9}>
-                  <TextField
-                    size='small'
-                    variant='outlined'
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                    sx={{ input: { color: 'white' } }}
-                    placeholder='Wallet address'
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <IconButton sx={{ color: 'white' }}>
-                            <SearchIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Button type='submit' sx={{ color: 'white' }}>
-                    Search
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          </MenuItem>
-
-          <MenuItem onClick={() => navigate('/send')}>
-            <Typography textAlign='center'>Mint</Typography>
-          </MenuItem>
-          <IconButton onClick={handleOpenProfileMenu}>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              size='small'
+              variant='outlined'
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              placeholder='Enter wallet address'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <Button onClick={handleSearch} disabled={!searchTerm}>
+                      Search
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
             <Avatar />
           </IconButton>
           <Menu
@@ -103,7 +90,7 @@ const Navigation = ({ children }: any) => {
             <MenuItem onClick={() => navigate('profiles/me')}>
               My profile
             </MenuItem>
-            <MenuItem>Disconnect wallet</MenuItem>
+            <MenuItem onClick={handleLogOut}>Log out</MenuItem>
           </Menu>
         </Box>
       </AppBar>
