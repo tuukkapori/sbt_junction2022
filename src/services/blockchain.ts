@@ -31,6 +31,7 @@ export interface Certificate {
   startDate: string;
   endDate: string;
   transactionHash: string;
+  tokenId?:string;
 }
 
 const getProfileFromBlockchain = async (

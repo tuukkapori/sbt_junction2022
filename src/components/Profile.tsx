@@ -5,7 +5,11 @@ import {
   getCertificateURIs,
   getIssuedCertificateURIs,
 } from '../services/blockchain';
-import { getUserByWalletId, getCerticatesByIds } from '../services/firebase';
+import {
+  getUserByWalletId,
+  getCerticatesByIds,
+  getCertificateById,
+} from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 import CertificateList from './CertificateList';
@@ -20,10 +24,6 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const [issuedCertificates, setIssuedCertificates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [certificates, setCertificates] = useState<any[]>([]);
-
-  interface IssuedCertificate extends Certificate {
-    id: number;
-  }
 
   useEffect(() => {
     const fetchData = async (walletId: string) => {
@@ -49,15 +49,16 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         // setEducation(data.filter(c => c.type === 'education'));
         // setWorkHistory(data.filter(c => c.type === 'work'));
 
-        const issuedUrisAndIds: any = await getIssuedCertificateURIs(
-          lowerWalletId
+        const issuedUrisAndIds = await getIssuedCertificateURIs(lowerWalletId);
+        console.log(issuedUrisAndIds);
+        const issuedData = await Promise.all(
+          issuedUrisAndIds.map(async n => ({
+            ...(await getCertificateById(n.uri)),
+            id: n.id.toString(),
+          }))
         );
-        console.log({ issuedUrisAndIds });
-        const issuedData = await getCerticatesByIds(
-          issuedUrisAndIds.map((x: any) => x.uri)
-        );
-        setIssuedCertificates(issuedData);
         console.log({ issuedData });
+        setIssuedCertificates(issuedData);
 
         // setIssuedCertificates(data.filter(c => c.type === 'education'))
 
