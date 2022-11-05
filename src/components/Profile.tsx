@@ -12,6 +12,8 @@ import CertificateList from './CertificateList';
 
 const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const { walletId: walletParam } = useParams();
+  const walletId =
+    walletParam === 'me' ? window.ethereum.selectedAddress : walletParam;
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
@@ -21,14 +23,11 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const [certificates, setCertificates] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async (wallet: string) => {
+    const fetchData = async (walletId: string) => {
       try {
         console.log('fetching data');
         setLoading(true);
-        const walletId =
-          wallet === 'me'
-            ? getCurrentWalletFromLocalStorage() || wallet
-            : wallet;
+
         console.log('getting user by wallet id', walletId);
         const prof = await getUserByWalletId(walletId);
         setProfileInfo(prof);
@@ -58,7 +57,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         console.log('error in fetchdata function ', error);
       }
     };
-    fetchData(walletParam);
+    fetchData(walletId);
   }, [walletParam]);
 
   console.log({ issuedCertificates });
@@ -96,8 +95,9 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
               sx={{ width: 100, height: 100 }}
               src={profileInfo.profilePicture}
             />
-            <h1 style={{ marginBottom: 3 }}>{profileInfo.name}</h1>
-            <Typography>{profileInfo.bio}</Typography>
+            <Typography variant='h4'>{profileInfo.name}</Typography>
+            <Typography variant='subtitle1'>{walletId}</Typography>
+            <Typography variant='subtitle2'>{profileInfo.bio}</Typography>
           </Box>
         )}
 
