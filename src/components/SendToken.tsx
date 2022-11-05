@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
+import {
+  TextField,
+  Select,
+  Button,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Box,
+} from '@mui/material';
 
 const SendToken = () => {
   const [receiver, setReceiver] = useState('');
@@ -10,6 +17,7 @@ const SendToken = () => {
   const [companyName, setCompanyName] = useState('');
   const [schoolName, setSchoolName] = useState('');
   const [degree, setDegree] = useState('');
+  const [position, setPosition] = useState('');
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -22,6 +30,7 @@ const SendToken = () => {
       companyName,
       schoolName,
       degree,
+      position,
     });
     setReceiver('');
     setTokenType('');
@@ -30,12 +39,22 @@ const SendToken = () => {
     setCompanyName('');
     setSchoolName('');
     setDegree('');
+    setPosition('');
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2>Issue a new certificate token</h2>
-      <div>
+    <Box
+      component='form'
+      onSubmit={onSubmit}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        '& .MuiFormControl-root': { m: 1, width: '50ch' },
+      }}
+      mx={2}>
+      <h2>Mint a new certificate</h2>
+      <FormControl>
         <TextField
           name='receiver'
           label='Receiver'
@@ -44,21 +63,24 @@ const SendToken = () => {
           onChange={(e: any) => setReceiver(e.target.value)}
           value={receiver}
         />
-      </div>
-      <div>
-        <select
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>Token Type</InputLabel>
+        <Select
           name='tokenType'
           // label='Token Type'
           // placeholder='YYYY-MM-DD'
           id='tokenType'
           onChange={(e: any) => setTokenType(e.target.value)}
           value={tokenType}>
-          <option />
-          <option value='education'>Education</option>
-          <option value='job'>Job</option>
-        </select>
-      </div>
-      <div>
+          <MenuItem value=''></MenuItem>
+          <MenuItem value='education'>Education</MenuItem>
+          <MenuItem value='work'>Work</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl>
         <TextField
           name='startDate'
           label='Start Date'
@@ -67,8 +89,8 @@ const SendToken = () => {
           onChange={(e: any) => setStartDate(e.target.value)}
           value={startDate}
         />
-      </div>
-      <div>
+      </FormControl>
+      <FormControl>
         <TextField
           name='endDate'
           label='End Date'
@@ -77,40 +99,35 @@ const SendToken = () => {
           onChange={(e: any) => setEndDate(e.target.value)}
           value={endDate}
         />
-      </div>
-      <div>
-        <TextField
-          name='companyName'
-          label='Company Name'
-          // placeholder='Company'
-          id='companyName'
-          onChange={(e: any) => setCompanyName(e.target.value)}
-          value={companyName}
-        />
-      </div>
-      <div>
-        <TextField
-          name='schoolName'
-          label='School Name'
-          // placeholder='School'
-          id='schoolName'
-          onChange={(e: any) => setSchoolName(e.target.value)}
-          value={schoolName}
-        />
-      </div>
-      <div>
-        <TextField
-          name='degree'
-          label='Degree'
-          // placeholder='"Bachelor of Science"'
-          id='degree'
-          onChange={(e: any) => setDegree(e.target.value)}
-          value={degree}
-        />
-      </div>
-
-      <button type='submit'>Submit</button>
-    </form>
+      </FormControl>
+      {tokenType === 'work' && (
+        <FormControl>
+          <TextField
+            name='position'
+            label='Position'
+            // placeholder='"Software Engineer"'
+            id='position'
+            onChange={(e: any) => setPosition(e.target.value)}
+            value={position}
+          />
+        </FormControl>
+      )}
+      {tokenType === 'education' && (
+        <FormControl>
+          <TextField
+            name='degree'
+            label='Degree'
+            // placeholder='"Bachelor of Science"'
+            id='degree'
+            onChange={(e: any) => setDegree(e.target.value)}
+            value={degree}
+          />
+        </FormControl>
+      )}
+      <Button type='submit' variant='outlined'>
+        Submit
+      </Button>
+    </Box>
   );
 };
 
