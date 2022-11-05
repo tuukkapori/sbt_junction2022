@@ -45,6 +45,8 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        height: '100vh',
+        justifyContent: 'center',
       }}>
       <Typography
         variant='h1'
@@ -73,7 +75,9 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       )}
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {!(chainId == '0x61') && <Typography style={{ marginBottom: 0 }}>or</Typography>}
+        {!(chainId == '0x61') && (
+          <Typography style={{ marginBottom: 0 }}>or</Typography>
+        )}
         <Typography variant='h6'>Search by wallet address</Typography>
         <TextField
           value={searchTerm}

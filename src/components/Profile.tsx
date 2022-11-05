@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
 import EducationList from './EducationList';
 import WorkHistoryList from './WorkHistoryList';
@@ -7,6 +7,7 @@ import ProfileInfo from './ProfileInfo';
 import {
   getProfileFromBlockchain,
   getCertificates,
+  Certificate,
 } from '../services/blockchain';
 import { getUserByWalletId } from '../services/firebase';
 import { useParams } from 'react-router-dom';
@@ -17,6 +18,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
+  const [certificates, setCertificates] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async (wallet: string) => {
@@ -25,10 +27,8 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
       const profileInfo = await getUserByWalletId(walletId);
       setProfileInfo(profileInfo);
 
-      const { education: educationData, workHistory: workHistoryData } =
-        await getProfileFromBlockchain(walletId);
-      setEducation(educationData);
-      setWorkHistory(workHistoryData);
+      const certs = await getProfileFromBlockchain(walletId);
+      setCertificates(certs);
 
       const uris = await getCertificates(walletId);
 
@@ -37,6 +37,24 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
     fetchData(walletId);
   }, [walletId]);
 
+  console.log('work ', workHistory);
+
+  const groupededCertificates: { [key: string]: Certificate[] } =
+    certificates.length
+      ? certificates.reduce((obj: any, cert: any) => {
+          const { type } = cert;
+          if (obj[type]) {
+            obj[type].push(cert);
+          } else {
+            obj[type] = [cert];
+          }
+
+          return obj;
+        }, {})
+      : {};
+
+  console.log('grouped ', groupededCertificates);
+
   return (
     <Box
       sx={{
@@ -44,7 +62,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-      {profileInfo ? (
+      {/* {profileInfo ? (
         <Box>
           <ProfileInfo data={profileInfo} isMe={walletId === 'me'} />
         </Box>
@@ -84,6 +102,41 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
             alignItems: 'center',
           }}>
           <Typography>Loading...</Typography>
+        </Box>
+      )} */}
+      {profileInfo && (
+        <Box sx={{ p: 3 }}>
+          {walletId === 'me' && <h4>My profile</h4>}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+            <Avatar
+              sx={{ width: 100, height: 100 }}
+              src={profileInfo.profilePicture}
+            />
+            <h1 style={{ marginBottom: 3 }}>{profileInfo.name}</h1>
+            <Typography>{profileInfo.bio}</Typography>
+          </Box>
+
+          <Box sx={{ mt: 5 }}>
+            <h3>Certificates</h3>
+            <hr />
+            {certificates.length &&
+              Object.keys(groupededCertificates).map((key: string) => {
+                const certsOnCategory = groupededCertificates[key];
+                return (
+                  <Box>
+                    <h4>{key}</h4>
+                    {certsOnCategory.map(cert => {
+                      return <Box>{cert.title}</Box>;
+                    })}
+                  </Box>
+                );
+              })}
+          </Box>
         </Box>
       )}
     </Box>

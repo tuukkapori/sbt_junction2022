@@ -27,41 +27,52 @@ const getSymbol = async () => {
   return contract.symbol();
 };
 
-const getProfileFromBlockchain = async (walletId: string) => {
-  return {
-    education: [
-      {
-        type: 'education',
-        school: 'Aalto University',
-        degree: 'Bachelor of Computer Science',
-        startDate: '2017-09-01',
-        endDate: '2022-06-01',
-      },
-      {
-        type: 'education',
-        school: 'LUT University',
-        degree: 'Bachelor of Mathematics',
-        startDate: '2013-09-01',
-        endDate: '2018-06-01',
-      },
-    ],
-    workHistory: [
-      {
-        type: 'work',
-        companyName: 'Binance',
-        position: 'Software Engineer',
-        startDate: '2020-01-01',
-        endDate: '2022-03-15',
-      },
-      {
-        type: 'work',
-        companyName: 'Junction',
-        position: 'Junior Software Developer',
-        startDate: '2016-06-01',
-        endDate: '2019-12-31',
-      },
-    ],
-  };
+export interface Certificate {
+  type: 'education' | 'work';
+  issuerName: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+}
+
+const getProfileFromBlockchain = async (
+  walletId: string
+): Promise<Certificate[]> => {
+  return [
+    {
+      type: 'education',
+      issuerName: 'Aalto University',
+      title: 'Bachelor of Computer Science',
+      description: 'blaahblaah',
+      startDate: '2017-09-01',
+      endDate: '2022-06-01',
+    },
+    {
+      type: 'education',
+      issuerName: 'LUT University',
+      title: 'Bachelor of Mathematics',
+      description: 'blaahblaah',
+      startDate: '2013-09-01',
+      endDate: '2018-06-01',
+    },
+    {
+      type: 'work',
+      issuerName: 'Binance',
+      title: 'Software Engineer',
+      description: 'blaahblaah',
+      startDate: '2020-01-01',
+      endDate: '2022-03-15',
+    },
+    {
+      type: 'work',
+      issuerName: 'Junction',
+      title: 'Junior Software Developer',
+      description: 'blaahblaah',
+      startDate: '2016-06-01',
+      endDate: '2019-12-31',
+    },
+  ];
 };
 
 const getCertificates = async (walletId: string) => {
