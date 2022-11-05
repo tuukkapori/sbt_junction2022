@@ -21,15 +21,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
   console.log({ windowEthereum: window.ethereum });
   const { user, chainId, setChainId } = useMetamask();
   console.log({ user, connected: user.isConnected });
-  const [isBinance, setIsBinance] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (chainId === '0x61') {
-      setIsBinance(true);
-    } else {
-      setIsBinance(false);
-    }
-  }, [chainId]);
 
   const handleSearchCertificates = async () => {
     setSearching(true);
@@ -64,7 +56,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       ) : (
         <ConnectMetamaskPrompt setCurrentWallet={setCurrentWallet} />
       )}
-      {isBinance ? (
+      {chainId == '0x61' ? (
         <Typography variant='subtitle2'>BNB Testnet</Typography>
       ) : (
         <>
@@ -81,7 +73,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       )}
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {!isBinance && <Typography style={{ marginBottom: 0 }}>or</Typography>}
+        {!(chainId == '0x61') && <Typography style={{ marginBottom: 0 }}>or</Typography>}
         <Typography variant='h6'>Search by wallet address</Typography>
         <TextField
           value={searchTerm}

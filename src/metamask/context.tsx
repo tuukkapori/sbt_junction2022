@@ -47,15 +47,8 @@ const MetamaskProvider = ({ children }: any) => {
   //   });
 
   useEffect(() => {
-    getUserInfo();
-    const timer = window.setInterval(() => {
-      if (!user.isConnected) {
-        getUserInfo();
-      }
-    }, 15000);
-    return () => clearInterval(timer);
+    getUserInfo()
   }, []);
-
   return (
     <MetamaskContext.Provider value={values}>
       {children}
