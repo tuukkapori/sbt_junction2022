@@ -14,12 +14,11 @@ import { useParams } from 'react-router-dom';
 import CertificateList from './CertificateList';
 import WalletIcon from '@mui/icons-material/Wallet';
 
-const Profile = ({ currentWallet }: { currentWallet: string }) => {
+const Profile = () => {
   const { walletId: walletParam } = useParams();
   const walletId =
     walletParam === 'me' ? window.ethereum.selectedAddress : walletParam;
   const [profileInfo, setProfileInfo] = useState(null);
-  const [uris, setUris] = useState<string[]>([]);
   const [issuedCertificates, setIssuedCertificates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [certificates, setCertificates] = useState<any[]>([]);
@@ -27,47 +26,27 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   useEffect(() => {
     const fetchData = async (walletId: string) => {
       if(!walletId) return;
-      try {
-        console.log('fetching data');
         setLoading(true);
 
-        console.log('getting user by wallet id', walletId);
         const lowerWalletId = walletId.toLowerCase();
-        console.log('lower wallet ', lowerWalletId);
         const prof = await getUserByWalletId(lowerWalletId);
         setProfileInfo(prof);
-        console.log('set profile info');
-        // const certs = await getProfileFromBlockchain(walletId);
-        // setCertificates(certs);
 
         const uris = await getCertificateURIs(lowerWalletId);
-        console.log({ uris });
-        // const data = await getCerticatesByIds(uris);
         const data = await getCerticatesByIds(uris);
-        console.log({ data });
         setCertificates(data);
-        // setEducation(data.filter(c => c.type === 'education'));
-        // setWorkHistory(data.filter(c => c.type === 'work'));
 
         const issuedUrisAndIds = await getIssuedCertificateURIs(lowerWalletId);
-        console.log(issuedUrisAndIds);
         const issuedData = await Promise.all(
           issuedUrisAndIds.map(async n => ({
             ...(await getCertificateById(n.uri)),
             tokenId: n.id.toString(),
           }))
         );
-        console.log({ issuedData });
         setIssuedCertificates(issuedData);
 
-        // setIssuedCertificates(data.filter(c => c.type === 'education'))
 
-        console.log({ uris });
-        // setUris(issuedUrisAndIds);
         setLoading(false);
-      } catch (error) {
-        console.log('error in fetchdata function ', error);
-      }
     };
     fetchData(walletId);
   }, [walletParam]);

@@ -98,7 +98,7 @@ export default function App() {
                 <Route path='profiles' element={<Profiles />} />
                 <Route
                   path='/profiles/:walletId'
-                  element={<Profile currentWallet={currentWallet} />}
+                  element={<Profile />}
                 />
                 <Route path='/send' element={<SendToken />} />
               </Routes>
