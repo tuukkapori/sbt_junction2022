@@ -29,74 +29,74 @@ const Navigation = ({ children }: any) => {
   const handleSearch = async () => {
     console.log('search term ', searchTerm);
     navigate(`search?q=${searchTerm}`);
-
-    const handleOpenProfileMenu = (e: any) => {
-      setProfileMenuAnchor(e.currentTarget);
-      setProfileMenuOpen(true);
-    };
-
-    const handleLogOut = () => {
-      deleteCurrentWalletLocalStorage();
-      navigate('/welcome');
-    };
-
-    return (
-      <div>
-        <AppBar position='sticky'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              padding: '0px 5vw',
-              alignItems: 'center',
-            }}>
-            <Box sx={{ display: 'flex' }}>
-              <TextField
-                size='small'
-                variant='outlined'
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                placeholder='Enter wallet address'
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <IconButton>
-                        <SearchIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <Button onClick={handleSearch} disabled={!searchTerm}>
-                        Search
-                      </Button>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-            <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
-              <Avatar />
-            </IconButton>
-            <Menu
-              id='basic-menu'
-              anchorEl={profileMenuAnchor}
-              open={profileMenOpen}
-              onClose={() => setProfileMenuOpen(false)}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}>
-              <MenuItem onClick={() => navigate('profiles/me')}>
-                My profile
-              </MenuItem>
-              <MenuItem onClick={handleLogOut}>Log out</MenuItem>
-            </Menu>
-          </Box>
-        </AppBar>
-        <Outlet />
-      </div>
-    );
   };
+
+  const handleOpenProfileMenu = (e: any) => {
+    setProfileMenuAnchor(e.currentTarget);
+    setProfileMenuOpen(true);
+  };
+
+  const handleLogOut = () => {
+    deleteCurrentWalletLocalStorage();
+    navigate('/welcome');
+  };
+
+  return (
+    <div>
+      <AppBar position='sticky'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '0px 5vw',
+            alignItems: 'center',
+          }}>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              size='small'
+              variant='outlined'
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              placeholder='Enter wallet address'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <Button onClick={handleSearch} disabled={!searchTerm}>
+                      Search
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
+            <Avatar />
+          </IconButton>
+          <Menu
+            id='basic-menu'
+            anchorEl={profileMenuAnchor}
+            open={profileMenOpen}
+            onClose={() => setProfileMenuOpen(false)}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}>
+            <MenuItem onClick={() => navigate('profiles/me')}>
+              My profile
+            </MenuItem>
+            <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+          </Menu>
+        </Box>
+      </AppBar>
+      <Outlet />
+    </div>
+  );
 };
 
 export default Navigation;
