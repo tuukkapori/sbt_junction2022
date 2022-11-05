@@ -24,6 +24,7 @@ const getSymbol = async () => {
 
 export interface Certificate {
   type: 'education' | 'work';
+  issuerAddress: string;
   issuerName: string;
   title: string;
   description: string;
@@ -38,6 +39,7 @@ const getProfileFromBlockchain = async (
   return [
     {
       type: 'education',
+      issuerAddress: 'none',
       issuerName: 'Aalto University',
       title: 'Bachelor of Computer Science',
       description: 'blaahblaah',
@@ -47,6 +49,7 @@ const getProfileFromBlockchain = async (
     },
     {
       type: 'education',
+      issuerAddress: 'none',
       issuerName: 'LUT University',
       title: 'Bachelor of Mathematics',
       description: 'blaahblaah',
@@ -56,6 +59,7 @@ const getProfileFromBlockchain = async (
     },
     {
       type: 'work',
+      issuerAddress: 'none',
       issuerName: 'Binance',
       title: 'Software Engineer',
       description:
@@ -66,6 +70,7 @@ const getProfileFromBlockchain = async (
     },
     {
       type: 'work',
+      issuerAddress: 'none',
       issuerName: 'Junction',
       title: 'Junior Software Developer',
       description: 'blaahblaah',

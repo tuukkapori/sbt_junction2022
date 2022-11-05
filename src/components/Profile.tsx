@@ -9,6 +9,7 @@ import { getUserByWalletId, getCerticatesByIds } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 import CertificateList from './CertificateList';
+import WalletIcon from '@mui/icons-material/Wallet';
 
 const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const { walletId: walletParam } = useParams();
@@ -27,13 +28,15 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         setLoading(true);
 
         console.log('getting user by wallet id', walletId);
-        const prof = await getUserByWalletId(walletId);
+        const lowerWalletId = walletId.toLowerCase();
+        console.log('lower wallet ', lowerWalletId);
+        const prof = await getUserByWalletId(lowerWalletId);
         setProfileInfo(prof);
         console.log('set profile info');
         // const certs = await getProfileFromBlockchain(walletId);
         // setCertificates(certs);
 
-        const uris = await getCertificateURIs(walletId);
+        const uris = await getCertificateURIs(lowerWalletId);
         console.log({ uris });
         // const data = await getCerticatesByIds(uris);
         const data = await getCerticatesByIds(uris);
@@ -42,7 +45,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         // setEducation(data.filter(c => c.type === 'education'));
         // setWorkHistory(data.filter(c => c.type === 'work'));
 
-        const issuedUris: any = await getIssuedCertificateURIs(walletId);
+        const issuedUris: any = await getIssuedCertificateURIs(lowerWalletId);
         console.log({ issuedUris });
         const issuedData = await getCerticatesByIds(
           issuedUris.map((x: any) => x.uri)
@@ -98,13 +101,16 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
               src={profileInfo.profilePicture}
             />
             <Typography variant='h4'>{profileInfo.name}</Typography>
-            <Typography variant='subtitle1'>{walletId}</Typography>
+            <Box sx={{ display: 'flex' }}>
+              <WalletIcon sx={{ mr: 1 }} />
+              <Typography variant='subtitle1'>{walletId}</Typography>
+            </Box>
             <Typography variant='subtitle2'>{profileInfo.bio}</Typography>
           </Box>
         )}
 
         <Box sx={{ mt: 5 }}>
-          <h3>Certificates</h3>
+          <h2 style={{ textAlign: 'center' }}>Certificates</h2>
           <hr />
           {certificates.length > 0 &&
             Object.keys(groupedCertificates).map(

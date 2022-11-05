@@ -1,9 +1,10 @@
-import { Box, Card } from '@mui/material';
+import { Box, Card, Tooltip } from '@mui/material';
 import { Certificate } from '../services/blockchain';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import LinkIcon from '@mui/icons-material/Link';
+import { useNavigate } from 'react-router-dom';
 
 const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
   const {
@@ -13,7 +14,9 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
     startDate,
     endDate,
     transactionHash,
+    issuerAddress,
   } = certificate;
+  const navigate = useNavigate();
   return (
     <Card
       sx={{
@@ -28,13 +31,29 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
       }}>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         {/*  <LightbulbIcon /> */}
-        <h3 style={{ margin: 1, paddingLeft: 2, textDecoration: 'underline' }}>
+        <h3
+          style={{
+            margin: 1,
+            paddingLeft: 2,
+            fontSize: '23px',
+            marginBottom: '5px',
+          }}>
           {title}
         </h3>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         <AccountBalanceIcon sx={{ marginTop: 0.8 }} />
-        <h4 style={{ margin: '5px 0px' }}>{issuerName}</h4>
+        <Tooltip title='View issuer profile'>
+          <h4
+            style={{
+              margin: '5px 0px',
+              cursor: 'pointer',
+              textDecoration: 'underline',
+            }}
+            onClick={() => navigate(`/profiles/${issuerAddress}`)}>
+            {issuerName}
+          </h4>
+        </Tooltip>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         <AssignmentIcon sx={{ marginTop: 0.8 }} />
@@ -47,12 +66,14 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         <LinkIcon sx={{ marginTop: 0.8 }} />
-        <a
-          style={{ margin: '5px 0px', color: 'white' }}
-          href={`https://testnet.bscscan.com/tx/${transactionHash}`}
-          target='_blank'>
-          View transaction
-        </a>
+        <Tooltip title='Open transaction on block explorer'>
+          <a
+            style={{ margin: '5px 0px', color: 'white' }}
+            href={`https://testnet.bscscan.com/tx/${transactionHash}`}
+            target='_blank'>
+            View transaction
+          </a>
+        </Tooltip>
       </Box>
     </Card>
   );
