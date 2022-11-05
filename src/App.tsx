@@ -1,22 +1,19 @@
 import { MetamaskProvider } from './metamask/context';
-import HelloMetamask from './components/HelloMetamask';
 import { app } from './services/firebase';
-import { AppBar, Avatar, Container, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import Profile from './components/Profile';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Profiles from './components/Profiles';
 import Navigation from './components/Navigation';
 import './index.css';
 import ProfileSearchResults from './components/ProfileSearchResults';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import WelcomeScreen from './components/ConnectMetamaskPrompt';
 import CreateProfile from './components/CreateProfile';
 import SendToken from './components/SendToken';
 import { getSymbol } from './services/blockchain';
 import Home from './components/Home';
-import ViewCertificate from './components/ViewCertificate';
 
 const darkTheme = createTheme({
   palette: {
@@ -40,14 +37,14 @@ export default function App() {
   console.log({ currentWallet });
   // console.log('setCurrentWallet from app', setCurrentWallet);
 
-  useEffect(() => {
-    const func = async () => {
-      console.log('calling');
-      const symbol = await getSymbol();
-      console.log({ symbol });
-    };
-    func();
-  }, []);
+  // useEffect(() => {
+  //   const func = async () => {
+  //     console.log('calling');
+  //     const symbol = await getSymbol();
+  //     console.log({ symbol });
+  //   };
+  //   func();
+  // }, []);
 
   console.log('rendering....');
 
