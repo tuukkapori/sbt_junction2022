@@ -14,6 +14,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import WelcomeScreen from './components/WelcomeScreen';
 import CreateProfile from './components/CreateProfile';
 import SendToken from './components/SendToken';
+import ViewCertificate from './components/ViewCertificate';
 
 const darkTheme = createTheme({
   palette: {
@@ -61,6 +62,10 @@ export default function App() {
                     setCurrentWallet={setCurrentWallet}
                   />
                 }
+              />
+              <Route
+                path='/certificates/:certificateId'
+                element={<ViewCertificate />}
               />
               <Route path='/'>
                 <Route

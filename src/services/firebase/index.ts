@@ -11,6 +11,7 @@ import {
   doc,
   setDoc,
 } from 'firebase/firestore/lite';
+import { nanoid } from 'nanoid';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -94,6 +95,24 @@ const createUser = async (
   });
 };
 
+const createCert = async (data: any) => {
+  const id = nanoid();
+
+  await setDoc(doc(db, 'certificates', id), data);
+
+  return id;
+};
+
+const getCertificateById = async (id: string) => {
+  const certRef = doc(db, 'certificates', id);
+  const res = await getDoc(certRef);
+  if (res.exists()) {
+    return res.data();
+  } else {
+    undefined;
+  }
+};
+
 export {
   app,
   getUserByWalletId,
@@ -101,4 +120,6 @@ export {
   uploadProfilePic,
   getProfilePicUrl,
   createUser,
+  createCert,
+  getCertificateById,
 };
