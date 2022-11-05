@@ -9,6 +9,7 @@ import { getUserByWalletId, getCerticatesByIds } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 import CertificateList from './CertificateList';
+import WalletIcon from '@mui/icons-material/Wallet';
 
 const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const { walletId: walletParam } = useParams();
@@ -96,7 +97,10 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
               src={profileInfo.profilePicture}
             />
             <Typography variant='h4'>{profileInfo.name}</Typography>
-            <Typography variant='subtitle1'>{walletId}</Typography>
+            <Box sx={{ display: 'flex' }}>
+              <WalletIcon sx={{ mr: 1 }} />
+              <Typography variant='subtitle1'>{walletId}</Typography>
+            </Box>
             <Typography variant='subtitle2'>{profileInfo.bio}</Typography>
           </Box>
         )}
