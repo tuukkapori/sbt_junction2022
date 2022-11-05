@@ -84,6 +84,12 @@ const SendToken = () => {
               '& .MuiFormControl-root': {
                 m: 1,
                 width: '100%',
+                '& .MuiFormLabel-root': {
+                  color: 'white',
+                },
+                '& .MuiFormLabel-root.Mui-focused': {
+                  color: 'white',
+                },
               },
             }}
             mx={2}>
@@ -98,6 +104,7 @@ const SendToken = () => {
                 id='receiver'
                 onChange={(e: any) => setReceiver(e.target.value)}
                 value={receiver}
+                sx={{}}
               />
             </FormControl>
 
