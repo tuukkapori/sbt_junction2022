@@ -16,6 +16,7 @@ import CreateProfile from './components/CreateProfile';
 import SendToken from './components/SendToken';
 import { getSymbol } from './services/blockchain';
 import Home from './components/Home';
+import ViewCertificate from './components/ViewCertificate';
 
 const darkTheme = createTheme({
   palette: {

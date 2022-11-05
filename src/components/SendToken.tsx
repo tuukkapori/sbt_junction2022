@@ -10,6 +10,7 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
+import { createCert } from '../services/firebase';
 
 const SendToken = () => {
   const [receiver, setReceiver] = useState('');
@@ -25,7 +26,7 @@ const SendToken = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log('submitted');
-    console.log({
+    const data = {
       receiver,
       tokenType,
       startDate,
@@ -35,7 +36,9 @@ const SendToken = () => {
       degree,
       position,
       description,
-    });
+    };
+    console.log(data);
+    await createCert(data);
     setReceiver('');
     setTokenType('');
     setStartDate('');
