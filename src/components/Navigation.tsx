@@ -12,20 +12,31 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { getUserByWalletId } from '../services/firebase';
 import { SettingsEthernet } from '@mui/icons-material';
-import { deleteCurrentWalletLocalStorage } from '../services/localStorage';
+import {
+  deleteCurrentWalletLocalStorage,
+  getCurrentWalletFromLocalStorage,
+} from '../services/localStorage';
 
 const Navigation = ({ children }: any) => {
+  const [user, setUser] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [profileMenuAnchor, setProfileMenuAnchor] = useState<any>(null);
   const [profileMenOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
-
-  useEffect(() => {}, [searchParams]);
+  const [isInstitutionalAccount, setInstitutionalAccount] = useState(false);
+  const params = useParams();
+  const location = useLocation();
 
   const handleSearch = async (e: any) => {
     e.preventDefault();
@@ -40,8 +51,23 @@ const Navigation = ({ children }: any) => {
 
   const handleLogOut = () => {
     deleteCurrentWalletLocalStorage();
+    setProfileMenuAnchor(null);
     navigate('/welcome');
   };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      console.log('checking user ');
+      const currentWallet = getCurrentWalletFromLocalStorage();
+      if (currentWallet) {
+        const user = await getUserByWalletId(currentWallet);
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    };
+    checkUser();
+  }, [location]);
 
   return (
     <div>
@@ -83,16 +109,23 @@ const Navigation = ({ children }: any) => {
               />
             </Box>
           </Box>
-          <MenuItem onClick={() => navigate('/send')}>
-            <Typography textAlign='center'>Mint</Typography>
-          </MenuItem>
-          <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
-            <Avatar />
-          </IconButton>
+          {user && user.accountType == 'institution' && (
+            <MenuItem onClick={() => navigate('/send')}>
+              <Typography textAlign='center'>Mint</Typography>
+            </MenuItem>
+          )}
+          {user ? (
+            <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
+              <Avatar />
+            </IconButton>
+          ) : (
+            <Box sx={{ width: '20px', height: '20px', m: 2.2 }} />
+          )}
+
           <Menu
             id='basic-menu'
             anchorEl={profileMenuAnchor}
-            open={profileMenOpen}
+            open={Boolean(profileMenuAnchor) && profileMenOpen}
             onClose={() => setProfileMenuOpen(false)}
             MenuListProps={{
               'aria-labelledby': 'basic-button',

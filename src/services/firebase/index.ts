@@ -81,18 +81,8 @@ const getProfilePicUrl = async (walletId: string) => {
   return url;
 };
 
-const createUser = async (
-  walletId: string,
-  name: string,
-  bio: string,
-  profilePicture: string
-) => {
-  console.log('creatUser ', walletId, name, bio, profilePicture);
-  await setDoc(doc(db, 'users', walletId), {
-    name,
-    bio,
-    profilePicture,
-  });
+const createUser = async (walletId: string, data: any) => {
+  await setDoc(doc(db, 'users', walletId), data);
 };
 
 const createCert = async (data: any) => {
