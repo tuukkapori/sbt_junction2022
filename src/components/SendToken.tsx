@@ -9,6 +9,7 @@ import {
   Box,
   Paper,
   Typography,
+  Card,
 } from '@mui/material';
 import { createCert } from '../services/firebase';
 import { createCertificate } from '../services/blockchain';
@@ -18,10 +19,7 @@ const SendToken = () => {
   const [tokenType, setTokenType] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [schoolName, setSchoolName] = useState('');
-  const [degree, setDegree] = useState('');
-  const [position, setPosition] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const onSubmit = async (e: any) => {
@@ -29,14 +27,11 @@ const SendToken = () => {
     console.log('submitted');
     const data = {
       receiver,
-      tokenType,
+      type: tokenType,
+      title,
+      description,
       startDate,
       endDate,
-      companyName,
-      schoolName,
-      degree,
-      position,
-      description,
     };
     console.log(data);
     console.log({ receiver });
@@ -56,7 +51,14 @@ const SendToken = () => {
   };
 
   return (
-    <Paper sx={{ padding: 5 }}>
+    <Card
+      sx={{
+        background: 'rgba(255, 255, 255, 0.05)',
+        marginTop: 5,
+        p: 3,
+        maxWidth: '90vw',
+        width: '600px',
+      }}>
       <Box
         component='form'
         onSubmit={onSubmit}
@@ -64,10 +66,12 @@ const SendToken = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          '& .MuiFormControl-root': { m: 1, width: '50ch' },
+          '& .MuiFormControl-root': { m: 1, width: '100%' },
         }}
         mx={2}>
-        <Typography variant='h4'>Mint a new certificate</Typography>
+        <Typography variant='h4' sx={{ textAlign: 'center' }}>
+          Mint a new certificate
+        </Typography>
         <FormControl>
           <TextField
             name='receiver'
@@ -82,16 +86,25 @@ const SendToken = () => {
         <FormControl>
           <InputLabel>Token Type</InputLabel>
           <Select
+            sx={{ ml: 1, mr: -1 }}
             name='tokenType'
             // label='Token Type'
             // placeholder='YYYY-MM-DD'
             id='tokenType'
             onChange={(e: any) => setTokenType(e.target.value)}
             value={tokenType}>
-            <MenuItem value=''></MenuItem>
             <MenuItem value='education'>Education</MenuItem>
             <MenuItem value='work'>Work</MenuItem>
           </Select>
+        </FormControl>
+        <FormControl>
+          <TextField
+            name='title'
+            label='Title'
+            id='title'
+            onChange={(e: any) => setTitle(e.target.value)}
+            value={title}
+          />
         </FormControl>
         <FormControl>
           <TextField
@@ -124,35 +137,11 @@ const SendToken = () => {
           />
         </FormControl>
 
-        {tokenType === 'work' && (
-          <FormControl>
-            <TextField
-              name='position'
-              label='Position'
-              // placeholder='"Software Engineer"'
-              id='position'
-              onChange={(e: any) => setPosition(e.target.value)}
-              value={position}
-            />
-          </FormControl>
-        )}
-        {tokenType === 'education' && (
-          <FormControl>
-            <TextField
-              name='degree'
-              label='Degree'
-              // placeholder='"Bachelor of Science"'
-              id='degree'
-              onChange={(e: any) => setDegree(e.target.value)}
-              value={degree}
-            />
-          </FormControl>
-        )}
         <Button type='submit' variant='outlined'>
           Submit
         </Button>
       </Box>
-    </Paper>
+    </Card>
   );
 };
 
