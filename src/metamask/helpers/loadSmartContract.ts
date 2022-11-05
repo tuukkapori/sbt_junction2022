@@ -1,15 +1,13 @@
 import { ethers } from 'ethers';
-
-function loadSmartContract<T>(address: string, abi: Record<string, any>[]) {
+import {  SoulBoundCertificate } from '../../types/ethers-contracts';
+import contractInfo from '../../contracts/SoulBoundToken.json'
+function loadSmartContract(address: string) {
   if (!window.ethereum) return null;
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const contract = new ethers.Contract(address, abi, provider.getSigner());
-
-  const contractAsAny: any = contract;
-  const contractAsT: T = contractAsAny;
-
-  return contractAsT;
+  const contract: any = new ethers.Contract(address, contractInfo.abi, provider)
+  const contractAny: SoulBoundCertificate = contract
+  return contractAny;
 }
 
 export default loadSmartContract;
