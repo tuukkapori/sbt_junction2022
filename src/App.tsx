@@ -69,6 +69,10 @@ export default function App() {
               }}>
               <Routes>
                 <Route
+                  path='/'
+                  element={<Home setCurrentWallet={setCurrentWallet} />}
+                />
+                <Route
                   path='/createProfile'
                   element={
                     <CreateProfile
@@ -77,10 +81,7 @@ export default function App() {
                     />
                   }
                 />
-                <Route
-                  path='/'
-                  element={<Home setCurrentWallet={setCurrentWallet} />}
-                />
+
                 <Route path='/search' element={<ProfileSearchResults />} />
                 <Route path='profiles' element={<Profiles />} />
                 <Route

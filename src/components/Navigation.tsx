@@ -37,6 +37,7 @@ const Navigation = ({ children }: any) => {
   const [isInstitutionalAccount, setInstitutionalAccount] = useState(false);
   const params = useParams();
   const location = useLocation();
+  console.log('location ', location);
 
   const handleSearch = async (e: any) => {
     e.preventDefault();
@@ -71,72 +72,77 @@ const Navigation = ({ children }: any) => {
 
   return (
     <div>
-      <AppBar position='sticky'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '0px 5vw',
-            alignItems: 'center',
-          }}>
-          <MenuItem onClick={() => navigate('/')}>
-            <Typography textAlign='center'>Home</Typography>
-          </MenuItem>
-          <Box sx={{ display: 'flex' }}>
-            <Box component='form' onSubmit={(e: any) => handleSearch(e)}>
-              <TextField
-                size='small'
-                variant='outlined'
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                placeholder='Enter wallet address'
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <IconButton>
-                        <SearchIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <Button disabled={!searchTerm} type='submit'>
-                        Search
-                      </Button>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-          </Box>
-          {user && user.accountType == 'institution' && (
-            <MenuItem onClick={() => navigate('/send')}>
-              <Typography textAlign='center'>Mint</Typography>
-            </MenuItem>
-          )}
-          {user ? (
-            <IconButton onClick={handleOpenProfileMenu} sx={{ marginLeft: 2 }}>
-              <Avatar />
-            </IconButton>
-          ) : (
-            <Box sx={{ width: '20px', height: '20px', m: 2.2 }} />
-          )}
-
-          <Menu
-            id='basic-menu'
-            anchorEl={profileMenuAnchor}
-            open={Boolean(profileMenuAnchor) && profileMenOpen}
-            onClose={() => setProfileMenuOpen(false)}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
+      {location.pathname !== '/' && (
+        <AppBar position='sticky'>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '0px 5vw',
+              alignItems: 'center',
             }}>
-            <MenuItem onClick={() => navigate('profiles/me')}>
-              My profile
+            <MenuItem onClick={() => navigate('/')}>
+              <Typography textAlign='center'>Home</Typography>
             </MenuItem>
-            <MenuItem onClick={handleLogOut}>Log out</MenuItem>
-          </Menu>
-        </Box>
-      </AppBar>
+            <Box sx={{ display: 'flex' }}>
+              <Box component='form' onSubmit={(e: any) => handleSearch(e)}>
+                <TextField
+                  size='small'
+                  variant='outlined'
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  placeholder='Enter wallet address'
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <IconButton>
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <Button disabled={!searchTerm} type='submit'>
+                          Search
+                        </Button>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+            </Box>
+            {user && user.accountType == 'institution' && (
+              <MenuItem onClick={() => navigate('/send')}>
+                <Typography textAlign='center'>Mint</Typography>
+              </MenuItem>
+            )}
+            {user ? (
+              <IconButton
+                onClick={handleOpenProfileMenu}
+                sx={{ marginLeft: 2 }}>
+                <Avatar />
+              </IconButton>
+            ) : (
+              <Box sx={{ width: '20px', height: '20px', m: 2.2 }} />
+            )}
+
+            <Menu
+              id='basic-menu'
+              anchorEl={profileMenuAnchor}
+              open={Boolean(profileMenuAnchor) && profileMenOpen}
+              onClose={() => setProfileMenuOpen(false)}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}>
+              <MenuItem onClick={() => navigate('profiles/me')}>
+                My profile
+              </MenuItem>
+              <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+            </Menu>
+          </Box>
+        </AppBar>
+      )}
+
       <Outlet />
     </div>
   );

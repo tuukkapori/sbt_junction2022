@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Backdrop, Box, Button, CircularProgress } from '@mui/material';
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import requestAccounts from '../metamask/helpers/requestAccounts';
 import { getUserByWalletId } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +50,7 @@ const ConnectMetamaskPrompt = ({
           alignItems: 'center',
           fontFamily: 'OpenSans-Bold',
         }}>
-        <h2 style={{ marginTop: 0 }}>
+        <h2 style={{ marginTop: 0, textAlign: 'center' }}>
           Your work experience on the blockchain.
         </h2>
         <Button
