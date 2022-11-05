@@ -1,4 +1,5 @@
-import { Paper, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import SchoolIcon from '@mui/icons-material/School';
 
 export interface EducationItemType {
   school: string;
@@ -11,12 +12,18 @@ const EducationItem = ({ item }: { item: EducationItemType }) => {
   const { school, degree, startDate, endDate } = item;
 
   return (
-    <Paper sx={{ margin: 1, padding: 1 }}>
-      <Typography variant="h5">{school}</Typography>
-      <div>{degree}</div>
-      <div>{startDate}</div>
-      <div>{endDate}</div>
-    </Paper>
+    <Grid container sx={{ margin: 1, padding: 1 }} spacing={2}>
+      <Grid item xs={2}>
+        <SchoolIcon fontSize='large'></SchoolIcon>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant='h5'>{school}</Typography>
+        <div>{degree}</div>
+        <div>
+          {startDate} - {endDate}
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 
