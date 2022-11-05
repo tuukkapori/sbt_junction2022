@@ -50,9 +50,9 @@ const ConnectMetamaskPrompt = ({
           alignItems: 'center',
           fontFamily: 'OpenSans-Bold',
         }}>
-        <h2 style={{ marginTop: 0, textAlign: 'center' }}>
+        <Typography variant='h5' my={2}>
           Your work experience on the blockchain.
-        </h2>
+        </Typography>
         <Button
           variant='contained'
           size='large'

@@ -1,4 +1,4 @@
-import { Box, Typography, Avatar, Card } from '@mui/material';
+import { Box, Typography, Avatar, Divider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import {
   Certificate,
@@ -106,7 +106,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
               sx={{ width: 100, height: 100 }}
               src={profileInfo.profilePicture}
             />
-            <Typography variant='h4'>{profileInfo.name}</Typography>
+            <Typography variant='h3'>{profileInfo.name}</Typography>
             <Box sx={{ display: 'flex' }}>
               <WalletIcon sx={{ mr: 1 }} />
               <Typography variant='subtitle1'>{walletId}</Typography>
@@ -116,8 +116,10 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         )}
 
         <Box sx={{ mt: 5 }}>
-          <h2 style={{ textAlign: 'center' }}>Certificates</h2>
-          <hr />
+          <Typography variant='h6' style={{ textAlign: 'center' }}>
+            <b> Certificates</b>
+          </Typography>
+          <Divider />
           {certificates.length > 0 &&
             Object.keys(groupedCertificates).map(
               (key: string, index: number) => {
@@ -151,9 +153,17 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
             />
           )}
           {certificates.length === 0 && issuedCertificates.length === 0 && (
-            <Box>
-              <Typography>No certificates yet.</Typography>
-            </Box>
+            <>
+              {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Typography>Loading...</Typography>
+                </Box>
+              ) : (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Typography>No certificates yet.</Typography>
+                </Box>
+              )}
+            </>
           )}
         </Box>
       </Box>

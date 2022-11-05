@@ -3,8 +3,11 @@ import RenderCertificate from './RenderCertificate';
 
 const CertificateList = ({ title, items }: { title: string; items: any }) => {
   return (
-    <Box>
-      <h3>{title}</h3>
+    <Box mt={4}>
+      <Typography variant='h4' sx={{ marginBottom: 2 }}>
+        {title}
+      </Typography>
+
       {items.map((cert: any, index: number) => {
         return <RenderCertificate certificate={cert} key={index} />;
       })}

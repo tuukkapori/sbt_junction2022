@@ -80,7 +80,9 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {!(chainId == '0x61') && (
-          <Typography style={{ marginBottom: 0 }}>or</Typography>
+          <Typography variant='subtitle1' style={{ marginBottom: 0 }}>
+            or
+          </Typography>
         )}
         <Typography variant='h6'>Search by wallet address</Typography>
         <TextField
