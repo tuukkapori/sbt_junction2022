@@ -6,7 +6,6 @@ import ProfileInfo from './ProfileInfo';
 
 import {
   getProfileFromBlockchain,
-  getCertificates,
   Certificate,
   getCertificateURIs,
 } from '../services/blockchain';
