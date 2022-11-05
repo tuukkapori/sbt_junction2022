@@ -6,7 +6,7 @@ import ProfileInfo from './ProfileInfo';
 
 import {
   getProfileFromBlockchain,
-  getCertificates,
+  getCertificateURIs,
 } from '../services/blockchain';
 import { getUserByWalletId } from '../services/firebase';
 import { useParams } from 'react-router-dom';
@@ -30,7 +30,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
       setEducation(educationData);
       setWorkHistory(workHistoryData);
 
-      const uris = await getCertificates(walletId);
+      const uris = await getCertificateURIs(walletId);
 
       console.log({ uris });
     };
