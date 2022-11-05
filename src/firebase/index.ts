@@ -13,6 +13,8 @@ import {
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 console.log('initializing firebase');
 
 // Your web app's Firebase configuration
@@ -60,4 +62,27 @@ const getUsersBySearhTerm = async (search: string) => {
   }
 };
 
-export { app, getUserByWalletId, getUsersBySearhTerm };
+const storage = getStorage(app);
+
+const uploadProfilePic = async (file: any, walletId: string) => {
+  const picRef = ref(storage, `profile_pic_${walletId}`);
+  const res = await uploadBytes(picRef, file);
+  console.log('res from upload file ', res);
+  const url = await getProfilePicUrl(walletId);
+  console.log('url for ppf ', url);
+  return url;
+};
+
+const getProfilePicUrl = async (walletId: string) => {
+  const picRef = ref(storage, `profile_pic_${walletId}`);
+  const url = await getDownloadURL(picRef);
+  return url;
+};
+
+export {
+  app,
+  getUserByWalletId,
+  getUsersBySearhTerm,
+  uploadProfilePic,
+  getProfilePicUrl,
+};

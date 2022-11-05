@@ -4,13 +4,15 @@ import { app } from './firebase';
 import { AppBar, Avatar, Container } from '@mui/material';
 import Profile from './components/Profile';
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Profiles from './components/Profiles';
 import Navigation from './components/Navigation';
 import './index.css';
 import ProfileSearchResults from './components/ProfileSearchResults';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import WelcomeScreen from './components/WelcomeScreen';
+import CreateProfile from './components/CreateProfile';
 
 const darkTheme = createTheme({
   palette: {
@@ -29,30 +31,46 @@ const lightTheme = createTheme({
 console.log(app);
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState({ id: '1' });
+  const [currentWallet, setCurrentWallet] = useState<any>(null);
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <div>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<Navigation />}>
-              <Route index element={<div>hello</div>} />
-              <Route path='/search' element={<ProfileSearchResults />} />
-              <Route path='profiles' element={<Profiles />} />
+      <MetamaskProvider>
+        <CssBaseline />
+        <div>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/welcome' element={<WelcomeScreen />} />
               <Route
-                path='/profiles/:walletId'
-                element={<Profile currentUser={currentUser} />}
+                path='/createProfile'
+                element={
+                  <CreateProfile
+                    currentWallet={currentWallet}
+                    setCurrentWallet={setCurrentWallet}
+                  />
+                }
               />
-            </Route>
-          </Routes>
-          {/* <MetamaskProvider> */}
-          {/* <HelloMetamask /> */}
-
-          {/* </MetamaskProvider> */}
-        </BrowserRouter>
-      </div>
+              <Route path='/' element={<Navigation />}>
+                <Route
+                  index
+                  element={
+                    <WelcomeScreen
+                      currentWallet={currentWallet}
+                      setCurrentWallet={setCurrentWallet}
+                    />
+                  }
+                />
+                <Route path='/search' element={<ProfileSearchResults />} />
+                <Route path='profiles' element={<Profiles />} />
+                <Route
+                  path='/profiles/:walletId'
+                  element={<Profile currentUser={currentWallet} />}
+                />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </MetamaskProvider>
     </ThemeProvider>
   );
 }
