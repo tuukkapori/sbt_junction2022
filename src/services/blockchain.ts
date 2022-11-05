@@ -1,4 +1,6 @@
 import { getUserByWalletId } from './firebase';
+import { ethers } from 'ethers';
+import abi from '../contracts/SoulBoundToken.json';
 
 export interface ProfileInfo {
   walletId: string;
@@ -6,6 +8,10 @@ export interface ProfileInfo {
   bio: string;
   profilePicture: string;
 }
+
+const address = '0x994B4A6dBE760F8Fae32A5D649087653505b2A39';
+const provider = ethers.providers.getDefaultProvider('ropsten');
+const contract = new ethers.Contract(address, abi.abi, provider);
 
 const getProfileFromBlockchain = async (walletId: string) => {
   return {
