@@ -36,7 +36,7 @@ const getProfileFromBlockchain = async (walletId: string) => {
       {
         type: 'work',
         companyName: 'Junction',
-        position: 'Junio Software Developer',
+        position: 'Junior Software Developer',
         startDate: '2016-06-01',
         endDate: '2019-12-31',
       },
