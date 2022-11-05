@@ -64,4 +64,9 @@ const getProfileFromBlockchain = async (walletId: string) => {
   };
 };
 
+const getCertificates = async (walletId: string) => {
+  console.log('getting certificates');
+  return;
+};
+
 export { getProfileFromBlockchain, getSymbol };
