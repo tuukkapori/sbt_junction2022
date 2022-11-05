@@ -11,7 +11,6 @@ import {
   getCertificateById,
 } from '../services/firebase';
 import { useParams } from 'react-router-dom';
-import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 import CertificateList from './CertificateList';
 import WalletIcon from '@mui/icons-material/Wallet';
 
@@ -27,6 +26,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
 
   useEffect(() => {
     const fetchData = async (walletId: string) => {
+      if(!walletId) return;
       try {
         console.log('fetching data');
         setLoading(true);

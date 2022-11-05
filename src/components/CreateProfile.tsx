@@ -69,7 +69,7 @@ const CreateInstitutionalAccount = ({ setWizardStep }: any) => {
       setInstitutionInfo({
         name: 'Amazing Company ltd',
         bio: 'We are the worlds most innovative software company',
-        photo: '',
+        profilePicture: '',
         accountType: 'institution',
         private: false,
       });
