@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import EducationList from './EducationList';
 import WorkHistoryList from './WorkHistoryList';
@@ -30,15 +30,39 @@ const Profile = ({ currentUser }: { currentUser: { id: string } }) => {
   }, []);
 
   return (
-    <div>
-      {profileInfo ? <ProfileInfo data={profileInfo} /> : <div>Loading...</div>}
-      {education ? <EducationList items={education} /> : <div>Loading...</div>}
-      {workHistory ? (
-        <WorkHistoryList items={workHistory} />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        '& .MuiBox-root': {
+          margin: '20px 0px',
+          minWidth: 700,
+          maxWidth: 700,
+        },
+      }}>
+      {profileInfo ? (
+        <Box>
+          <ProfileInfo data={profileInfo} />
+        </Box>
       ) : (
-        <div>Loading...</div>
+        <Box>Loading...</Box>
       )}
-    </div>
+      {workHistory ? (
+        <Box>
+          <WorkHistoryList items={workHistory} />
+        </Box>
+      ) : (
+        <Box>Loading...</Box>
+      )}
+      {education ? (
+        <Box>
+          <EducationList items={education} />
+        </Box>
+      ) : (
+        <Box>Loading...</Box>
+      )}
+    </Box>
   );
 };
 

@@ -3,8 +3,8 @@ import WorkHistoryItem, { WorkHistoryItemType } from './WorkHistoryItem';
 
 const WorkHistory = ({ items }: { items: any }) => {
   return (
-    <Paper sx={{ marginTop: 2, padding: 3 }}>
-      <Typography variant='h4'>Work History</Typography>
+    <Paper sx={{ padding: 5 }}>
+      <Typography variant='h4'>Experience</Typography>
       {items &&
         items.map((item: WorkHistoryItemType, index: number) => (
           <WorkHistoryItem key={index} item={item} />
