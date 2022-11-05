@@ -14,6 +14,20 @@ import { getUserByWalletId, getCerticatesByIds } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
+const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
+  const { title, issuerName, description, startDate, endDate } = certificate;
+  return (
+    <Box>
+      <h5>{issuerName}</h5>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <h3 style={{ marginRight: '25px' }}>{title}</h3>
+        <p>{`${startDate} - ${endDate}`}</p>
+      </Box>
+      <p>{description}</p>
+    </Box>
+  );
+};
+
 const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const { walletParam } = useParams();
   const [profileInfo, setProfileInfo] = useState(null);
@@ -172,9 +186,9 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
                 const certsOnCategory = groupededCertificates[key];
                 return (
                   <Box>
-                    <h4>{key}</h4>
+                    <h3>{key}</h3>
                     {certsOnCategory.map(cert => {
-                      return <Box>{cert.title}</Box>;
+                      return <RenderCertificate certificate={cert} />;
                     })}
                   </Box>
                 );
