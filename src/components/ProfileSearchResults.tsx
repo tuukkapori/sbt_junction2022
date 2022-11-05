@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getUsersBySearhTerm } from '../firebase';
+import { getUsersBySearhTerm } from '../services/firebase';
 
 const SearchResultProfile = ({
   user: { name, walletId, profilePicture },

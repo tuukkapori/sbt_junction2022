@@ -4,10 +4,8 @@ import EducationList from './EducationList';
 import WorkHistoryList from './WorkHistoryList';
 import ProfileInfo from './ProfileInfo';
 
-import {
-  getProfileFromBlockchain,
-  getProfileFromFirebase,
-} from '../services/profileInfo';
+import { getProfileFromBlockchain } from '../services/blockchain';
+import { getUserByWalletId } from '../services/firebase';
 import { useParams } from 'react-router-dom';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
@@ -21,7 +19,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
     const fetchData = async (wallet: string) => {
       const walletId =
         wallet === 'me' ? getCurrentWalletFromLocalStorage() || wallet : wallet;
-      const profileInfo = await getProfileFromFirebase(walletId);
+      const profileInfo = await getUserByWalletId(walletId);
       setProfileInfo(profileInfo);
 
       const { education: educationData, workHistory: workHistoryData } =
@@ -46,7 +44,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
       }}>
       {profileInfo ? (
         <Box>
-          <ProfileInfo data={profileInfo} />
+          <ProfileInfo data={profileInfo} isMe={walletId === 'me'} />
         </Box>
       ) : (
         <Box>Loading...</Box>

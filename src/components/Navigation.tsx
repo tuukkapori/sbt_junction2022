@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import { getUserByWalletId } from '../firebase';
+import { getUserByWalletId } from '../services/firebase';
 import { SettingsEthernet } from '@mui/icons-material';
 import { deleteCurrentWalletLocalStorage } from '../services/localStorage';
 

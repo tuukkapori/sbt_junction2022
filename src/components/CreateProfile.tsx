@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUser, uploadProfilePic } from '../firebase';
+import { createUser, uploadProfilePic } from '../services/firebase';
 import { useMetamask } from '../metamask';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 

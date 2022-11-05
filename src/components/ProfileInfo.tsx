@@ -6,7 +6,13 @@ export interface ProfileInfoType {
   bio: string;
 }
 
-const ProfileInfo = ({ data }: { data: ProfileInfoType }) => {
+const ProfileInfo = ({
+  data,
+  isMe,
+}: {
+  data: ProfileInfoType;
+  isMe: Boolean;
+}) => {
   const { name, bio } = data;
   return (
     <Paper sx={{ padding: 5 }}>
@@ -21,8 +27,8 @@ const ProfileInfo = ({ data }: { data: ProfileInfoType }) => {
         <Grid item xs={8}>
           {bio ? <Box>{bio}</Box> : <Box>Bio missing</Box>}
         </Grid>
-        <Grid item xs={4}>
-          <ConnectButton />
+        <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center' }}>
+          {!isMe && <ConnectButton />}
         </Grid>
       </Grid>
     </Paper>

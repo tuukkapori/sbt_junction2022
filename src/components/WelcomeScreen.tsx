@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button } from '@mui/material';
 import requestAccounts from '../metamask/helpers/requestAccounts';
-import { getUserByWalletId } from '../firebase';
+import { getUserByWalletId } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentWalletLocalStorage } from '../services/localStorage';
 

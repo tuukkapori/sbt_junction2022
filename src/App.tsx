@@ -1,6 +1,6 @@
 import { MetamaskProvider } from './metamask/context';
 import HelloMetamask from './components/HelloMetamask';
-import { app } from './firebase';
+import { app } from './services/firebase';
 import { AppBar, Avatar, Container, Box } from '@mui/material';
 import Profile from './components/Profile';
 import React, { useState } from 'react';

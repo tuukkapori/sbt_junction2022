@@ -5,7 +5,11 @@ const ConnectButton = () => {
     console.log('Friend request sent!');
   };
 
-  return <Button onClick={onClick}>Connect</Button>;
+  return (
+    <Button onClick={onClick} variant='outlined' sx={{ margin: 'auto' }}>
+      Connect
+    </Button>
+  );
 };
 
 export default ConnectButton;
