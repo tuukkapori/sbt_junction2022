@@ -120,16 +120,13 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
                   default:
                     title = 'Miscellaneous';
                 }
+
                 return (
-                  <>
+                  <Box key={index}>
                     {certsOnCategory.length > 0 && (
-                      <CertificateList
-                        title={title}
-                        items={certsOnCategory}
-                        key={index}
-                      />
+                      <CertificateList title={title} items={certsOnCategory} />
                     )}
-                  </>
+                  </Box>
                 );
               }
             )}
