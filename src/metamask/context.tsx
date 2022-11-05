@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import getBalance from './helpers/getBalance';
 import requestAccounts from './helpers/requestAccounts';
 
 /* interface Values {
@@ -8,8 +7,7 @@ import requestAccounts from './helpers/requestAccounts';
   contract: any
   setContract: (values: any) => void
 } */
-
-const initialValues: any = {
+const initialValues = {
   contract: {},
   setContract: () => {},
   user: {
@@ -18,6 +16,7 @@ const initialValues: any = {
     balance: 0,
   },
   setUser: () => {},
+  chainId: '',
 };
 
 const MetamaskContext = React.createContext<any>(initialValues);
@@ -29,6 +28,7 @@ const MetamaskProvider = ({ children }: any) => {
     isConnected: false,
     balance: 0,
   });
+  const [chainId, setChainId] = React.useState<string>('');
   const getUserInfo = async () => {
     if (window.ethereum) {
       const userInfo = await requestAccounts();
@@ -36,9 +36,10 @@ const MetamaskProvider = ({ children }: any) => {
         ...user,
         ...userInfo,
       });
+      setChainId(window.ethereum.chainId);
     }
   };
-  const values: any = { user, setUser, contract, setContract };
+  const values: any = { user, setUser, contract, setContract,chainId,setChainId };
 
   // if (window.ethereum)
   //   window.ethereum.on('accountsChanged', async (accounts: any) => {

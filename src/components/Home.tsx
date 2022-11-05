@@ -19,18 +19,17 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
   const [showSearchError, setShowSearchError] = useState(false);
   const [searching, setSearching] = useState(false);
   console.log({ windowEthereum: window.ethereum });
-  const { user, setContract } = useMetamask();
+  const { user, chainId, setChainId } = useMetamask();
   console.log({ user, connected: user.isConnected });
   const [isBinance, setIsBinance] = useState(false);
   const navigate = useNavigate();
-  const [toggle, setToggle] = useState(false);
   useEffect(() => {
-    if (window.ethereum.chainId === '0x61') {
+    if (chainId === '0x61') {
       setIsBinance(true);
     } else {
       setIsBinance(false);
     }
-  }, [window.ethereum.chainId, toggle]);
+  }, [chainId]);
 
   const handleSearchCertificates = async () => {
     setSearching(true);
@@ -74,9 +73,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
           </Typography>
           <Button
             onClick={() =>
-              changeNetwork('bnbTestnet').then(() => {
-                setToggle(!toggle);
-              })
+              changeNetwork('bnbTestnet').then(() => setChainId('0x61'))
             }>
             Change Network
           </Button>
