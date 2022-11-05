@@ -9,6 +9,7 @@ import {
   Button,
   Tooltip,
   CircularProgress,
+  Paper,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -56,62 +57,60 @@ const CreateProfile = ({ currentWallet, setCurrentWallet }: any) => {
     navigate('/profiles/me');
   };
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        paddingTop: '100px',
-        background:
-          'linear-gradient( 105.3deg,  rgba(30,39,107,1) 21.8%, rgba(77,118,221,1) 100.2% );',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'start',
-      }}>
-      <h2>Create profile</h2>
-      <Tooltip title='add a profile picture'>
-        <IconButton onClick={handleSetProfilePic}>
-          {loadingPpf ? (
-            <Avatar
-              src={profilePicFile ? URL.createObjectURL(profilePicFile) : ''}
-              sx={{ width: 80, height: 80 }}>
-              <CircularProgress />
-            </Avatar>
-          ) : (
-            <Avatar
-              src={profilePicFile ? URL.createObjectURL(profilePicFile) : ''}
-              sx={{ width: 80, height: 80 }}></Avatar>
-          )}
-        </IconButton>
-      </Tooltip>
-      <input
-        type='file'
-        id='profile-pic-selector'
-        onChange={onFileChange}
-        style={{ display: 'none' }}
-      />
-      <TextField
-        label='Name'
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <InputLabel>Bio</InputLabel>
-      <TextareaAutosize
-        value={bio}
-        onChange={e => setBio(e.target.value)}
-        minRows={5}
-        style={{
-          fontFamily: 'Roboto',
-          fontSize: '18px',
-          background: 'rgba(0, 0, 0, 0)',
-          color: 'white',
-        }}
-      />
-      <Button
-        variant='contained'
-        disabled={!name || !bio}
-        onClick={handleCreateProfile}>
-        Create profile!
-      </Button>
-    </Box>
+    <Paper sx={{ padding: 5 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'start',
+        }}>
+        <Typography variant='h4'>Create profile</Typography>
+        <Tooltip title='add a profile picture'>
+          <IconButton onClick={handleSetProfilePic}>
+            {loadingPpf ? (
+              <Avatar
+                src={profilePicFile ? URL.createObjectURL(profilePicFile) : ''}
+                sx={{ width: 80, height: 80 }}>
+                <CircularProgress />
+              </Avatar>
+            ) : (
+              <Avatar
+                src={profilePicFile ? URL.createObjectURL(profilePicFile) : ''}
+                sx={{ width: 80, height: 80 }}></Avatar>
+            )}
+          </IconButton>
+        </Tooltip>
+        <input
+          type='file'
+          id='profile-pic-selector'
+          onChange={onFileChange}
+          style={{ display: 'none' }}
+        />
+        <TextField
+          label='Name'
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <InputLabel>Bio</InputLabel>
+        <TextareaAutosize
+          value={bio}
+          onChange={e => setBio(e.target.value)}
+          minRows={5}
+          style={{
+            fontFamily: 'Roboto',
+            fontSize: '18px',
+            background: 'rgba(0, 0, 0, 0)',
+            color: 'white',
+          }}
+        />
+        <Button
+          variant='contained'
+          disabled={!name || !bio}
+          onClick={handleCreateProfile}>
+          Create profile!
+        </Button>
+      </Box>
+    </Paper>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   InputLabel,
   Box,
   Paper,
+  Typography,
 } from '@mui/material';
 
 const SendToken = () => {
@@ -58,7 +59,7 @@ const SendToken = () => {
           '& .MuiFormControl-root': { m: 1, width: '50ch' },
         }}
         mx={2}>
-        <h2>Mint a new certificate</h2>
+        <Typography variant='h4'>Mint a new certificate</Typography>
         <FormControl>
           <TextField
             name='receiver'
