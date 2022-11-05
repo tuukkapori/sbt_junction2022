@@ -58,19 +58,23 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       ) : (
         <ConnectMetamaskPrompt setCurrentWallet={setCurrentWallet} />
       )}
-      {chainId == '0x61' ? (
-        <Typography variant='subtitle2'>BNB Testnet</Typography>
-      ) : (
+      {user.isConnected && (
         <>
-          <Typography variant='subtitle2'>
-            Please connect your Metamask to BNB Testnet.
-          </Typography>
-          <Button
-            onClick={() =>
-              changeNetwork('bnbTestnet').then(() => setChainId('0x61'))
-            }>
-            Change Network
-          </Button>
+          {chainId == '0x61' ? (
+            <Typography variant='subtitle2'>BNB Testnet</Typography>
+          ) : (
+            <>
+              <Typography variant='subtitle2'>
+                Please connect your Metamask to BNB Testnet.
+              </Typography>
+              <Button
+                onClick={() =>
+                  changeNetwork('bnbTestnet').then(() => setChainId('0x61'))
+                }>
+                Change Network
+              </Button>
+            </>
+          )}
         </>
       )}
       <Box

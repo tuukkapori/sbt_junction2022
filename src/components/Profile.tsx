@@ -8,6 +8,7 @@ import {
   getProfileFromBlockchain,
   getCertificates,
   Certificate,
+  getCertificateURIs,
 } from '../services/blockchain';
 import { getUserByWalletId } from '../services/firebase';
 import { useParams } from 'react-router-dom';
@@ -30,7 +31,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
       const certs = await getProfileFromBlockchain(walletId);
       setCertificates(certs);
 
-      const uris = await getCertificates(walletId);
+      const uris = await getCertificateURIs(walletId);
 
       console.log({ uris });
     };

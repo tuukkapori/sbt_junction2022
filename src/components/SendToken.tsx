@@ -39,10 +39,10 @@ const SendToken = () => {
       description,
     };
     console.log(data);
-    console.log({ windowEthereum: window.ethereum });
-    if (window.ethereum.selectedAddress) {
+    console.log({ receiver });
+    if (receiver) {
       const uri = await createCert(data);
-      await createCertificate(window.ethereum.selectedAddress, uri);
+      await createCertificate(receiver, uri);
       // setReceiver('');
       // setTokenType('');
       // setStartDate('');
