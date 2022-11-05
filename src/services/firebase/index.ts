@@ -46,6 +46,19 @@ const getUserByWalletId = async (walletId: string) => {
   }
 };
 
+const getCertificateById = async (certificateId: string) => {
+  const docRef = doc(db, 'certificates', certificateId);
+  const snap = await getDoc(docRef);
+
+  if (snap.exists()) {
+    console.log('snap exists ', snap.data());
+    return snap.data();
+  } else {
+    console.log('not founbd');
+    return undefined;
+  }
+};
+
 const getUsersBySearhTerm = async (search: string) => {
   if (search.startsWith('0x')) {
     const user = await getUserByWalletId(search);
