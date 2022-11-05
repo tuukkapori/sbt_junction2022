@@ -22,6 +22,7 @@ import { createUser, uploadProfilePic } from '../services/firebase';
 import { useMetamask } from '../metamask';
 import InstitutionIcon from '@mui/icons-material/AccountBalance';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import PersonIcon from '@mui/icons-material/Person';
 import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
@@ -107,11 +108,14 @@ const CreateInstitutionalAccount = ({ setWizardStep }: any) => {
             alignItems: 'center',
             gap: 2,
           }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <VerifiedIcon />
-            <h2 style={{ margin: 0, marginLeft: 10 }}>
-              {institutionInfo.name}
-            </h2>
+          <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <VerifiedIcon />
+              <h2 style={{ margin: 0, marginLeft: 10 }}>
+                {institutionInfo.name}
+              </h2>
+            </Box>
+            <p>Company data is automatically filled</p>
           </Box>
           <Button
             variant='contained'
@@ -243,9 +247,12 @@ const CreateProfile = ({ currentWallet, setCurrentWallet }: any) => {
         flexDirection: 'column',
         alignItems: 'start',
       }}>
+      <h1>Create a Zerify account</h1>
       {wizardStep !== 'selectAccountType' && (
-        <Button
-          onClick={() => setWizardStep('selectAccountType')}>{`< back`}</Button>
+        <Button onClick={() => setWizardStep('selectAccountType')}>
+          <ArrowLeftIcon />
+          back
+        </Button>
       )}
       {wizardStep === 'selectAccountType' && (
         <SelectAccountType setWizardStep={setWizardStep} />

@@ -36,11 +36,6 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        '& .MuiBox-root': {
-          margin: '20px 0px',
-          minWidth: 700,
-          maxWidth: 700,
-        },
       }}>
       {profileInfo ? (
         <Box>

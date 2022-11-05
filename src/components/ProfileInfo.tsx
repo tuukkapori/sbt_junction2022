@@ -15,7 +15,11 @@ const ProfileInfo = ({
 }) => {
   const { name, bio } = data;
   return (
-    <Paper sx={{ padding: 5 }}>
+    <Paper
+      sx={{
+        padding: 5,
+        background: 'linear-gradient(to right, #0f0c29, #302b63, #24243e)',
+      }}>
       <Grid container>
         <Grid item xs={12}>
           {name ? (
@@ -26,9 +30,6 @@ const ProfileInfo = ({
         </Grid>
         <Grid item xs={8}>
           {bio ? <Box>{bio}</Box> : <Box>Bio missing</Box>}
-        </Grid>
-        <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-          {!isMe && <ConnectButton />}
         </Grid>
       </Grid>
     </Paper>

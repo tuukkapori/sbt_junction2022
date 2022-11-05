@@ -103,6 +103,13 @@ const getCertificateById = async (id: string) => {
   }
 };
 
+const getCerticatesByIds = async (idArray: string[]) => {
+  const promises = await Promise.all(idArray.map(id => getCertificateById(id)));
+  // filter possible undefined values
+  const certificates = promises.filter(cert => cert);
+  return certificates;
+};
+
 export {
   app,
   getUserByWalletId,
@@ -112,4 +119,5 @@ export {
   createUser,
   createCert,
   getCertificateById,
+  getCerticatesByIds,
 };

@@ -62,7 +62,6 @@ export default function App() {
                 minHeight: '100vh',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center',
               }}>
               <Routes>
                 <Route
