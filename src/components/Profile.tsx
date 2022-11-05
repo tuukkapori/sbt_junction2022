@@ -17,6 +17,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
+  const [uris, setUris] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async (wallet: string) => {
@@ -29,12 +30,16 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         await getProfileFromBlockchain(walletId);
       setEducation(educationData);
       setWorkHistory(workHistoryData);
-
-      const uris = await getCertificateURIs(walletId);
-
-      console.log({ uris });
     };
     fetchData(walletId);
+  }, [walletId,uris]);
+  useEffect(() => {
+    const fetchUris = async (wallet: string) => {
+      const urisFromChain: any = await getCertificateURIs(walletId);
+      console.log({ urisFromChain });
+      setUris(urisFromChain);
+    };
+    fetchUris(walletId);
   }, [walletId]);
 
   return (
