@@ -17,9 +17,7 @@ export interface ProfileInfo {
 //   contract = (await contractFactory.deploy()) as unknown as SoulBoundToken;
 // };
 
-const contract = loadSmartContract(
-  soulBoundTokenContract.address
-);
+const contract = loadSmartContract(soulBoundTokenContract.address);
 
 const getSymbol = async () => {
   return contract.symbol();
@@ -32,6 +30,7 @@ export interface Certificate {
   description: string;
   startDate: string;
   endDate: string;
+  transactionHash: string;
 }
 
 const getProfileFromBlockchain = async (
@@ -45,6 +44,7 @@ const getProfileFromBlockchain = async (
       description: 'blaahblaah',
       startDate: '2017-09-01',
       endDate: '2022-06-01',
+      transactionHash: 'none',
     },
     {
       type: 'education',
@@ -53,6 +53,7 @@ const getProfileFromBlockchain = async (
       description: 'blaahblaah',
       startDate: '2013-09-01',
       endDate: '2018-06-01',
+      transactionHash: 'none',
     },
     {
       type: 'work',
@@ -62,6 +63,7 @@ const getProfileFromBlockchain = async (
         'sadfasdfasdfasdf dsadfa asdfggas da fas fasdfasdf asdfasdggsadfasd fasdf asf wa dsfasdadsf',
       startDate: '2020-01-01',
       endDate: '2022-03-15',
+      transactionHash: 'none',
     },
     {
       type: 'work',
@@ -70,6 +72,7 @@ const getProfileFromBlockchain = async (
       description: 'blaahblaah',
       startDate: '2016-06-01',
       endDate: '2019-12-31',
+      transactionHash: 'none',
     },
   ];
 };
@@ -83,7 +86,9 @@ const getCertificateURIs = async (walletId: string) => {
 const createCertificate = async (walletId: string, uri: string) => {
   console.log('creating certificate');
   console.log({ walletId, uri });
-  contract.safeMint(walletId, uri);
+  const res = await contract.safeMint(walletId, uri);
+  console.log('res from create cert ', res);
+  return res.hash;
 };
 
 const getIssuedCertificateURIs = async (walletId: string) => {

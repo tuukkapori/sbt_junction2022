@@ -90,9 +90,7 @@ const createUser = async (walletId: string, data: any) => {
   await setDoc(doc(db, 'users', walletId), data);
 };
 
-const createCert = async (data: any) => {
-  const id = nanoid();
-
+const createCert = async (id: string, data: any) => {
   await setDoc(doc(db, 'certificates', id), data);
 
   return id;

@@ -3,9 +3,17 @@ import { Certificate } from '../services/blockchain';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DateRangeIcon from '@mui/icons-material/DateRange';
+import LinkIcon from '@mui/icons-material/Link';
 
 const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
-  const { title, issuerName, description, startDate, endDate } = certificate;
+  const {
+    title,
+    issuerName,
+    description,
+    startDate,
+    endDate,
+    transactionHash,
+  } = certificate;
   return (
     <Card
       sx={{
@@ -35,6 +43,15 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         <DateRangeIcon sx={{ marginTop: 0.8 }} />
         <p style={{ margin: '5px 0px' }}>{`${startDate} - ${endDate}`}</p>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
+        <LinkIcon sx={{ marginTop: 0.8 }} />
+        <a
+          style={{ margin: '5px 0px', color: 'white' }}
+          href={`https://testnet.bscscan.com/tx/${transactionHash}`}
+          target='_blank'>
+          View transaction
+        </a>
       </Box>
     </Card>
   );

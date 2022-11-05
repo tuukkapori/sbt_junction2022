@@ -11,6 +11,7 @@ import {
   Typography,
   Card,
 } from '@mui/material';
+import { nanoid } from 'nanoid';
 import { createCert, getUserByWalletId } from '../services/firebase';
 import { createCertificate } from '../services/blockchain';
 
@@ -27,19 +28,22 @@ const SendToken = () => {
     e.preventDefault();
     try {
       const user = await getUserByWalletId(window.ethereum.selectedAddress);
-      const data = {
-        receiver,
-        issuerName: user.name,
-        type: tokenType,
-        title,
-        description,
-        startDate,
-        endDate,
-      };
-      console.log('TOKEN DATA ', data);
+
       if (receiver) {
-        const uri = await createCert(data);
-        await createCertificate(receiver, uri);
+        const uri = nanoid();
+        const transactionHash = await createCertificate(receiver, uri);
+        const data = {
+          receiver,
+          issuerName: user.name,
+          type: tokenType,
+          title,
+          description,
+          startDate,
+          endDate,
+          transactionHash,
+        };
+        console.log('TOKEN DATA ', data);
+        await createCert(uri, data);
         // setReceiver('');
         // setTokenType('');
         // setStartDate('');
