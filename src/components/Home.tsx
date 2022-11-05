@@ -12,6 +12,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import { getUserByWalletId } from '../services/firebase';
+import changeNetwork from '../metamask/helpers/changeNetwork';
 
 const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,13 +23,14 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
   console.log({ user, connected: user.isConnected });
   const [isBinance, setIsBinance] = useState(false);
   const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
   useEffect(() => {
     if (window.ethereum.chainId === '0x61') {
       setIsBinance(true);
     } else {
       setIsBinance(false);
     }
-  }, [window.ethereum.chainId]);
+  }, [window.ethereum.chainId, toggle]);
 
   const handleSearchCertificates = async () => {
     setSearching(true);
@@ -59,16 +61,26 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
         Zerify
       </Typography>
       {user.isConnected ? (
-        <Typography variant='subtitle1'>Metamask connected</Typography>
+        <Typography variant='subtitle1'>Connected to Metamask</Typography>
       ) : (
         <ConnectMetamaskPrompt setCurrentWallet={setCurrentWallet} />
       )}
       {isBinance ? (
-        <Typography variant='subtitle2'>Connected to Binance</Typography>
+        <Typography variant='subtitle2'>BNB Testnet</Typography>
       ) : (
-        <Typography variant='subtitle2'>
-          Please connect your Metamask to Binance with chain ID 97
-        </Typography>
+        <>
+          <Typography variant='subtitle2'>
+            Please connect your Metamask to BNB Testnet.
+          </Typography>
+          <Button
+            onClick={() =>
+              changeNetwork('bnbTestnet').then(() => {
+                setToggle(!toggle);
+              })
+            }>
+            Change Network
+          </Button>
+        </>
       )}
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

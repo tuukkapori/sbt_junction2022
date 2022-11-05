@@ -1,17 +1,6 @@
 const networks: Record<string, any> = {
-  sepolia: {
-    chainId: `0x${Number(11155111).toString(16)}`,
-    chainName: 'Sepolia Test Network',
-    nativeCurrency: {
-      name: 'SepoliaETH',
-      symbol: 'SepoliaETH',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc.sepolia.dev'],
-    blockExplorerUrls: ['https://sepolia.etherscan.io/'],
-  },
   bnbTestnet: {
-    chainId: 97,
+    chainId: `0x${Number(97).toString(16)}`,
     chainName: 'Binance Testnet',
     nativeCurrency: {
       name: 'binance token',
@@ -24,9 +13,9 @@ const networks: Record<string, any> = {
 };
 
 export default async function changeNetwork(networkName: string) {
-  if (!networkName) networkName = 'sepolia';
+  if (!networkName) networkName = 'bnbTestnet';
 
-  await window.ethereum.request({
+  return window.ethereum.request({
     method: 'wallet_addEthereumChain',
     params: [
       {
