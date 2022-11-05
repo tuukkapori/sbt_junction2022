@@ -81,8 +81,8 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       )}
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h4 style={{ marginBottom: 0 }}>or</h4>
-        <h3>Search by wallet address</h3>
+        {!isBinance && <Typography style={{ marginBottom: 0 }}>or</Typography>}
+        <Typography variant='h6'>Search by wallet address</Typography>
         <TextField
           value={searchTerm}
           placeholder='0x082bfd...'
