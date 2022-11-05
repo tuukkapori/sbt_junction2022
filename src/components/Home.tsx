@@ -26,17 +26,17 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       <Typography
         variant='h1'
         style={{ fontSize: '70px', fontWeight: 600, marginBottom: 2 }}>
-        True Connect
+        Zerify
       </Typography>
       {user.isConnected ? (
-        <Typography variant='h4'>Metamask connected</Typography>
+        <Typography variant='subtitle1'>Metamask connected</Typography>
       ) : (
         <ConnectMetamaskPrompt setCurrentWallet={setCurrentWallet} />
       )}
       {isBinance ? (
-        <Typography variant='h5'>Connected to Binance</Typography>
+        <Typography variant='subtitle2'>Connected to Binance</Typography>
       ) : (
-        <Typography variant='h6'>
+        <Typography variant='subtitle2'>
           Please connect your Metamask to Binance with chain ID 97
         </Typography>
       )}
