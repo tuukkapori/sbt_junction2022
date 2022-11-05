@@ -45,6 +45,8 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        height: '100vh',
+        justifyContent: 'center',
       }}>
       <Typography
         variant='h1'

@@ -28,6 +28,22 @@ const lightTheme = createTheme({
       main: 'rgba(0, 0, 0, 0)',
     },
   },
+  components: {
+    /* MuiPaper: {
+      styleOverrides: {
+        root: {
+          background: 'rgba(255, 255, 255, 0.05)',
+        },
+      },
+    }, */
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+        },
+      },
+    },
+  },
 });
 console.log(app);
 
