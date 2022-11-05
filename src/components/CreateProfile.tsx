@@ -28,8 +28,9 @@ import { getCurrentWalletFromLocalStorage } from '../services/localStorage';
 
 const SelectAccountType = ({ setWizardStep }: any) => {
   return (
-    <Box>
-      <h2 style={{ textAlign: 'center' }}>1. Select Account type</h2>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Typography variant='subtitle1'>1. Select Account type</Typography>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <Card>
           <CardActionArea
@@ -86,9 +87,11 @@ const CreateInstitutionalAccount = ({ setWizardStep }: any) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 2,
+        gap: 1,
       }}>
-      <Typography variant='h6'>2. Enter your institution info</Typography>
+      <Typography variant='subtitle1'>
+        2. Enter your institution info
+      </Typography>
       {!institutionInfo && (
         <Button
           variant='contained'
@@ -109,13 +112,22 @@ const CreateInstitutionalAccount = ({ setWizardStep }: any) => {
             gap: 2,
           }}>
           <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <VerifiedIcon />
-              <h2 style={{ margin: 0, marginLeft: 10 }}>
+              <Typography
+                variant='subtitle2'
+                style={{ margin: 0, marginLeft: 10 }}>
                 {institutionInfo.name}
-              </h2>
+              </Typography>
             </Box>
-            <p>Company data is automatically filled</p>
+            <Typography variant='subtitle2'>
+              Company data has been automatically filled.
+            </Typography>
           </Box>
           <Button
             variant='contained'
@@ -179,19 +191,21 @@ const CreateIndividualAccount = ({ setWizardStep }: any) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant='h4'>Create individual account</Typography>
+      <Box mx={'auto'}>
+        <Typography variant='h5'>Create individual account</Typography>
+      </Box>
       <Tooltip title='add a profile picture'>
         <IconButton onClick={handleSetProfilePic}>
           {loadingPpf ? (
             <Avatar
               src={profilePicFile ? URL.createObjectURL(profilePicFile) : ''}
-              sx={{ width: 80, height: 80 }}>
+              sx={{ width: 80, height: 80, marginY: 2 }}>
               <CircularProgress />
             </Avatar>
           ) : (
             <Avatar
               src={profilePicFile ? URL.createObjectURL(profilePicFile) : ''}
-              sx={{ width: 80, height: 80 }}></Avatar>
+              sx={{ width: 80, height: 80, marginY: 2 }}></Avatar>
           )}
         </IconButton>
       </Tooltip>
@@ -225,9 +239,11 @@ const CreateIndividualAccount = ({ setWizardStep }: any) => {
         label='Private Account'
         sx={{ fontWeight: 600 }}
       />
-      <Typography sx={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)' }}>
+      <Typography
+        variant='subtitle2'
+        sx={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)' }}>
         If you set your account to be private, other users cannot find you by
-        name
+        name.
       </Typography>
 
       <Button variant='contained' sx={{ mt: 2 }} onClick={handleCreateProfile}>
@@ -245,7 +261,7 @@ const CreateProfile = ({ currentWallet, setCurrentWallet }: any) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'start',
+        alignItems: 'center',
         marginTop: 4,
       }}>
       <Typography variant='h4'>Create a Zerify account</Typography>
@@ -257,10 +273,7 @@ const CreateProfile = ({ currentWallet, setCurrentWallet }: any) => {
       )}
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: 4,
+          marginTop: 3,
         }}>
         {wizardStep === 'selectAccountType' && (
           <SelectAccountType setWizardStep={setWizardStep} />
