@@ -1,7 +1,7 @@
 import { getUserByWalletId } from './firebase';
-import { ethers } from 'ethers';
 import abi from '../contracts/SoulBoundToken.json';
-
+import loadSmartContract from '../metamask/helpers/loadSmartContract';
+import { SoulBoundToken } from '../contracts/SoulBoundToken';
 export interface ProfileInfo {
   walletId: string;
   name: string;
@@ -9,9 +9,23 @@ export interface ProfileInfo {
   profilePicture: string;
 }
 
-const address = '0x994B4A6dBE760F8Fae32A5D649087653505b2A39';
-const provider = ethers.providers.getDefaultProvider('ropsten');
-const contract = new ethers.Contract(address, abi.abi, provider);
+// let contract: SoulBoundToken;
+
+// const initialize = async () => {
+//   const address = '0x994B4A6dBE760F8Fae32A5D649087653505b2A39';
+//   const provider = ethers.providers.getDefaultProvider('ropsten');
+//   const contractFactory = await ethers.getContractFactory('SoulBoundToken');
+//   contract = (await contractFactory.deploy()) as unknown as SoulBoundToken;
+// };
+
+const contract = loadSmartContract<SoulBoundToken>(
+  '0x994B4A6dBE760F8Fae32A5D649087653505b2A39',
+  abi.abi
+);
+
+const getSymbol = async () => {
+  return contract.symbol();
+};
 
 const getProfileFromBlockchain = async (walletId: string) => {
   return {
@@ -50,4 +64,4 @@ const getProfileFromBlockchain = async (walletId: string) => {
   };
 };
 
-export { getProfileFromBlockchain };
+export { getProfileFromBlockchain, getSymbol };
