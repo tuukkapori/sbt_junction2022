@@ -21,6 +21,10 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const [loading, setLoading] = useState(false);
   const [certificates, setCertificates] = useState<any[]>([]);
 
+  interface IssuedCertificate extends Certificate {
+    id: number;
+  }
+
   useEffect(() => {
     const fetchData = async (walletId: string) => {
       try {
@@ -45,18 +49,18 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         // setEducation(data.filter(c => c.type === 'education'));
         // setWorkHistory(data.filter(c => c.type === 'work'));
 
-        const issuedUris: any = await getIssuedCertificateURIs(lowerWalletId);
-        console.log({ issuedUris });
-        const issuedData = await getCerticatesByIds(
-          issuedUris.map((x: any) => x.uri)
+        const issuedUrisAndIds: any = await getIssuedCertificateURIs(
+          lowerWalletId
         );
+        console.log({ issuedUrisAndIds });
+        const issuedData = await getCerticatesByIds(issuedUrisAndIds);
         setIssuedCertificates(issuedData);
         console.log({ issuedData });
 
         // setIssuedCertificates(data.filter(c => c.type === 'education'))
 
         console.log({ uris });
-        setUris(issuedUris);
+        // setUris(issuedUrisAndIds);
         setLoading(false);
       } catch (error) {
         console.log('error in fetchdata function ', error);

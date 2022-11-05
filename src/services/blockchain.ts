@@ -95,6 +95,10 @@ const createCertificate = async (walletId: string, uri: string) => {
   return res.hash;
 };
 
+const deleteCertificate = async (id: string) => {
+  const res = await contract.revokeCertificate(id);
+};
+
 const getIssuedCertificateURIs = async (walletId: string) => {
   console.log('getting issued certificates');
   const IDs = await contract.getTokensIssuedByAddress(walletId);

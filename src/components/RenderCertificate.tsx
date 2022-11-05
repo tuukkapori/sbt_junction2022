@@ -1,9 +1,10 @@
-import { Box, Card, Tooltip } from '@mui/material';
+import { Box, Card, Tooltip, Button } from '@mui/material';
 import { Certificate } from '../services/blockchain';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import LinkIcon from '@mui/icons-material/Link';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 
 const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
@@ -17,6 +18,10 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
     issuerAddress,
   } = certificate;
   const navigate = useNavigate();
+  const deleteCertificate = async () => {
+    console.log('deleting');
+  };
+
   return (
     <Card
       sx={{
@@ -75,6 +80,14 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
           </a>
         </Tooltip>
       </Box>
+      {window.ethereum.selectedAddress === issuerAddress && (
+        <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
+          <DeleteIcon sx={{ marginTop: 0.8 }} />
+          <Button sx={{ color: 'white' }} onClick={() => deleteCertificate()}>
+            Delete certificate
+          </Button>
+        </Box>
+      )}
     </Card>
   );
 };
