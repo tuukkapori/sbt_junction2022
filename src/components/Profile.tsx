@@ -33,7 +33,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   const [profileInfo, setProfileInfo] = useState(null);
   const [education, setEducation] = useState(null);
   const [workHistory, setWorkHistory] = useState(null);
-  const [uris, setUris] = useState<string[]>([]);
+  // const [uris, setUris] = useState<string[]>([]);
   const [issuedCertificates, setIssuedCertificates] = useState(null);
   const [loading, setLoading] = useState(false);
   const [certificates, setCertificates] = useState<any[]>([]);
@@ -44,30 +44,31 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         console.log('fetching data');
         setLoading(true);
         const walletId =
-          wallet === 'me'
-            ? getCurrentWalletFromLocalStorage() || wallet
-            : wallet;
+          wallet === 'me' ? window.ethereum.selectedAddress : wallet;
+          
         console.log('getting user by wallet id', walletId);
         const prof = await getUserByWalletId(walletId);
         setProfileInfo(prof);
         console.log('set profile info');
-        const certs = await getProfileFromBlockchain(walletId);
-        setCertificates(certs);
+        // const certs = await getProfileFromBlockchain(walletId);
+        // setCertificates(certs);
 
-        const uris = await getCertificateURIs(walletId);
-        // const data = await getCerticatesByIds(uris);
-        const data = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
-        setEducation(data.filter(c => c.type === 'education'));
-        setWorkHistory(data.filter(c => c.type === 'work'));
+        const uris: any = await getCertificateURIs(walletId);
+        const data = await getCerticatesByIds(uris);
+        // const data = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
+        // setEducation(data.filter(c => c.type === 'education'));
+        // setWorkHistory(data.filter(c => c.type === 'work'));
+        console.log({ data });
+        setCertificates(data);
 
         const issuedUris: any = await getIssuedCertificateURIs(walletId);
-        const issuedData = await getCerticatesByIds(['URIXXXXXXXXXXXXX']);
+        const issuedData = await getCerticatesByIds(issuedUris);
         setIssuedCertificates(issuedData);
 
         // setIssuedCertificates(data.filter(c => c.type === 'education'))
 
         console.log({ uris });
-        setUris(issuedUris);
+        // setUris(issuedUris);
         setLoading(false);
       } catch (error) {
         console.log('error in fetchdata function ', error);
@@ -77,6 +78,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
   }, []);
 
   console.log('work ', workHistory);
+  console.log({ issuedCertificates });
 
   const groupededCertificates: { [key: string]: Certificate[] } =
     certificates.length
