@@ -88,7 +88,7 @@ const CreateInstitutionalAccount = ({ setWizardStep }: any) => {
         alignItems: 'center',
         gap: 2,
       }}>
-      <h2>2. Enter your institution info</h2>
+      <Typography variant='h6'>2. Enter your institution info</Typography>
       {!institutionInfo && (
         <Button
           variant='contained'
@@ -246,23 +246,32 @@ const CreateProfile = ({ currentWallet, setCurrentWallet }: any) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'start',
+        marginTop: 4,
       }}>
-      <h1>Create a Zerify account</h1>
+      <Typography variant='h4'>Create a Zerify account</Typography>
       {wizardStep !== 'selectAccountType' && (
         <Button onClick={() => setWizardStep('selectAccountType')}>
           <ArrowLeftIcon />
           back
         </Button>
       )}
-      {wizardStep === 'selectAccountType' && (
-        <SelectAccountType setWizardStep={setWizardStep} />
-      )}
-      {wizardStep === 'createInstitutionalAccount' && (
-        <CreateInstitutionalAccount setWizardStep={setWizardStep} />
-      )}
-      {wizardStep === 'createIndividualAccount' && (
-        <CreateIndividualAccount setWizardStep={setWizardStep} />
-      )}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginTop: 4,
+        }}>
+        {wizardStep === 'selectAccountType' && (
+          <SelectAccountType setWizardStep={setWizardStep} />
+        )}
+        {wizardStep === 'createInstitutionalAccount' && (
+          <CreateInstitutionalAccount setWizardStep={setWizardStep} />
+        )}
+        {wizardStep === 'createIndividualAccount' && (
+          <CreateIndividualAccount setWizardStep={setWizardStep} />
+        )}
+      </Box>
     </Box>
   );
 };

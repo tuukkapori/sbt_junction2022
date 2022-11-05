@@ -83,7 +83,7 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
         <Tooltip title='Open transaction on block explorer'>
           <Typography variant='subtitle1'>
             <a
-              style={{ margin: '10px 0px', color: 'white' }}
+              style={{ margin: '20px 0px', color: 'white' }}
               href={`https://testnet.bscscan.com/tx/${transactionHash}`}
               target='_blank'>
               View transaction

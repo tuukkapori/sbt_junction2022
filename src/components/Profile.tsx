@@ -95,7 +95,11 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
         alignItems: 'center',
       }}>
       <Box sx={{ p: 3 }}>
-        {walletParam === 'me' && <h4>My profile</h4>}
+        {walletParam === 'me' && (
+          <Typography variant='h6' style={{ textAlign: 'center' }}>
+            <b>My Profile</b>
+          </Typography>
+        )}
         {profileInfo && (
           <Box
             sx={{
@@ -118,7 +122,7 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
 
         <Box sx={{ mt: 5 }}>
           <Typography variant='h6' style={{ textAlign: 'center' }}>
-            <b> Certificates</b>
+            <b>Certificates</b>
           </Typography>
           <Divider />
           {certificates.length > 0 &&

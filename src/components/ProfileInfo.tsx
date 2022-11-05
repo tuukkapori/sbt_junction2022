@@ -1,5 +1,4 @@
 import { Paper, Typography, Grid, Box, Avatar } from '@mui/material';
-import ConnectButton from './ConnectButton';
 
 export interface ProfileInfoType {
   name: string;
