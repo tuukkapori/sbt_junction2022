@@ -136,6 +136,11 @@ const Profile = ({ currentWallet }: { currentWallet: string }) => {
               items={issuedCertificates}
             />
           )}
+          {certificates.length === 0 && issuedCertificates.length === 0 && (
+            <Box>
+              <Typography>No certificates yet.</Typography>
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
