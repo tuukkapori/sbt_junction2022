@@ -60,7 +60,8 @@ const getProfileFromBlockchain = async (
       type: 'work',
       issuerName: 'Binance',
       title: 'Software Engineer',
-      description: 'blaahblaah',
+      description:
+        'sadfasdfasdfasdf dsadfa asdfggas da fas fasdfasdf asdfasdggsadfasd fasdf asf wa dsfasdadsf',
       startDate: '2020-01-01',
       endDate: '2022-03-15',
     },
