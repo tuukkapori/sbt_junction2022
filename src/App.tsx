@@ -74,7 +74,7 @@ export default function App() {
             <Box
               sx={{
                 background:
-                  'linear-gradient( 105.3deg,  #64dfdf 21.8%, #5e60ce 100.2% );',
+                  'linear-gradient( 105.3deg,  #02c2c2 21.8%, #5b5dcf 100.2% );',
                 minHeight: '100vh',
                 display: 'flex',
                 justifyContent: 'center',
