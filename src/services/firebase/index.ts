@@ -63,8 +63,10 @@ const getUsersBySearhTerm = async (search: string) => {
     querySnapshot.forEach(doc => {
       users.push({ walletId: doc.id, ...doc.data() });
     });
+    console.log(users);
+    
     return users.filter((user: any) =>
-      user.name.toLowerCase().includes(search.toLowerCase())
+      user.name?.toLowerCase().includes(search.toLowerCase())
     );
   }
 };
