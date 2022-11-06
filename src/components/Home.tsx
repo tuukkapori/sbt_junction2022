@@ -23,7 +23,8 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
   console.log({ user, connected: user.isConnected });
   const navigate = useNavigate();
 
-  const handleSearchCertificates = async () => {
+  const handleSearchCertificates = async (e: any) => {
+    e.preventDefault();
     setSearching(true);
     setShowSearchError(false);
     console.log('Searching certificates for ', searchTerm);
@@ -53,86 +54,86 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
         style={{ fontSize: '130px', fontWeight: 600, marginBottom: 2 }}>
         Zerify
       </Typography>
+      <Typography variant='h5' mt={2}>
+        Your work experience on the blockchain.
+      </Typography>
       {user.isConnected ? (
         <Typography variant='subtitle1'>Connected to Metamask</Typography>
       ) : (
-        <ConnectMetamaskPrompt setCurrentWallet={setCurrentWallet} />
+        <ConnectMetamaskPrompt
+          setCurrentWallet={setCurrentWallet}
+          changeNetwork={changeNetwork}
+          setChainId={setChainId}
+        />
       )}
-      {user.isConnected && (
+      {window.ethereum.selectedAddress && window.ethereum.chainId === '0x61' && (
         <>
-          {chainId == '0x61' ? (
-            <Typography variant='subtitle2'>BNB Testnet</Typography>
-          ) : (
-            <>
-              <Typography variant='subtitle2'>
-                Please connect your Metamask to BNB Testnet.
-              </Typography>
-              <Button
-                onClick={() =>
-                  changeNetwork('bnbTestnet').then(() => setChainId('0x61'))
-                }>
-                Change Network
-              </Button>
-            </>
-          )}
-        </>
-      )}
-      <Box
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {!(chainId == '0x61') && (
+          <Typography variant='subtitle1'>BNB Testnet</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+            mt={2}
+            component='form'
+            onSubmit={(e: any) => handleSearchCertificates(e)}>
+            {/* {!(chainId == '0x61') && (
           <Typography variant='subtitle1' style={{ marginBottom: 0 }}>
             or
           </Typography>
-        )}
-        <Typography variant='h6'>Search by wallet address</Typography>
-        <TextField
-          value={searchTerm}
-          placeholder='0x082bfd...'
-          onChange={e => {
-            setSearchTerm(e.target.value);
-            setShowSearchError(false);
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position='end'>
-                <Button
-                  size='large'
-                  disabled={!searchTerm || searching}
-                  onClick={handleSearchCertificates}
-                  sx={{ position: 'relative' }}>
-                  Search
-                  {searching && (
-                    <CircularProgress
-                      size={24}
-                      sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        marginTop: '-12px',
-                        marginLeft: '-12px',
-                      }}
-                    />
-                  )}
-                </Button>
-              </InputAdornment>
-            ),
-          }}
-        />
+        )} */}
+            <Typography variant='h6'>Search by wallet address</Typography>
+            <TextField
+              value={searchTerm}
+              placeholder='0x082bfd...'
+              onChange={e => {
+                setSearchTerm(e.target.value);
+                setShowSearchError(false);
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <Button
+                      size='large'
+                      disabled={!searchTerm || searching}
+                      type='submit'
+                      sx={{ position: 'relative' }}>
+                      Search
+                      {searching && (
+                        <CircularProgress
+                          size={24}
+                          sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            marginTop: '-12px',
+                            marginLeft: '-12px',
+                          }}
+                        />
+                      )}
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-        <Typography
-          sx={{
-            color: 'red',
-            opacity: showSearchError ? 1 : 0,
-            transitionDuration: '200ms',
-          }}>
-          Account not found
-        </Typography>
-      </Box>
+            <Typography
+              sx={{
+                color: 'red',
+                opacity: showSearchError ? 1 : 0,
+                transitionDuration: '200ms',
+              }}>
+              Account not found
+            </Typography>
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

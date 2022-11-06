@@ -13,8 +13,12 @@ import { setCurrentWalletLocalStorage } from '../services/localStorage';
 
 const ConnectMetamaskPrompt = ({
   setCurrentWallet,
+  changeNetwork,
+  setChainId,
 }: {
   setCurrentWallet: any;
+  changeNetwork: any;
+  setChainId: any;
 }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -24,13 +28,16 @@ const ConnectMetamaskPrompt = ({
       const account = await requestAccounts();
       if (account && account.isConnected) {
         setCurrentWalletLocalStorage(account.address);
-
-        const user = await getUserByWalletId(account.address);
-        setLoading(false);
-        if (user) {
-          navigate('/profiles/me');
+        if (window.ethereum.chainId == '0x61') {
+          const user = await getUserByWalletId(account.address);
+          setLoading(false);
+          if (user) {
+            navigate('/profiles/me');
+          } else {
+            navigate('/createProfile');
+          }
         } else {
-          navigate('/createProfile');
+          navigate('/');
         }
       }
     }
@@ -50,16 +57,36 @@ const ConnectMetamaskPrompt = ({
           alignItems: 'center',
           fontFamily: 'OpenSans-Bold',
         }}>
-        <Typography variant='h5' my={2}>
-          Your work experience on the blockchain.
-        </Typography>
-        <Button
-          variant='contained'
-          size='large'
-          sx={{ fontWeight: 600 }}
-          onClick={handleConnectMetamask}>
-          Connect Metamask
-        </Button>
+        {!window.ethereum.selectedAddress && (
+          <Button
+            variant='contained'
+            size='large'
+            sx={{ fontWeight: 600, marginTop: 3 }}
+            onClick={handleConnectMetamask}>
+            Connect Metamask
+          </Button>
+        )}
+        {window.ethereum.selectedAddress && window.ethereum.chainId !== '0x61' && (
+          <>
+            <Button
+              variant='contained'
+              size='large'
+              sx={{ fontWeight: 600, marginTop: 3 }}
+              onClick={() =>
+                changeNetwork('bnbTestnet').then(() => {
+                  setChainId('0x61');
+                  handleConnectMetamask();
+                })
+              }>
+              Change Network
+            </Button>
+            <Typography
+              variant='subtitle1'
+              sx={{ color: '#f77f00', marginTop: 1 }}>
+              Please connect your Metamask to BNB Testnet.
+            </Typography>
+          </>
+        )}
       </Box>
       <Backdrop open={loading}>
         <CircularProgress />
