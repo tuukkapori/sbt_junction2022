@@ -66,74 +66,10 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
           setChainId={setChainId}
         />
       )}
-      {window.ethereum.selectedAddress && window.ethereum.chainId === '0x61' && (
-        <>
+      {window.ethereum.selectedAddress &&
+        window.ethereum.chainId === '0x61' && (
           <Typography variant='subtitle1'>BNB Testnet</Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-            mt={2}
-            component='form'
-            onSubmit={(e: any) => handleSearchCertificates(e)}>
-            {/* {!(chainId == '0x61') && (
-          <Typography variant='subtitle1' style={{ marginBottom: 0 }}>
-            or
-          </Typography>
-        )} */}
-            <Typography variant='h6'>Search by wallet address</Typography>
-            <TextField
-              value={searchTerm}
-              placeholder='0x082bfd...'
-              onChange={e => {
-                setSearchTerm(e.target.value);
-                setShowSearchError(false);
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <Button
-                      size='large'
-                      disabled={!searchTerm || searching}
-                      type='submit'
-                      sx={{ position: 'relative' }}>
-                      Search
-                      {searching && (
-                        <CircularProgress
-                          size={24}
-                          sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            marginTop: '-12px',
-                            marginLeft: '-12px',
-                          }}
-                        />
-                      )}
-                    </Button>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <Typography
-              sx={{
-                color: 'red',
-                opacity: showSearchError ? 1 : 0,
-                transitionDuration: '200ms',
-              }}>
-              Account not found
-            </Typography>
-          </Box>
-        </>
-      )}
+        )}
     </Box>
   );
 };
