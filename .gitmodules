@@ -1,0 +1,3 @@
+[submodule "junction_smart_contracts"]
+	path = junction_smart_contracts
+	url = https://github.com/kqlski/Junction2022-contracts
