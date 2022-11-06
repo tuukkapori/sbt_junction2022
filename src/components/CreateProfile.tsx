@@ -9,17 +9,15 @@ import {
   Button,
   Tooltip,
   CircularProgress,
-  Paper,
   Card,
   CardActionArea,
   Backdrop,
   Switch,
   FormControlLabel,
 } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUser, uploadProfilePic } from '../services/firebase';
-import { useMetamask } from '../metamask';
 import InstitutionIcon from '@mui/icons-material/AccountBalance';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
@@ -162,10 +160,7 @@ const CreateIndividualAccount = ({ setWizardStep }: any) => {
     console.log('file change ', e);
     setProfilePicFile(file);
 
-    const url = await uploadProfilePic(
-      file,
-      getCurrentWalletFromLocalStorage()
-    );
+    const url = await uploadProfilePic(file, window.ethereum.selectedAddress);
     console.log('url from uploading ppf ', url);
     setProfilePictureUrl(url);
     setLoadingPpf(false);
