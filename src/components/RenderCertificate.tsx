@@ -81,7 +81,7 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
       <Box sx={{ display: 'flex', alignItems: 'start', gap: 2 }}>
         <LinkIcon sx={{ marginTop: 0.8 }} />
         <Tooltip title='Open transaction on block explorer'>
-          <Typography variant='subtitle1'>
+          <Typography variant='subtitle1' sx={{ marginTop: 0.6 }}>
             <a
               style={{ margin: '20px 0px', color: 'white' }}
               href={`https://testnet.bscscan.com/tx/${transactionHash}`}
