@@ -1,14 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMetamask } from '../metamask';
 import ConnectMetamaskPrompt from './ConnectMetamaskPrompt';
-import {
-  Typography,
-  Box,
-  TextField,
-  InputAdornment,
-  Button,
-  CircularProgress,
-} from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import { getUserByWalletId } from '../services/firebase';
@@ -57,7 +50,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       <Typography variant='h5' mt={2}>
         Your work experience on the blockchain.
       </Typography>
-      {user.isConnected ? (
+      {window.ethereum.selectedAddress ? (
         <Typography variant='subtitle1'>Connected to Metamask</Typography>
       ) : (
         <ConnectMetamaskPrompt
