@@ -1,5 +1,4 @@
 import {
-  Paper,
   Box,
   Avatar,
   Typography,
@@ -7,7 +6,7 @@ import {
   CardActionArea,
   LinearProgress,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getUsersBySearhTerm } from '../services/firebase';
 
