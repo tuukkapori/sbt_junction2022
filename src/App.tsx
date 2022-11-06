@@ -12,6 +12,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import CreateProfile from './components/CreateProfile';
 import SendToken from './components/SendToken';
 import Home from './components/Home';
+import PageNotFound from './components/PageNotFound'
 
 const darkTheme = createTheme({
   palette: {
@@ -55,6 +56,7 @@ export default function App() {
                 <Route path='/profiles/:walletId' element={<Profile />} />
                 <Route path='/example' element={<ProfileExample />} />
                 <Route path='/send' element={<SendToken />} />
+                <Route path="*" element={<PageNotFound />} />
               </Routes>
             </Box>
           </Box>
