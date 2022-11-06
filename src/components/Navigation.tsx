@@ -72,7 +72,7 @@ const Navigation = ({ children }: any) => {
 
   return (
     <div>
-      {location.pathname !== '/' && (
+      {window.ethereum.selectedAddress && window.ethereum.chainId === '0x61' && (
         <AppBar position='sticky'>
           <Box
             sx={{
@@ -120,9 +120,7 @@ const Navigation = ({ children }: any) => {
               <IconButton
                 onClick={handleOpenProfileMenu}
                 sx={{ marginLeft: 2 }}>
-                <Avatar 
-                src={user.profilePicture}
-                />
+                <Avatar src={user.profilePicture} />
               </IconButton>
             ) : (
               <Box sx={{ width: '20px', height: '20px', m: 2.2 }} />
