@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import Profile from './components/Profile';
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Profiles from './components/Profiles';
 import Navigation from './components/Navigation';
 import './index.css';
 import ProfileSearchResults from './components/ProfileSearchResults';
@@ -22,7 +21,7 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [currentWallet, setCurrentWallet] = useState<any>(null);
-  
+
   return (
     <MetamaskProvider>
       <ThemeProvider theme={darkTheme}>
@@ -54,7 +53,6 @@ export default function App() {
                 />
 
                 <Route path='/search' element={<ProfileSearchResults />} />
-                <Route path='profiles' element={<Profiles />} />
                 <Route path='/profiles/:walletId' element={<Profile />} />
                 <Route path='/send' element={<SendToken />} />
               </Routes>
