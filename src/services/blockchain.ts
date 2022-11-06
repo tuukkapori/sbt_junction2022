@@ -31,7 +31,7 @@ export interface Certificate {
   startDate: string;
   endDate: string;
   transactionHash: string;
-  tokenId?:string;
+  tokenId?: string;
 }
 
 const getProfileFromBlockchain = async (
@@ -84,28 +84,44 @@ const getProfileFromBlockchain = async (
 
 const getCertificateURIs = async (walletId: string) => {
   console.log('getting certificates', { walletId });
-  const uris = await contract.getURIsFromAddress(walletId);
-  return uris;
+  try {
+    const uris = await contract.getURIsFromAddress(walletId);
+    return uris;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const createCertificate = async (walletId: string, uri: string) => {
-  console.log('creating certificate');
-  console.log({ walletId, uri });
-  const res = await contract.safeMint(walletId, uri);
-  console.log('res from create cert ', res);
-  return res.hash;
+  try {
+    console.log('creating certificate');
+    console.log({ walletId, uri });
+    const res = await contract.safeMint(walletId, uri);
+    console.log('res from create cert ', res);
+    return res.hash;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const revokeCertificate = async (id: string) => {
-  const res = await contract.revokeCertificate(id);
+  try {
+    const res = await contract.revokeCertificate(id);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getIssuedCertificateURIs = async (walletId: string) => {
-  console.log('getting issued certificates');
-  const IDs = await contract.getTokensIssuedByAddress(walletId);
-  return Promise.all(
-    IDs.map(async id => ({ uri: await contract.tokenURI(id), id }))
-  );
+  try {
+    console.log('getting issued certificates');
+    const IDs = await contract.getTokensIssuedByAddress(walletId);
+    return Promise.all(
+      IDs.map(async id => ({ uri: await contract.tokenURI(id), id }))
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export {
@@ -114,5 +130,5 @@ export {
   getCertificateURIs,
   createCertificate,
   getIssuedCertificateURIs,
-  revokeCertificate
+  revokeCertificate,
 };
