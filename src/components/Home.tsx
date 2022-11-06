@@ -50,7 +50,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
       <Typography variant='h5' mt={2}>
         Your work experience on the blockchain.
       </Typography>
-      {window.ethereum.selectedAddress ? (
+      {window.ethereum?.selectedAddress ? (
         <Typography variant='subtitle1'>Connected to Metamask</Typography>
       ) : (
         <ConnectMetamaskPrompt
