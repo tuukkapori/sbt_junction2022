@@ -1,18 +1,18 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { ConnectMetamask } from '../';
 
 export default function DetectMetamask(props: any) {
   if (!window.ethereum) {
     return (
-      <div>
-        Metamask is not installed in this browser{' '}
+      <Typography variant='subtitle1' sx={{ color: '#f77f00', marginTop: 1 }}>
+        Metamask is not installed in this browser.{' '}
         <a
           href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en'
           target='_blank'
           rel='noopener noreferrer'>
           Download it here.
         </a>
-      </div>
+      </Typography>
     );
   } else {
     return (
