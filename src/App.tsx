@@ -1,6 +1,7 @@
 import { MetamaskProvider } from './metamask/context';
 import { Box } from '@mui/material';
 import Profile from './components/Profile';
+import ProfileExample from './components/ProfileExample';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
@@ -52,6 +53,7 @@ export default function App() {
                 />
                 <Route path='/search' element={<ProfileSearchResults />} />
                 <Route path='/profiles/:walletId' element={<Profile />} />
+                <Route path='/example' element={<ProfileExample />} />
                 <Route path='/send' element={<SendToken />} />
               </Routes>
             </Box>
