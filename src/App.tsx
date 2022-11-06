@@ -22,6 +22,7 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [currentWallet, setCurrentWallet] = useState<any>(null);
+  
   return (
     <MetamaskProvider>
       <ThemeProvider theme={darkTheme}>
