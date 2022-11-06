@@ -145,7 +145,7 @@ const CreateInstitutionalAccount = ({ setWizardStep }: any) => {
 const CreateIndividualAccount = ({ setWizardStep }: any) => {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
-  const [profilePictureUrl, setProfilePictureUrl] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
   const [privateProfile, setPrivateProfile] = useState(true);
   const [loadingPpf, setLoadingPpf] = useState(false);
   const [creatingProfile, setCreatingProfile] = useState(false);
@@ -162,7 +162,7 @@ const CreateIndividualAccount = ({ setWizardStep }: any) => {
 
     const url = await uploadProfilePic(file, window.ethereum.selectedAddress);
     console.log('url from uploading ppf ', url);
-    setProfilePictureUrl(url);
+    setProfilePicture(url);
     setLoadingPpf(false);
   };
 
@@ -177,7 +177,7 @@ const CreateIndividualAccount = ({ setWizardStep }: any) => {
     await createUser(getCurrentWalletFromLocalStorage(), {
       name,
       bio,
-      profilePictureUrl,
+      profilePicture,
       accountType: 'individual',
       private: privateProfile,
     });
