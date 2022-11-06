@@ -66,7 +66,7 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
           setChainId={setChainId}
         />
       )}
-      {window.ethereum.selectedAddress && window.ethereum.chainId === '0x61' && (
+      {window.ethereum?.selectedAddress && window.ethereum.chainId === '0x61' && (
         <>
           <Typography variant='subtitle1'>BNB Testnet</Typography>
           <Box

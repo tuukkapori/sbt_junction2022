@@ -91,21 +91,6 @@ const RenderCertificate = ({ certificate }: { certificate: Certificate }) => {
           </Typography>
         </Tooltip>
       </Box>
-      {window.ethereum.selectedAddress === issuerAddress && (
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'start',
-            gap: 2,
-          }}>
-          <DeleteIcon sx={{ marginTop: 0.8 }} />
-          <Button
-            sx={{ color: 'white', marginLeft: '-10px' }}
-            onClick={() => deleteCertificate()}>
-            Delete certificate
-          </Button>
-        </Box>
-      )}
     </Card>
   );
 };

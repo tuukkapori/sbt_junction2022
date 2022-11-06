@@ -69,10 +69,10 @@ const Navigation = ({ children }: any) => {
     };
     checkUser();
   }, [location]);
-
+  if (!window.ethereum) navigate("/");
   return (
     <div>
-      {window.ethereum.selectedAddress && window.ethereum.chainId === '0x61' && (
+      {window.ethereum?.selectedAddress && window.ethereum.chainId === '0x61' && (
         <AppBar position='sticky'>
           <Box
             sx={{

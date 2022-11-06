@@ -17,7 +17,7 @@ import WalletIcon from '@mui/icons-material/Wallet';
 const Profile = () => {
   const { walletId: walletParam } = useParams();
   const walletId =
-    walletParam === 'me' ? window.ethereum.selectedAddress : walletParam;
+    walletParam === 'me' ? window.ethereum?.selectedAddress : walletParam;
   const [profileInfo, setProfileInfo] = useState(null);
   const [issuedCertificates, setIssuedCertificates] = useState([]);
   const [loading, setLoading] = useState(false);

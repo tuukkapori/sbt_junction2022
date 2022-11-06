@@ -10,6 +10,7 @@ import requestAccounts from '../metamask/helpers/requestAccounts';
 import { getUserByWalletId } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentWalletLocalStorage } from '../services/localStorage';
+import { DetectMetamask } from '../metamask';
 
 const ConnectMetamaskPrompt = ({
   setCurrentWallet,
@@ -28,7 +29,7 @@ const ConnectMetamaskPrompt = ({
       const account = await requestAccounts();
       if (account && account.isConnected) {
         setCurrentWalletLocalStorage(account.address);
-        if (window.ethereum.chainId == '0x61') {
+        if (window.ethereum?.chainId == '0x61') {
           const user = await getUserByWalletId(account.address);
           setLoading(false);
           if (user) {
@@ -57,36 +58,31 @@ const ConnectMetamaskPrompt = ({
           alignItems: 'center',
           fontFamily: 'OpenSans-Bold',
         }}>
-        {!window.ethereum.selectedAddress && (
-          <Button
-            variant='contained'
-            size='large'
-            sx={{ fontWeight: 600, marginTop: 3 }}
-            onClick={handleConnectMetamask}>
-            Connect Metamask
-          </Button>
+        {!window.ethereum?.selectedAddress && (
+          <DetectMetamask handleConnectMetamask={handleConnectMetamask} />
         )}
-        {window.ethereum.selectedAddress && window.ethereum.chainId !== '0x61' && (
-          <>
-            <Button
-              variant='contained'
-              size='large'
-              sx={{ fontWeight: 600, marginTop: 3 }}
-              onClick={() =>
-                changeNetwork('bnbTestnet').then(() => {
-                  setChainId('0x61');
-                  handleConnectMetamask();
-                })
-              }>
-              Change Network
-            </Button>
-            <Typography
-              variant='subtitle1'
-              sx={{ color: '#f77f00', marginTop: 1 }}>
-              Please connect your Metamask to BNB Testnet.
-            </Typography>
-          </>
-        )}
+        {window.ethereum?.selectedAddress &&
+          window.ethereum.chainId !== '0x61' && (
+            <>
+              <Button
+                variant='contained'
+                size='large'
+                sx={{ fontWeight: 600, marginTop: 3 }}
+                onClick={() =>
+                  changeNetwork('bnbTestnet').then(() => {
+                    setChainId('0x61');
+                    handleConnectMetamask();
+                  })
+                }>
+                Change Network
+              </Button>
+              <Typography
+                variant='subtitle1'
+                sx={{ color: '#f77f00', marginTop: 1 }}>
+                Please connect your Metamask to BNB Testnet.
+              </Typography>
+            </>
+          )}
       </Box>
       <Backdrop open={loading}>
         <CircularProgress />
