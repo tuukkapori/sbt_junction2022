@@ -34,7 +34,6 @@ const Profile = () => {
 
   const { walletId: walletParam } = useParams();
   const walletId = ExampleVariables.walletId;
-  console.log({ walletId });
   // walletParam === 'me' ? window.ethereum?.selectedAddress : walletParam;
   const [profileInfo, setProfileInfo] = useState(null);
   const [issuedCertificates, setIssuedCertificates] = useState([]);
@@ -51,7 +50,6 @@ const Profile = () => {
       setProfileInfo(prof);
 
       const uris = ExampleVariables.uris; // await getCertificateURIs(lowerWalletId);
-      console.log({ uris });
       const data = await getCerticatesByIds(uris);
       setCertificates(data);
 
@@ -70,8 +68,6 @@ const Profile = () => {
     };
     fetchData(walletId);
   }, [walletParam]);
-
-  console.log({ issuedCertificates });
 
   const groupedCertificates: { [key: string]: Certificate[] } =
     certificates.length
