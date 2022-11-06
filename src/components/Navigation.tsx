@@ -118,7 +118,7 @@ const Navigation = ({ children }: any) => {
             )}
             {user ? (
               <IconButton
-                onClick={handleOpenProfileMenu}
+                onClick={() => navigate('/profiles/me')}
                 sx={{ marginLeft: 2 }}>
                 <Avatar src={user.profilePicture} />
               </IconButton>
@@ -137,7 +137,7 @@ const Navigation = ({ children }: any) => {
               <MenuItem onClick={() => navigate('profiles/me')}>
                 My profile
               </MenuItem>
-              <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+              {/* <MenuItem onClick={handleLogOut}>Log out</MenuItem> */}
             </Menu>
           </Box>
         </AppBar>
