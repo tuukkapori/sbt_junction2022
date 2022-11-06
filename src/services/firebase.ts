@@ -64,7 +64,7 @@ const getUsersBySearhTerm = async (search: string) => {
       users.push({ walletId: doc.id, ...doc.data() });
     });
     console.log(users);
-    
+
     return users.filter((user: any) =>
       user.name?.toLowerCase().includes(search.toLowerCase())
     );
@@ -109,10 +109,16 @@ const getCertificateById = async (id: string) => {
 };
 
 const getCerticatesByIds = async (idArray: string[]) => {
-  const promises = await Promise.all(idArray.map(id => getCertificateById(id)));
-  // filter possible undefined values
-  const certificates = promises.filter(cert => cert);
-  return certificates;
+  if (idArray && idArray.length > 0) {
+    const promises = await Promise.all(
+      idArray.map(id => getCertificateById(id))
+    );
+    // filter possible undefined values
+    const certificates = promises.filter(cert => cert);
+    return certificates;
+  } else {
+    return [];
+  }
 };
 
 export {
