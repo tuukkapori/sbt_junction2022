@@ -15,9 +15,27 @@ import CertificateList from './CertificateList';
 import WalletIcon from '@mui/icons-material/Wallet';
 
 const Profile = () => {
+  const ExampleVariables = {
+    walletId: '0x043bff4ed01d0e78d1408e5fb26bece5ebea90f5',
+    uris: [
+      '4fokXb8NdjK5CDzhziAM1',
+      'PhLnXooLwmzH-OZNQewvY',
+      'F31KTgBIuuN-ScbDODkC_',
+      'nlwVJtbvdwAqVrIjKMl__',
+      '4rhtxYBBb33bytP5KcZYT',
+    ],
+    issuedUrisAndIds: [
+      {
+        uri: 'Stmz_9cm0YznKDfwW7h5G',
+        id: { _hex: '0x04', _isBigNumber: true },
+      },
+    ],
+  };
+
   const { walletId: walletParam } = useParams();
-  const walletId =
-    walletParam === 'me' ? window.ethereum?.selectedAddress : walletParam;
+  const walletId = ExampleVariables.walletId;
+  console.log({ walletId });
+  // walletParam === 'me' ? window.ethereum?.selectedAddress : walletParam;
   const [profileInfo, setProfileInfo] = useState(null);
   const [issuedCertificates, setIssuedCertificates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,14 +48,14 @@ const Profile = () => {
 
       const lowerWalletId = walletId.toLowerCase();
       const prof = await getUserByWalletId(lowerWalletId);
-      console.log({ prof });
       setProfileInfo(prof);
 
-      const uris = await getCertificateURIs(lowerWalletId);
+      const uris = ExampleVariables.uris; // await getCertificateURIs(lowerWalletId);
+      console.log({ uris });
       const data = await getCerticatesByIds(uris);
       setCertificates(data);
 
-      const issuedUrisAndIds = await getIssuedCertificateURIs(lowerWalletId);
+      const issuedUrisAndIds = ExampleVariables.issuedUrisAndIds; //  await getIssuedCertificateURIs(lowerWalletId);
       if (issuedUrisAndIds && issuedUrisAndIds.length > 0) {
         const issuedData = await Promise.all(
           issuedUrisAndIds.map(async n => ({
@@ -88,15 +106,11 @@ const Profile = () => {
               flexDirection: 'column',
               alignItems: 'center',
             }}>
-              {!profileInfo?.private && (
-                <>
             <Avatar
               sx={{ width: 100, height: 100 }}
               src={profileInfo.profilePicture}
             />
-              <Typography variant='h3'>{profileInfo.name}</Typography>
-              </>
-            )}
+            <Typography variant='h3'>{profileInfo.name}</Typography>
             <Box sx={{ display: 'flex' }}>
               <WalletIcon sx={{ mr: 1 }} />
               <Typography variant='subtitle1'>
@@ -109,9 +123,7 @@ const Profile = () => {
                 </a>
               </Typography>
             </Box>
-            {!profileInfo.private && (
-              <Typography variant='subtitle2'>{profileInfo.bio}</Typography>
-            )}
+            <Typography variant='subtitle2'>{profileInfo.bio}</Typography>
           </Box>
         )}
 
