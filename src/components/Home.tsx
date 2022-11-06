@@ -1,6 +1,6 @@
 import { useMetamask } from '../metamask';
 import ConnectMetamaskPrompt from './ConnectMetamaskPrompt';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import changeNetwork from '../metamask/helpers/changeNetwork';
 
 const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
@@ -34,10 +34,23 @@ const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
           setChainId={setChainId}
         />
       )}
-      {window.ethereum?.selectedAddress &&
-        window.ethereum.chainId === '0x61' && (
+      {window.ethereum?.selectedAddress && window.ethereum.chainId === '0x61' && (
+        <>
           <Typography variant='subtitle1'>BNB Testnet</Typography>
-        )}
+          <a
+            href='https://testnet.binance.org/faucet-smart'
+            target='_blank'
+            rel='noopener noreferrer'
+            style={{textDecoration:'none'}}>
+            <Button
+              variant='contained'
+              size='large'
+              sx={{ fontWeight: 600, marginTop: 3, }}>
+              Add Free Test Currency
+            </Button>
+          </a>
+        </>
+      )}
     </Box>
   );
 };
