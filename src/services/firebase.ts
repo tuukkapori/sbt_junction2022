@@ -61,7 +61,9 @@ const getUsersBySearhTerm = async (search: string) => {
     const querySnapshot = await getDocs(q);
     const users: any[] = [];
     querySnapshot.forEach(doc => {
-      users.push({ walletId: doc.id, ...doc.data() });
+      if (!doc.data().private){
+        users.push({ walletId: doc.id, ...doc.data() });
+      }
     });
     console.log(users);
 
