@@ -25,28 +25,27 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchData = async (walletId: string) => {
-      if(!walletId) return;
-        setLoading(true);
+      if (!walletId) return;
+      setLoading(true);
 
-        const lowerWalletId = walletId.toLowerCase();
-        const prof = await getUserByWalletId(lowerWalletId);
-        setProfileInfo(prof);
+      const lowerWalletId = walletId.toLowerCase();
+      const prof = await getUserByWalletId(lowerWalletId);
+      setProfileInfo(prof);
 
-        const uris = await getCertificateURIs(lowerWalletId);
-        const data = await getCerticatesByIds(uris);
-        setCertificates(data);
+      const uris = await getCertificateURIs(lowerWalletId);
+      const data = await getCerticatesByIds(uris);
+      setCertificates(data);
 
-        const issuedUrisAndIds = await getIssuedCertificateURIs(lowerWalletId);
-        const issuedData = await Promise.all(
-          issuedUrisAndIds.map(async n => ({
-            ...(await getCertificateById(n.uri)),
-            tokenId: n.id.toString(),
-          }))
-        );
-        setIssuedCertificates(issuedData);
+      const issuedUrisAndIds = await getIssuedCertificateURIs(lowerWalletId);
+      const issuedData = await Promise.all(
+        issuedUrisAndIds.map(async n => ({
+          ...(await getCertificateById(n.uri)),
+          tokenId: n.id.toString(),
+        }))
+      );
+      setIssuedCertificates(issuedData);
 
-
-        setLoading(false);
+      setLoading(false);
     };
     fetchData(walletId);
   }, [walletParam]);
@@ -93,7 +92,15 @@ const Profile = () => {
             <Typography variant='h3'>{profileInfo.name}</Typography>
             <Box sx={{ display: 'flex' }}>
               <WalletIcon sx={{ mr: 1 }} />
-              <Typography variant='subtitle1'>{walletId}</Typography>
+              <Typography variant='subtitle1'>
+                <a
+                  href={`https://testnet.bscscan.com/address/${walletId}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{ color: 'inherit' }}>
+                  {walletId}
+                </a>
+              </Typography>
             </Box>
             <Typography variant='subtitle2'>{profileInfo.bio}</Typography>
           </Box>
