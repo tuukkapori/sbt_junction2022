@@ -37,13 +37,15 @@ const Profile = () => {
       setCertificates(data);
 
       const issuedUrisAndIds = await getIssuedCertificateURIs(lowerWalletId);
-      const issuedData = await Promise.all(
-        issuedUrisAndIds.map(async n => ({
-          ...(await getCertificateById(n.uri)),
-          tokenId: n.id.toString(),
-        }))
-      );
-      setIssuedCertificates(issuedData);
+      if (issuedUrisAndIds && issuedUrisAndIds.length > 0) {
+        const issuedData = await Promise.all(
+          issuedUrisAndIds.map(async n => ({
+            ...(await getCertificateById(n.uri)),
+            tokenId: n.id.toString(),
+          }))
+        );
+        setIssuedCertificates(issuedData);
+      }
 
       setLoading(false);
     };
