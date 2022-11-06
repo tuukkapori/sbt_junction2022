@@ -1,37 +1,12 @@
-import { useState } from 'react';
 import { useMetamask } from '../metamask';
 import ConnectMetamaskPrompt from './ConnectMetamaskPrompt';
 import { Typography, Box } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router-dom';
-import { getUserByWalletId } from '../services/firebase';
 import changeNetwork from '../metamask/helpers/changeNetwork';
 
 const Home = ({ setCurrentWallet }: { setCurrentWallet: any }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showSearchError, setShowSearchError] = useState(false);
-  const [searching, setSearching] = useState(false);
   console.log({ windowEthereum: window.ethereum });
-  const { user, chainId, setChainId } = useMetamask();
+  const { user, setChainId } = useMetamask();
   console.log({ user, connected: user.isConnected });
-  const navigate = useNavigate();
-
-  const handleSearchCertificates = async (e: any) => {
-    e.preventDefault();
-    setSearching(true);
-    setShowSearchError(false);
-    console.log('Searching certificates for ', searchTerm);
-    const user = await getUserByWalletId(searchTerm);
-    if (user) {
-      console.log('user found, redirect to profile ');
-      setSearching(false);
-      navigate(`/profiles/${searchTerm}`);
-    } else {
-      console.log('user not found, notify searcher');
-      setShowSearchError(true);
-      setSearching(false);
-    }
-  };
 
   return (
     <Box

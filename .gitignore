@@ -8,3 +8,4 @@ node_modules
 .firestore.indexes.json
 .firestore.rules
 functions
+build
