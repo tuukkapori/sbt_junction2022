@@ -30,7 +30,7 @@ const Profile = () => {
 
       const lowerWalletId = walletId.toLowerCase();
       const prof = await getUserByWalletId(lowerWalletId);
-      console.log({ prof });
+
       setProfileInfo(prof);
 
       const uris = await getCertificateURIs(lowerWalletId);
@@ -67,7 +67,6 @@ const Profile = () => {
           return obj;
         }, {})
       : {};
-
   return (
     <Box
       sx={{
@@ -88,7 +87,7 @@ const Profile = () => {
               flexDirection: 'column',
               alignItems: 'center',
             }}>
-              {!profileInfo?.private && (
+              {profileInfo.private!== undefined && !profileInfo.private && 
                 <>
             <Avatar
               sx={{ width: 100, height: 100 }}
@@ -96,7 +95,7 @@ const Profile = () => {
             />
               <Typography variant='h3'>{profileInfo.name}</Typography>
               </>
-            )}
+            }
             <Box sx={{ display: 'flex' }}>
               <WalletIcon sx={{ mr: 1 }} />
               <Typography variant='subtitle1'>
