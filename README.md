@@ -1,8 +1,15 @@
 # Contract repository can be found [here](https://github.com/kqlski/Junction2022-contracts/).
 
+## Development
+Requirements:
+- node & npm 16 ([nvm install](https://github.com/nvm-sh/nvm#installing-and-updating))
+- Firebase app with required API-key
+1.     git clone git@github.com:tuukkapori/sbt_junction2022.git
+2. Setup `.env`-file according to the template file `.env.example`. These are all for firebase.
+3. Change the `address`-field of `/src/contracts/SoulBoundToken.json` to a different contract that's deployed on the chain (see submodule `junction_smart_contracts`).
+4. `npm install` & `npm start`
 
-
-# Basic boilerplate forked from [jaavier/boilerplate-react-metamask](https://github.com/jaavier/boilerplate-react-metamask).
+### Basic boilerplate forked from [jaavier/boilerplate-react-metamask](https://github.com/jaavier/boilerplate-react-metamask).
 
 
 
